@@ -50,7 +50,11 @@ export default function AppLayout() {
           tabBarIcon: ({ focused }) => {
             return (
               <View>
-                <Icon name="fire" type="font-awesome-5" color={focused ? colors.primary : "grey"} />
+                <Icon
+                  name="fire"
+                  type="font-awesome-5"
+                  color={focused ? colors.primary : "grey"}
+                />
               </View>
             );
           },
