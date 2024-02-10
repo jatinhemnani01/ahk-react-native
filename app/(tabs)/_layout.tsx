@@ -1,4 +1,7 @@
+import { Icon } from "@rneui/base";
 import { Tabs } from "expo-router/tabs";
+import { View } from "react-native";
+import { colors } from "../../src/constants/colors";
 export default function AppLayout() {
   return (
     <Tabs>
@@ -7,9 +10,16 @@ export default function AppLayout() {
         options={{
           title: "Home",
           headerTitleAlign: "center",
-          tabBarLabelStyle: { fontSize: 15 },
+          tabBarLabelStyle: { fontSize: 15, color: "black" },
           headerTitleStyle: { color: "white" },
-          headerStyle: { backgroundColor: "#2E3AE5" },
+          headerStyle: { backgroundColor: colors.primary },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <Icon name="home" color={focused ? colors.primary : "grey"} />
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -17,9 +27,16 @@ export default function AppLayout() {
         options={{
           title: "Search",
           headerTitleAlign: "center",
-          tabBarLabelStyle: { fontSize: 15 },
+          tabBarLabelStyle: { fontSize: 15, color: "black" },
           headerTitleStyle: { color: "white" },
-          headerStyle: { backgroundColor: "#2E3AE5" },
+          headerStyle: { backgroundColor: colors.primary },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <Icon name="search" color={focused ? colors.primary : "grey"} />
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -27,9 +44,16 @@ export default function AppLayout() {
         options={{
           title: "Popular",
           headerTitleAlign: "center",
-          tabBarLabelStyle: { fontSize: 15 },
+          tabBarLabelStyle: { fontSize: 15, color: "black" },
           headerTitleStyle: { color: "white" },
-          headerStyle: { backgroundColor: "#2E3AE5" },
+          headerStyle: { backgroundColor: colors.primary },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <Icon name="fire" type="font-awesome-5" color={focused ? colors.primary : "grey"} />
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -37,9 +61,16 @@ export default function AppLayout() {
         options={{
           title: "Profile",
           headerTitleAlign: "center",
-          tabBarLabelStyle: { fontSize: 15 },
+          tabBarLabelStyle: { fontSize: 15, color: "black" },
           headerTitleStyle: { color: "white" },
-          headerStyle: { backgroundColor: "#2E3AE5" },
+          headerStyle: { backgroundColor: colors.primary },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <Icon name="person" color={focused ? colors.primary : "grey"} />
+              </View>
+            );
+          },
         }}
       />
     </Tabs>
