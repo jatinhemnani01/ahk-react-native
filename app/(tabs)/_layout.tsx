@@ -6,32 +6,40 @@ export default function AppLayout() {
         name="index"
         options={{
           title: "Home",
-          headerTitleAlign:"center",
+          headerTitleAlign: "center",
           tabBarLabelStyle: { fontSize: 15 },
+          headerTitleStyle: { color: "white" },
+          headerStyle: { backgroundColor: "#2E3AE5" },
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: "Search",
-          headerTitleAlign:"center",
+          headerTitleAlign: "center",
           tabBarLabelStyle: { fontSize: 15 },
+          headerTitleStyle: { color: "white" },
+          headerStyle: { backgroundColor: "#2E3AE5" },
         }}
       />
       <Tabs.Screen
         name="popular"
         options={{
           title: "Popular",
-          headerTitleAlign:"center",
+          headerTitleAlign: "center",
           tabBarLabelStyle: { fontSize: 15 },
+          headerTitleStyle: { color: "white" },
+          headerStyle: { backgroundColor: "#2E3AE5" },
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          headerTitleAlign:"center",
+          headerTitleAlign: "center",
           tabBarLabelStyle: { fontSize: 15 },
+          headerTitleStyle: { color: "white" },
+          headerStyle: { backgroundColor: "#2E3AE5" },
         }}
       />
     </Tabs>
