@@ -15,7 +15,7 @@ export default function KaraokeTile() {
           source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
         />
         <ListItem.Content>
-          <ListItem.Title>John Doe</ListItem.Title>
+          <ListItem.Title>3 REMIX MASHUP SAAWAN KARAOKE 3 SONGS-AMIT S. FT SANDESH.mp4</ListItem.Title>
         </ListItem.Content>
         <ListItem.Chevron size={25} color={"black"} />
       </ListItem>

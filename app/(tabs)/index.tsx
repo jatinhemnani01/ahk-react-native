@@ -1,10 +1,10 @@
-import { Pressable, View, Text } from "react-native";
+import { Pressable, View, Text, ScrollView } from "react-native";
 import KaraokeTile from "../../src/components/KaraokeTile";
 import tw from "twrnc";
 import { router } from "expo-router";
 export default function AppLayout() {
   return (
-    <View>
+    <ScrollView>
       <View>
         <Pressable
           onPress={() => router.navigate("/free")}
@@ -16,6 +16,18 @@ export default function AppLayout() {
         </Pressable>
       </View>
       <KaraokeTile />
-    </View>
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+      <KaraokeTile />
+    </ScrollView>
   );
 }
