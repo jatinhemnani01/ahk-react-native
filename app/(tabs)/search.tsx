@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Searchbar from '../../src/components/Searchbar'
 
 export default function Search() {
   return (
     <View>
-      <Text>search</Text>
+      <Searchbar />
     </View>
   )
 }
