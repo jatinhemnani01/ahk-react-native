@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Avatar, ListItem } from "@rneui/base";
+import { router } from "expo-router";
 
 interface Props {
   title: string;
@@ -9,7 +10,11 @@ interface Props {
 export default function KaraokeTile() {
   return (
     <>
-      <ListItem bottomDivider containerStyle={{ backgroundColor: "#ecf0f1" }}>
+      <ListItem
+        onPress={() => router.navigate("/video")}
+        bottomDivider
+        containerStyle={{ backgroundColor: "#ecf0f1" }}
+      >
         <Avatar
           rounded
           source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
