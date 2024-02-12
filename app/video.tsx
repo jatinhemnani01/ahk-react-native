@@ -11,6 +11,7 @@ import React, { useCallback } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
+import VideoSpeedControl from "../src/components/VideoSpeedControl";
 
 export default function VideoPlayer() {
   const params = useGlobalSearchParams();
@@ -65,36 +66,12 @@ export default function VideoPlayer() {
           </View>
         )}
 
-        <View style={styles.buttonsContainer}>
-          <Button title="+" onPress={handleIncrement} />
-          <Button title="-" onPress={handleDecrement} />
-        </View>
-        <Text>Speed: {speed.toFixed(2).toString()}</Text>
-        {/* <TextInput
-        style={styles.input}
-        value={speed.toFixed(2).toString()}
-        onChangeText={handleSpeedChange}
-        keyboardType="numeric"
-      /> */}
+        <VideoSpeedControl
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+          speed={speed}
+        />
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    marginRight: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    minWidth: 80,
-  },
-});
