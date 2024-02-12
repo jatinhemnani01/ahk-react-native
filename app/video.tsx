@@ -31,11 +31,8 @@ export default function VideoPlayer() {
     setSpeed((prevSpeed: number) => prevSpeed - 0.01);
   };
 
-  const handleSpeedChange = (text: string) => {
-    const numericValue = parseFloat(text);
-    if (!isNaN(numericValue)) {
-      setSpeed(numericValue);
-    }
+  const handleReset = () => {
+    setSpeed(1);
   };
 
   const toggleControls = useCallback(() => {
@@ -67,6 +64,7 @@ export default function VideoPlayer() {
         )}
 
         <VideoSpeedControl
+          handleReset={handleReset}
           handleDecrement={handleDecrement}
           handleIncrement={handleIncrement}
           speed={speed}

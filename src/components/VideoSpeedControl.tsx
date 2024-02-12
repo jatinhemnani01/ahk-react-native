@@ -8,11 +8,13 @@ interface VideoSpeedControlProps {
   speed: number;
   handleIncrement: () => void;
   handleDecrement: () => void;
+  handleReset: () => void;
 }
 
 export default function VideoSpeedControl({
   handleDecrement,
   handleIncrement,
+  handleReset,
   speed,
 }: VideoSpeedControlProps) {
   return (
@@ -29,6 +31,9 @@ export default function VideoSpeedControl({
           <Icon name="minus" color={"white"} size={20} type="font-awesome" />
         </Button>
       </View>
+      <Button onPress={handleReset} radius={"xl"} color={colors.primary}>
+        <Icon color={"white"} name="rotate-right" />
+      </Button>
     </View>
   );
 }
