@@ -66,12 +66,14 @@ export default function VideoPlayer() {
             </View>
           )}
 
-          <VideoSpeedControl
-            handleReset={handleReset}
-            handleDecrement={handleDecrement}
-            handleIncrement={handleIncrement}
-            speed={speed}
-          />
+          {!loading && (
+            <VideoSpeedControl
+              handleReset={handleReset}
+              handleDecrement={handleDecrement}
+              handleIncrement={handleIncrement}
+              speed={speed}
+            />
+          )}
         </TouchableOpacity>
       </View>
     </>

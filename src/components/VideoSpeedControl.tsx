@@ -23,16 +23,16 @@ export default function VideoSpeedControl({
         Change Scale/Tempo/Speed
       </Text>
       <View style={tw`flex flex-row gap-2 justify-center items-center`}>
-        <Button onPress={handleIncrement} radius={"xl"} color={colors.primary}>
-          <Icon name="plus" color={"white"} size={20} type="font-awesome" />
+        <Button onPress={handleIncrement} radius={"xl"} color={"#cbd5e1"}>
+          <Icon name="plus" color={"black"} size={20} type="font-awesome" />
         </Button>
         <Text style={tw`font-bold text-xl`}>{speed.toFixed(2).toString()}</Text>
-        <Button onPress={handleDecrement} radius={"xl"} color={colors.primary}>
-          <Icon name="minus" color={"white"} size={20} type="font-awesome" />
+        <Button onPress={handleDecrement} radius={"xl"} color={"#cbd5e1"}>
+          <Icon name="minus" color={"black"} size={20} type="font-awesome" />
         </Button>
       </View>
-      <Button onPress={handleReset} radius={"xl"} color={colors.primary}>
-        <Icon color={"white"} name="rotate-right" />
+      <Button onPress={handleReset} radius={"xl"} color={"#cbd5e1"}>
+        <Icon color={"black"} name="rotate-right" />
       </Button>
     </View>
   );
