@@ -1,11 +1,5 @@
 import {
-  View,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-  Button,
-  TextInput,
-  TouchableOpacity,
+  View, ActivityIndicator, TouchableOpacity
 } from "react-native";
 import React, { useCallback } from "react";
 import { ResizeMode, Video } from "expo-av";
