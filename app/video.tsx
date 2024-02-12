@@ -17,7 +17,7 @@ export default function VideoPlayer() {
   const { id } = params;
   const ref = React.useRef(null);
 
-  const [speed, setSpeed] = React.useState<number>(0);
+  const [speed, setSpeed] = React.useState<number>(1);
 
   const handleIncrement = () => {
     setSpeed((prevSpeed: number) => prevSpeed + 0.01);
@@ -45,6 +45,7 @@ export default function VideoPlayer() {
         resizeMode={ResizeMode.CONTAIN}
         ref={ref}
         isLooping
+        shouldPlay
         rate={speed}
         onLoadStart={() => setLoading(true)}
         onReadyForDisplay={() => setLoading(false)}
@@ -60,12 +61,13 @@ export default function VideoPlayer() {
         <Button title="+" onPress={handleIncrement} />
         <Button title="-" onPress={handleDecrement} />
       </View>
-      <TextInput
+      <Text>Speed: {speed.toFixed(2).toString()}</Text>
+      {/* <TextInput
         style={styles.input}
-        // value={speed.toString()}
+        value={speed.toFixed(2).toString()}
         onChangeText={handleSpeedChange}
         keyboardType="numeric"
-      />
+      /> */}
     </View>
   );
 }

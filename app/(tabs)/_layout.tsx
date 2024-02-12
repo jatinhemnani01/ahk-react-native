@@ -2,8 +2,11 @@ import { Icon } from "@rneui/base";
 import { Tabs } from "expo-router/tabs";
 import { View } from "react-native";
 import { colors } from "../../src/constants/colors";
+import { StatusBar } from "expo-status-bar";
 export default function AppLayout() {
   return (
+    <>
+    <StatusBar style="light" />
     <Tabs>
       <Tabs.Screen
         name="index"
@@ -78,5 +81,6 @@ export default function AppLayout() {
         }}
       />
     </Tabs>
+    </>
   );
 }

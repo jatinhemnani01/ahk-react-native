@@ -5,7 +5,7 @@ import { colors } from "../src/constants/colors";
 export default function AppLayout() {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light"  />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
