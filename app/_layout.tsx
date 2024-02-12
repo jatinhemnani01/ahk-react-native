@@ -1,11 +1,9 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { colors } from "../src/constants/colors";
 
 export default function AppLayout() {
   return (
     <>
-      <StatusBar style="light"  />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen

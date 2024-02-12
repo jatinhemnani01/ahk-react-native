@@ -12,6 +12,7 @@ import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/VideoSpeedControl";
+import { StatusBar } from "expo-status-bar";
 
 export default function VideoPlayer() {
   const params = useGlobalSearchParams();
@@ -40,36 +41,39 @@ export default function VideoPlayer() {
   }, []);
 
   return (
-    <View>
-      <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
-        <Video
-          source={{
-            uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-          }}
-          style={{ width: "100%", height: 300 }}
-          useNativeControls={showControls}
-          resizeMode={ResizeMode.CONTAIN}
-          ref={ref}
-          isLooping
-          shouldPlay
-          rate={speed}
-          onLoadStart={() => setLoading(true)}
-          onReadyForDisplay={() => setLoading(false)}
-        />
+    <>
+      <StatusBar style="light" />
+      <View>
+        <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
+          <Video
+            source={{
+              uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+            }}
+            style={{ width: "100%", height: 300 }}
+            useNativeControls={showControls}
+            resizeMode={ResizeMode.CONTAIN}
+            ref={ref}
+            isLooping
+            shouldPlay
+            rate={speed}
+            onLoadStart={() => setLoading(true)}
+            onReadyForDisplay={() => setLoading(false)}
+          />
 
-        {loading && (
-          <View style={tw`flex justify-center items-center`}>
-            <ActivityIndicator size="large" color="#0000ff" />
-          </View>
-        )}
+          {loading && (
+            <View style={tw`flex justify-center items-center`}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
 
-        <VideoSpeedControl
-          handleReset={handleReset}
-          handleDecrement={handleDecrement}
-          handleIncrement={handleIncrement}
-          speed={speed}
-        />
-      </TouchableOpacity>
-    </View>
+          <VideoSpeedControl
+            handleReset={handleReset}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+            speed={speed}
+          />
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }
