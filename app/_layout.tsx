@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
+import { getSubscription } from "../src/subscription/getSubscription";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -14,6 +15,9 @@ export default function RootLayout() {
       }
     }
     setupPurchases();
+    const isPro = getSubscription();
+    console.log(isPro);
+    
   }, []);
 
   return (
