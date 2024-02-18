@@ -1,11 +1,24 @@
 import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import Purchases, { LOG_LEVEL } from "react-native-purchases";
+import { Platform } from "react-native";
 
 export default function RootLayout() {
+  useEffect(() => {
+    async function setupPurchases() {
+      Purchases.setLogLevel(LOG_LEVEL.DEBUG);
+      if (Platform.OS === "android") {
+        Purchases.configure({ apiKey: "goog_gGxArHKrmaNHKqOSVLLiPWnlwYL" });
+      }
+    }
+    setupPurchases();
+  }, []);
+
   return (
     <>
-    <StatusBar style="light" />
+      <StatusBar style="light" />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen

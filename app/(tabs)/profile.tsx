@@ -1,8 +1,6 @@
-import { Button, PricingCard } from "@rneui/base";
+import { PricingCard } from "@rneui/base";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { Platform, ScrollView, View } from "react-native";
-import Purchases, { LOG_LEVEL } from "react-native-purchases";
+import { ScrollView, View } from "react-native";
 import RevenueCatUI from "react-native-purchases-ui";
 import { colors } from "../../src/constants/colors";
 import tw from "twrnc";
@@ -11,16 +9,6 @@ export default function profile() {
   function buy() {
     RevenueCatUI.presentPaywall();
   }
-
-  useEffect(() => {
-    async function setupPurchases() {
-      Purchases.setLogLevel(LOG_LEVEL.DEBUG);
-      if (Platform.OS === "android") {
-        Purchases.configure({ apiKey: "goog_gGxArHKrmaNHKqOSVLLiPWnlwYL" });
-      }
-    }
-    setupPurchases();
-  }, []);
 
   return (
     <>
