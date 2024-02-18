@@ -3,7 +3,7 @@ import { Tabs } from "expo-router/tabs";
 import { View } from "react-native";
 import { colors } from "../../src/constants/colors";
 import { StatusBar } from "expo-status-bar";
-export default function AppLayout() {
+export default function TabLayout() {
   return (
     <>
     <StatusBar style="light" />

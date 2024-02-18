@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
 import { StatusBar } from "expo-status-bar";
 
-export default function AppLayout() {
+export default function RootLayout() {
   return (
     <>
     <StatusBar style="light" />
