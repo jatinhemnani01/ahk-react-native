@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import { Icon, Button, color } from "@rneui/base";
 import React from "react";
 import tw from "twrnc";
-import { colors } from "../constants/colors";
+import { colors } from "../../constants/colors";
 
 interface VideoSpeedControlProps {
   speed: number;

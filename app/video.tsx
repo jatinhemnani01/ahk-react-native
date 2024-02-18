@@ -5,7 +5,7 @@ import React, { useCallback } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
-import VideoSpeedControl from "../src/components/VideoSpeedControl";
+import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
 import { StatusBar } from "expo-status-bar";
 
 export default function VideoPlayer() {

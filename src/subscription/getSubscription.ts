@@ -5,7 +5,7 @@ function isEmpty(obj: any) {
   return Object.keys(obj).length === 0;
 }
 
-export async function getSubscription() {
+export async function updateSubscription() {
   const customerInfo = await Purchases.getCustomerInfo();
   const entitlements = customerInfo.entitlements.active;
 

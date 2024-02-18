@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
-import { getSubscription } from "../src/subscription/getSubscription";
+import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
 
 export default function RootLayout() {
@@ -16,7 +16,7 @@ export default function RootLayout() {
       }
     }
     setupPurchases();
-    getSubscription();
+    updateSubscription();
   }, []);
 
   const isPro = isProStore((state) => state.isPro);

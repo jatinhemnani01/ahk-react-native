@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SearchBar } from "@rneui/base";
-import { colors } from "../constants/colors";
+import { colors } from "../../constants/colors";
 import { View } from "react-native";
 
 export default function Searchbar() {

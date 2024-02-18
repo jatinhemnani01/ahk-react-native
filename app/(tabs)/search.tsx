@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Searchbar from '../../src/components/Searchbar'
+import Searchbar from '../../src/components/common/Searchbar'
 
 export default function Search() {
   return (

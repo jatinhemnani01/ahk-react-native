@@ -1,5 +1,5 @@
 import { Pressable, View, Text, ScrollView } from "react-native";
-import KaraokeTile from "../../src/components/KaraokeTile";
+import KaraokeTile from "../../src/components/common/KaraokeTile";
 import tw from "twrnc";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
