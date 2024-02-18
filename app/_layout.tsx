@@ -16,7 +16,12 @@ export default function RootLayout() {
       }
     }
     setupPurchases();
-    updateSubscription();
+
+    async function update() {
+      await updateSubscription();
+    }
+
+    update();
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
