@@ -12,13 +12,14 @@ export default function FreePricingCard({ onPress }: { onPress: () => void }) {
           containerStyle={tw`rounded-xl`}
           color={colors.primary}
           title="Free"
-          price="$0"
+          price="Buy Now and get access to 10,000+ Karaoke"
           info={["Free Karaoke", "Basic Support", "Change Speed/Scale"]}
           button={{
             title: "Buy Now",
             onPress: onPress,
             buttonStyle: tw`rounded-lg`,
           }}
+          pricingStyle={tw`text-lg`}
         />
       </ScrollView>
     </>
