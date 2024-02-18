@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
 import { getSubscription } from "../src/subscription/getSubscription";
+import isProStore from "../src/state/isPro";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -15,10 +16,10 @@ export default function RootLayout() {
       }
     }
     setupPurchases();
-    const isPro = getSubscription();
-    console.log(isPro);
-    
+    getSubscription();
   }, []);
+
+  const isPro = isProStore((state) => state.isPro);
 
   return (
     <>
