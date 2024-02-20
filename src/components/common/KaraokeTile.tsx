@@ -4,10 +4,11 @@ import { Avatar, ListItem } from "@rneui/base";
 import { router } from "expo-router";
 
 interface Props {
+  kid: number;
   title: string;
 }
 
-export default function KaraokeTile() {
+export default function KaraokeTile({ kid, title }: Props) {
   return (
     <>
       <ListItem
@@ -20,9 +21,7 @@ export default function KaraokeTile() {
           source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
         />
         <ListItem.Content>
-          <ListItem.Title>
-            3 REMIX MASHUP SAAWAN KARAOKE 3 SONGS-AMIT S. FT SANDESH.mp4
-          </ListItem.Title>
+          <ListItem.Title>{title}</ListItem.Title>
         </ListItem.Content>
         <ListItem.Chevron size={25} color={"black"} />
       </ListItem>
