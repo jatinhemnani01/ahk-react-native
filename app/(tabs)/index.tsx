@@ -17,7 +17,20 @@ export default function AppLayout() {
   return (
     <>
       <StatusBar style="light" />
-      <KaraokeList />
+      <View style={{ height: "100%" }}>
+        {!isPro && (
+          <Pressable
+            onPress={() => router.navigate("/free")}
+            style={tw`flex flex-row justify-center m-2`}
+          >
+            <Text style={tw`text-lg text-blue-500 font-semibold`}>
+              Explore Free Karaoke
+            </Text>
+          </Pressable>
+        )}
+
+        <KaraokeList />
+      </View>
       {/* <ScrollView>
         <View>
           {!isPro && (
