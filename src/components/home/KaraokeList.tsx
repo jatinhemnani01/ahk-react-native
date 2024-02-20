@@ -36,7 +36,7 @@ export default function KaraokeList() {
   return (
     <FlashList
       data={data}
-      estimatedItemSize={200}
+      estimatedItemSize={170}
       renderItem={RenderKaraokeList}
       ListFooterComponent={() => (
         <ActivityIndicator size="large" color="#0000ff" />
