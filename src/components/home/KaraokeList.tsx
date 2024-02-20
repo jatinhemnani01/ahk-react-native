@@ -1,8 +1,5 @@
-import {
-  View,
-  Text, ActivityIndicator
-} from "react-native";
-import React from "react";
+import { View, Text, ActivityIndicator } from "react-native";
+import React, { useState } from "react";
 import BASE_URL from "../../constants/base_url";
 import useFetch from "../../hooks/useFetch";
 import { FlashList } from "@shopify/flash-list";
@@ -11,16 +8,19 @@ import { KaraokeListItem } from "../../types/KaraokeListItemType";
 import tw from "twrnc";
 
 export default function KaraokeList() {
+  const [page, setPage] = useState(1);
+
   const { data, error, setData } = useFetch(
-    `${BASE_URL}/v2/alla?page=1&limit=10`
+    `${BASE_URL}/v2/all?page=1&limit=25`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
-    return <KaraokeTile title={item?.kid.toString()} kid={item?.kid} />;
+    return <KaraokeTile title={item?.title} kid={item?.kid} />;
   };
 
   async function fetchMore() {
-    const response = await fetch(`${BASE_URL}/v2/all?page=2&limit=10`);
+    setPage((prev) => prev + 1);
+    const response = await fetch(`${BASE_URL}/v2/all?page=${page}&limit=25`);
     const newDate = await response.json();
     setData([...data, ...newDate]);
   }
@@ -36,14 +36,13 @@ export default function KaraokeList() {
   return (
     <FlashList
       data={data}
-      estimatedItemSize={1000}
+      estimatedItemSize={200}
       renderItem={RenderKaraokeList}
       ListFooterComponent={() => (
         <ActivityIndicator size="large" color="#0000ff" />
       )}
       onEndReached={() => {
         fetchMore();
-        console.log("end");
       }}
     />
   );
