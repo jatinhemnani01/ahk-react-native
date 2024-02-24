@@ -14,7 +14,7 @@ export default function Searchbar() {
         platform="android"
         loadingProps={{ color: colors.primary, size: 25 }}
         onChangeText={(newVal) => updateSearch(newVal)}
-        onSubmitEditing={() => console.log(value)}
+        onSubmitEditing={(e) => updateSearch(e.nativeEvent.text)}
         placeholder="Search Song/Artist/Movie"
         placeholderTextColor="#888"
         showLoading={false}
