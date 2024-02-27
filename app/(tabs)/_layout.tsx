@@ -7,19 +7,10 @@ export default function TabLayout() {
   return (
     <>
       <StatusBar style="light" />
-      <Tabs>
+      <Tabs backBehavior="history">
         <Tabs.Screen
           name="index"
           options={{
-            headerRight: () => (
-              <Icon
-                name="menu"
-                type="ionicons"
-                color="white"
-                size={30}
-                style={{ marginRight: 20 }}
-              />
-            ),
             title: "Home",
             headerTitleAlign: "center",
             tabBarLabelStyle: { fontSize: 15, color: "black" },
