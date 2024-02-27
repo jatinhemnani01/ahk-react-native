@@ -12,7 +12,7 @@ export default function KaraokeList() {
   const [hasMore, setHasMore] = useState(true);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL}/v2/all?page=1&limit=10`
+    `${BASE_URL}/v2/all?page=1&limit=25`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
@@ -21,10 +21,10 @@ export default function KaraokeList() {
 
   async function fetchMore() {
     setPage((prev) => prev + 1);
-    const response = await fetch(`${BASE_URL}/v2/all?page=${page}&limit=10`);
+    const response = await fetch(`${BASE_URL}/v2/all?page=${page}&limit=25`);
     const newDate = await response.json();
 
-    if (newDate.length >= 10) {
+    if (newDate.length >= 25) {
       setHasMore(true);
     } else {
       setHasMore(false);
