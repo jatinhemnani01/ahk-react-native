@@ -22,7 +22,6 @@ export default function Search() {
     `${BASE_URL}/v2/search?page=1&limit=25&q=`
   );
 
-  console.log(data.length);
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
