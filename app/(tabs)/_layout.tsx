@@ -2,11 +2,10 @@ import { Icon } from "@rneui/base";
 import { Tabs } from "expo-router/tabs";
 import { View } from "react-native";
 import { colors } from "../../src/constants/colors";
-import { StatusBar } from "expo-status-bar";
+import { router } from "expo-router";
 export default function TabLayout() {
   return (
     <>
-      <StatusBar style="light" />
       <Tabs backBehavior="history">
         <Tabs.Screen
           name="index"
@@ -16,6 +15,17 @@ export default function TabLayout() {
             tabBarLabelStyle: { fontSize: 15, color: "black" },
             headerTitleStyle: { color: "white" },
             headerStyle: { backgroundColor: colors.primary },
+            headerRight: () => {
+              return (
+                <Icon
+                  onPress={() => router.navigate("settings")}
+                  name="menu"
+                  color={"white"}
+                  size={25}
+                  style={{ marginRight: 20 }}
+                />
+              );
+            },
             tabBarIcon: ({ focused }) => {
               return (
                 <View>
@@ -79,27 +89,6 @@ export default function TabLayout() {
                 <View>
                   <Icon
                     name="person"
-                    color={focused ? colors.primary : "grey"}
-                  />
-                </View>
-              );
-            },
-          }}
-        />
-
-        <Tabs.Screen
-          name="settings"
-          options={{
-            title: "Settings",
-            headerTitleAlign: "center",
-            tabBarLabelStyle: { fontSize: 15, color: "black" },
-            headerTitleStyle: { color: "white" },
-            headerStyle: { backgroundColor: colors.primary },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View>
-                  <Icon
-                    name="settings"
                     color={focused ? colors.primary : "grey"}
                   />
                 </View>

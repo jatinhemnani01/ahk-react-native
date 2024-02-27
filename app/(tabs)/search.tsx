@@ -7,7 +7,8 @@ import BASE_URL from "../../src/constants/base_url";
 import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
-import tw from "twrnc"
+import tw from "twrnc";
+import { StatusBar } from "expo-status-bar";
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
@@ -75,37 +76,42 @@ export default function Search() {
   const ShowEmpty = () => {
     return (
       <View style={tw`flex justify-center flex-1 items-center`}>
-        <Text style={tw`text-lg text-gray-500 font-semibold`}>No results found</Text>
+        <Text style={tw`text-lg text-gray-500 font-semibold`}>
+          No results found
+        </Text>
       </View>
     );
   };
 
   return (
-    <View style={{ height: "100%" }}>
-      <View>
-        <SearchBar
-          platform="android"
-          loadingProps={{ color: colors.primary, size: 25 }}
-          onChangeText={(newVal) => updateSearch(newVal)}
-          onSubmitEditing={fetchSearch}
-          placeholder="Search Song/Artist/Movie"
-          placeholderTextColor="#888"
-          showLoading={loading}
-          value={searchValue}
+    <>
+      <StatusBar style="light" />
+      <View style={{ height: "100%" }}>
+        <View>
+          <SearchBar
+            platform="android"
+            loadingProps={{ color: colors.primary, size: 25 }}
+            onChangeText={(newVal) => updateSearch(newVal)}
+            onSubmitEditing={fetchSearch}
+            placeholder="Search Song/Artist/Movie"
+            placeholderTextColor="#888"
+            showLoading={loading}
+            value={searchValue}
+          />
+        </View>
+
+        {isEmpty && <ShowEmpty />}
+
+        <FlashList
+          data={data}
+          estimatedItemSize={170}
+          renderItem={RenderKaraokeList}
+          ListFooterComponent={() => <HasMore />}
+          onEndReached={() => {
+            fetchMore();
+          }}
         />
       </View>
-
-      {isEmpty && <ShowEmpty />}
-
-      <FlashList
-        data={data}
-        estimatedItemSize={170}
-        renderItem={RenderKaraokeList}
-        ListFooterComponent={() => <HasMore />}
-        onEndReached={() => {
-          fetchMore();
-        }}
-      />
-    </View>
+    </>
   );
 }
