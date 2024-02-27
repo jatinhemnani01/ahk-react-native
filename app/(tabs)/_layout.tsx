@@ -4,6 +4,19 @@ import { View } from "react-native";
 import { colors } from "../../src/constants/colors";
 import { router } from "expo-router";
 export default function TabLayout() {
+  const MoreComp = () => {
+    return (
+      <Icon
+        onPress={() => router.navigate("settings")}
+        name="more-vertical"
+        type="feather"
+        color={"white"}
+        size={25}
+        style={{ marginRight: 10 }}
+      />
+    );
+  };
+
   return (
     <>
       <Tabs backBehavior="history">
@@ -15,17 +28,7 @@ export default function TabLayout() {
             tabBarLabelStyle: { fontSize: 15, color: "black" },
             headerTitleStyle: { color: "white" },
             headerStyle: { backgroundColor: colors.primary },
-            headerRight: () => {
-              return (
-                <Icon
-                  onPress={() => router.navigate("settings")}
-                  name="menu"
-                  color={"white"}
-                  size={25}
-                  style={{ marginRight: 20 }}
-                />
-              );
-            },
+            headerRight: MoreComp,
             tabBarIcon: ({ focused }) => {
               return (
                 <View>
@@ -42,6 +45,7 @@ export default function TabLayout() {
             headerTitleAlign: "center",
             tabBarLabelStyle: { fontSize: 15, color: "black" },
             headerTitleStyle: { color: "white" },
+            headerRight: MoreComp,
             headerStyle: { backgroundColor: colors.primary },
             tabBarIcon: ({ focused }) => {
               return (
@@ -62,6 +66,7 @@ export default function TabLayout() {
             headerTitleAlign: "center",
             tabBarLabelStyle: { fontSize: 15, color: "black" },
             headerTitleStyle: { color: "white" },
+            headerRight: MoreComp,
             headerStyle: { backgroundColor: colors.primary },
             tabBarIcon: ({ focused }) => {
               return (
@@ -83,6 +88,7 @@ export default function TabLayout() {
             headerTitleAlign: "center",
             tabBarLabelStyle: { fontSize: 15, color: "black" },
             headerTitleStyle: { color: "white" },
+            headerRight: MoreComp,
             headerStyle: { backgroundColor: colors.primary },
             tabBarIcon: ({ focused }) => {
               return (
