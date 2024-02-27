@@ -1,22 +1,24 @@
 import { View, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
-import { SearchBar } from "@rneui/base";
+import { SearchBar, Text } from "@rneui/base";
 import { colors } from "../../src/constants/colors";
 import KaraokeTile from "../../src/components/common/KaraokeTile";
 import BASE_URL from "../../src/constants/base_url";
 import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
+import tw from "twrnc"
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const [page, setPage] = useState(1);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL}/v2/search?page=1&limit=10&q=`
+    `${BASE_URL}/v2/search?page=1&limit=25&q=`
   );
 
   console.log(data.length);
@@ -26,20 +28,25 @@ export default function Search() {
   };
 
   async function fetchSearch() {
+    setIsEmpty(false);
     setLoading(true);
     setPage(1);
     const response = await fetch(
       `${BASE_URL}/v2/search?page=1&limit=25&q=${searchValue}`
     );
-    const newDate = await response.json();
+    const newData = await response.json();
 
-    if (newDate.length >= 25) {
+    if (newData.length >= 25) {
       setHasMore(true);
     } else {
       setHasMore(false);
     }
 
-    setData(newDate);
+    if (newData.length === 0) {
+      setIsEmpty(true);
+    }
+
+    setData(newData);
     setLoading(false);
   }
 
@@ -65,6 +72,13 @@ export default function Search() {
     }
   };
 
+  const ShowEmpty = () => {
+    return (
+      <View style={tw`flex justify-center flex-1 items-center`}>
+        <Text style={tw`text-lg text-gray-500 font-semibold`}>No results found</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={{ height: "100%" }}>
@@ -80,6 +94,9 @@ export default function Search() {
           value={searchValue}
         />
       </View>
+
+      {isEmpty && <ShowEmpty />}
+
       <FlashList
         data={data}
         estimatedItemSize={170}
