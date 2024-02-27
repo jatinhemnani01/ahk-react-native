@@ -9,9 +9,10 @@ import tw from "twrnc";
 
 export default function KaraokeList() {
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL}/v2/all?page=1&limit=25`
+    `${BASE_URL}/v2/all?page=1&limit=10`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
@@ -20,10 +21,25 @@ export default function KaraokeList() {
 
   async function fetchMore() {
     setPage((prev) => prev + 1);
-    const response = await fetch(`${BASE_URL}/v2/all?page=${page}&limit=25`);
+    const response = await fetch(`${BASE_URL}/v2/all?page=${page}&limit=10`);
     const newDate = await response.json();
+
+    if (newDate.length >= 10) {
+      setHasMore(true);
+    } else {
+      setHasMore(false);
+    }
+
     setData([...data, ...newDate]);
   }
+
+  const HasMore = () => {
+    if (hasMore) {
+      return <ActivityIndicator size="large" color="#0000ff" />;
+    } else {
+      return null;
+    }
+  };
 
   if (error) {
     return (
@@ -38,9 +54,7 @@ export default function KaraokeList() {
       data={data}
       estimatedItemSize={170}
       renderItem={RenderKaraokeList}
-      ListFooterComponent={() => (
-        <ActivityIndicator size="large" color="#0000ff" />
-      )}
+      ListFooterComponent={() => <HasMore />}
       onEndReached={() => {
         fetchMore();
       }}
