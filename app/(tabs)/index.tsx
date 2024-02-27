@@ -4,7 +4,8 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import isProStore from "../../src/state/isPro";
 import KaraokeList from "../../src/components/home/KaraokeList";
-export default function AppLayout() {
+
+export default function Home() {
   const isPro = isProStore((state) => state.isPro);
 
   return (
