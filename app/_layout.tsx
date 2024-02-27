@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
-import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
@@ -28,7 +27,6 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style="light" />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
@@ -46,6 +44,17 @@ export default function RootLayout() {
           options={{
             animation: "ios",
             title: "Free Karaoke",
+            headerStyle: { backgroundColor: colors.primary },
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
+          }}
+        />
+
+        <Stack.Screen
+          name="settings"
+          options={{
+            animation: "ios",
+            title: "Settings",
             headerStyle: { backgroundColor: colors.primary },
             headerTitleStyle: { color: "white" },
             headerTintColor: "white",

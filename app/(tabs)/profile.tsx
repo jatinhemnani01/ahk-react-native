@@ -46,6 +46,7 @@ export default function profile() {
 
   return (
     <>
+      <StatusBar style="light" />
       <View style={tw`flex justify-center flex-row flex-1 items-center`}>
         <RenderPricingCard />
         <StatusBar style="light" />
