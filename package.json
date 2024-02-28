@@ -11,11 +11,11 @@
   "dependencies": {
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.8",
-    "expo": "~50.0.7",
+    "expo": "~50.0.8",
     "expo-av": "~13.10.5",
     "expo-build-properties": "~0.11.1",
     "expo-constants": "~15.4.5",
-    "expo-dev-client": "~3.3.8",
+    "expo-dev-client": "~3.3.9",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.7",
     "expo-status-bar": "~1.11.1",
@@ -28,7 +28,8 @@
     "twrnc": "^3.6.8",
     "zustand": "^4.5.1",
     "@shopify/flash-list": "1.6.3",
-    "expo-screen-capture": "~5.8.1"
+    "expo-screen-capture": "~5.8.1",
+    "@react-native-async-storage/async-storage": "1.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
