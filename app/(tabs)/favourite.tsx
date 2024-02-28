@@ -1,20 +1,25 @@
 import { View, Text } from "react-native";
-import React, { useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
+import getLikedList from "../../src/storage/getLikedList";
+import { Button } from "@rneui/base";
 
 export default function Favourite() {
-  async function getLikedSongs() {
-    const data = await AsyncStorage.getItem("liked");
-    console.log(data);
-  }
-
-  useEffect(() => {
-    getLikedSongs();
-  }, []);
+  const [likedSongs, setLikedSongs] = React.useState(
+    getLikedList().then((data) => data)
+  );
 
   return (
     <View>
-      <Text>favourite</Text>
+      <Text>{JSON.stringify(likedSongs)}</Text>
+      <Button
+        onPress={() => {
+          getLikedList().then((data) => {
+            setLikedSongs(data);
+          });
+        }}
+      >
+        Remove
+      </Button>
     </View>
   );
 }
