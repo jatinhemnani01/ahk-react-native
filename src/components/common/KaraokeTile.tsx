@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Icon, ListItem } from "@rneui/base";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import kidExistsOnStorage from "../../utils/kidExistsOnStorage";
+import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
 
 interface Props {
   kid: number;
