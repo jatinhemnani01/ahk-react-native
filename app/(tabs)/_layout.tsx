@@ -81,6 +81,31 @@ export default function TabLayout() {
             },
           }}
         />
+
+        <Tabs.Screen
+          name="favourite"
+          options={{
+            title: "Favourite",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: { fontSize: 15, color: "black" },
+            headerTitleStyle: { color: "white" },
+            headerRight: MoreComp,
+            headerStyle: { backgroundColor: colors.primary },
+            tabBarIcon: ({ focused }) => {
+              return (
+                <View>
+                  <Icon
+                    name="heart"
+                    type="font-awesome"
+                    size={20}
+                    color={focused ? colors.primary : "grey"}
+                  />
+                </View>
+              );
+            },
+          }}
+        />
+
         <Tabs.Screen
           name="profile"
           options={{
@@ -95,6 +120,7 @@ export default function TabLayout() {
                 <View>
                   <Icon
                     name="person"
+                    size={30}
                     color={focused ? colors.primary : "grey"}
                   />
                 </View>
