@@ -1,29 +1,14 @@
 import { View, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useCallback } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { useGlobalSearchParams } from "expo-router";
+import { router, useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
 import { StatusBar } from "expo-status-bar";
 import * as ScreenCapture from "expo-screen-capture";
 
 export default function VideoPlayer() {
-  // ScreenCapture.usePreventScreenCapture();
-
-  ScreenCapture.requestPermissionsAsync();
-
-  ScreenCapture.getPermissionsAsync().then((res) => {
-    if (res.granted === true) {
-      console.log("Permission granted");
-      
-      ScreenCapture.addScreenshotListener(() => {
-        console.log("Screenshot taken");
-      });
-    } else {
-      res.canAskAgain && ScreenCapture.requestPermissionsAsync();
-      console.log("Permission not granted");
-    }
-  });
+  ScreenCapture.usePreventScreenCapture();
 
   const params = useGlobalSearchParams();
   const [showControls, setShowControls] = React.useState(false);
