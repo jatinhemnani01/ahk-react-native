@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 export default function Settings() {
   return (
     <>
-      <StatusBar style="light" />
+       
       <View>
         <ListItem>
           <Icon name="forum" color="grey" />

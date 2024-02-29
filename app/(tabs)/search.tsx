@@ -84,7 +84,7 @@ export default function Search() {
 
   return (
     <>
-      <StatusBar style="light" />
+       
       <View style={{ height: "100%" }}>
         <View>
           <SearchBar

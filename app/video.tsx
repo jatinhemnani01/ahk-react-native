@@ -37,7 +37,7 @@ export default function VideoPlayer() {
 
   return (
     <>
-      <StatusBar style="light" />
+       
       <View>
         <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
           <Video

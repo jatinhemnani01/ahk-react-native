@@ -19,7 +19,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Opasasas up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+       style="auto" />
     </View>
   );
 }

@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <StatusBar style="light" />
+       
       <View style={{ height: "100%" }}>
         {!isPro && (
           <Pressable

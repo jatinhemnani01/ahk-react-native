@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar'
 export default function Free() {
   return (
     <>
-    <StatusBar style="light" />
+     
     <View>
       <Text>Free Karaoke</Text>
     </View>
