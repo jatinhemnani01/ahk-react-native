@@ -3,6 +3,9 @@ import React from "react";
 import getLikedList from "../../src/storage/getLikedList";
 import { Button } from "@rneui/base";
 import { useLikedSongsList } from "../../src/state/likedSongsList";
+import { FlashList } from "@shopify/flash-list";
+import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
+import FavKaraokeTile from "../../src/components/favourite/FavKaraokeTile";
 
 export default function Favourite() {
   const likedSongs = useLikedSongsList((state) => state.likedSongs);
@@ -11,8 +14,12 @@ export default function Favourite() {
   //   getLikedList().then((data) => data)
   // );
 
+  const RenderKaraokeList = ({ item }: { item: any }) => {
+    return <FavKaraokeTile title={item?.title} kid={item?.kid} />;
+  };
+
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       <Text>{JSON.stringify(likedSongs)}</Text>
       {/* <Button
         onPress={() => {
@@ -23,6 +30,12 @@ export default function Favourite() {
       >
         Remove
       </Button> */}
+
+      <FlashList
+        estimatedItemSize={170}
+        renderItem={RenderKaraokeList}
+        data={likedSongs}
+      />
     </View>
   );
 }

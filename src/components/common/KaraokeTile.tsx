@@ -3,6 +3,7 @@ import { Avatar, Icon, ListItem } from "@rneui/base";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
+import { useLikedSongsList } from "../../state/likedSongsList";
 
 interface Props {
   kid: number;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function KaraokeTile({ kid, title }: Props) {
   const [liked, setLiked] = React.useState(false);
+  const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
 
   async function handleLike() {
     if ((await AsyncStorage.getItem("liked")) === null) {
@@ -36,6 +38,7 @@ export default function KaraokeTile({ kid, title }: Props) {
           const parsedData = JSON.parse(likedSongs);
           parsedData.push(data);
           await AsyncStorage.setItem("liked", JSON.stringify(parsedData));
+          addLikedSong(title, kid);
           return;
         }
       }
