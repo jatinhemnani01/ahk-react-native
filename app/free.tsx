@@ -1,14 +1,12 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { StatusBar } from 'expo-status-bar'
+import { View, Text } from "react-native";
+import React from "react";
 
 export default function Free() {
   return (
     <>
-     
-    <View>
-      <Text>Free Karaoke</Text>
-    </View>
+      <View>
+        <Text>Free Karaoke</Text>
+      </View>
     </>
-  )
+  );
 }

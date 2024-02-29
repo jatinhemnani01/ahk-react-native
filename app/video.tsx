@@ -1,10 +1,9 @@
 import { View, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useCallback } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { router, useGlobalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
-import { StatusBar } from "expo-status-bar";
 import * as ScreenCapture from "expo-screen-capture";
 
 export default function VideoPlayer() {
@@ -37,7 +36,6 @@ export default function VideoPlayer() {
 
   return (
     <>
-       
       <View>
         <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
           <Video

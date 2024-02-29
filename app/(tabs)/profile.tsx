@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Alert, View } from "react-native";
 import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
 import tw from "twrnc";

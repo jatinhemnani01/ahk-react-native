@@ -1,12 +1,10 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { ListItem, Icon } from "@rneui/base";
-import { StatusBar } from "expo-status-bar";
 
 export default function Settings() {
   return (
     <>
-       
       <View>
         <ListItem>
           <Icon name="forum" color="grey" />

@@ -1,10 +1,7 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
-import getLikedList from "../../src/storage/getLikedList";
-import { Button } from "@rneui/base";
 import { useLikedSongsList } from "../../src/state/likedSongsList";
 import { FlashList } from "@shopify/flash-list";
-import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import FavKaraokeTile from "../../src/components/favourite/FavKaraokeTile";
 
 export default function Favourite() {

@@ -8,7 +8,6 @@ import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
-import { StatusBar } from "expo-status-bar";
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
