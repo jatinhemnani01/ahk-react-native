@@ -20,8 +20,6 @@ export default function KaraokeTile({ kid, title }: Props) {
     }
     const kidExists = await kidExistsOnStorage(kid);
     const likedSongs = await AsyncStorage.getItem("liked");
-    console.log(kidExists, "kidExists");
-    console.log(likedSongs);
 
     setLiked((prev) => !prev);
     try {
@@ -36,7 +34,7 @@ export default function KaraokeTile({ kid, title }: Props) {
         const likedSongs = await AsyncStorage.getItem("liked");
         if (likedSongs) {
           const parsedData = JSON.parse(likedSongs);
-          parsedData.push(data);
+          parsedData.unshift(data);
           await AsyncStorage.setItem("liked", JSON.stringify(parsedData));
           addLikedSong(title, kid);
           return;

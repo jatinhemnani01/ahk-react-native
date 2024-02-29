@@ -20,17 +20,6 @@ export default function Favourite() {
 
   return (
     <View style={{ height: "100%" }}>
-      <Text>{JSON.stringify(likedSongs)}</Text>
-      {/* <Button
-        onPress={() => {
-          getLikedList().then((data) => {
-            setLikedSongs(data);
-          });
-        }}
-      >
-        Remove
-      </Button> */}
-
       <FlashList
         estimatedItemSize={170}
         renderItem={RenderKaraokeList}
