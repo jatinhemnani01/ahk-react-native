@@ -2,10 +2,9 @@ import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
 import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
-import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function RootLayout() {
 
   return (
     <>
-    <StatusBar style="light" />
+      <StatusBar barStyle={"light-content"} animated />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen

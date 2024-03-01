@@ -7,7 +7,12 @@ interface Props {
 
 export default function FadeAnimation({ children }: Props) {
   return (
-    <View easing={"ease-in"} animation={"fadeInLeft"} duration={500} delay={200}>
+    <View
+      easing={"ease-in"}
+      animation={"fadeInLeft"}
+      duration={500}
+      delay={200}
+    >
       {children}
     </View>
   );
