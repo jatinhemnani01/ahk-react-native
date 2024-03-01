@@ -6,6 +6,7 @@ export default function Settings() {
   return (
     <>
       <View style={{ backgroundColor: "white", height: "100%" }}>
+        <SettingsItem title="Rate Us" icon="star" />
         <SettingsItem title="Feedback" icon="forum" />
         <SettingsItem title="Privacy Policy" icon="shield" />
         <SettingsItem title="Contact Us" icon="people" />
