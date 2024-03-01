@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
 import { useLikedSongsList } from "../../state/likedSongsList";
+import FadeAnimation from "./FadeAnimation";
 
 interface Props {
   kid: number;
@@ -45,26 +46,28 @@ export default function KaraokeTile({ kid, title }: Props) {
 
   return (
     <>
-      <ListItem
-        onPress={() => router.navigate("/video")}
-        bottomDivider
-        containerStyle={{ backgroundColor: "#ecf0f1" }}
-      >
-        <Avatar
-          rounded
-          source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-        />
-        <ListItem.Content>
-          <ListItem.Title>{title}</ListItem.Title>
-        </ListItem.Content>
-        {/* <ListItem.Chevron size={25} color={"black"} /> */}
-        <Icon
-          name={"heart"}
-          onPress={handleLike}
-          type={liked ? "font-awesome" : "feather"}
-          color={liked ? "red" : "black"}
-        />
-      </ListItem>
+      <FadeAnimation>
+        <ListItem
+          onPress={() => router.navigate("/video")}
+          bottomDivider
+          containerStyle={{ backgroundColor: "#ecf0f1" }}
+        >
+          <Avatar
+            rounded
+            source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
+          />
+          <ListItem.Content>
+            <ListItem.Title>{title}</ListItem.Title>
+          </ListItem.Content>
+          {/* <ListItem.Chevron size={25} color={"black"} /> */}
+          <Icon
+            name={"heart"}
+            onPress={handleLike}
+            type={liked ? "font-awesome" : "feather"}
+            color={liked ? "red" : "black"}
+          />
+        </ListItem>
+      </FadeAnimation>
     </>
   );
 }
