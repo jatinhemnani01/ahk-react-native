@@ -12,7 +12,7 @@ interface SettingsItemProps {
 export default function SettingsItem({ title, icon, type }: SettingsItemProps) {
   return (
     <View>
-      <FadeAnimation animation="fadeInRight">
+      <FadeAnimation animation="fadeInRight" duration={200} delay={100}>
         <ListItem>
           <Icon name={icon} color="grey" type={type || ""} />
           <ListItem.Content>
