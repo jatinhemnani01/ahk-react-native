@@ -5,6 +5,7 @@ import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform, StatusBar } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
+import { getAnalytics } from "@react-native-firebase/analytics";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function RootLayout() {
     async function update() {
       await updateSubscription();
     }
-
+    getAnalytics();
     update();
   }, []);
 
