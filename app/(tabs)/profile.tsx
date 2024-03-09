@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Alert, View } from "react-native";
 import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
 import tw from "twrnc";
@@ -46,10 +45,10 @@ export default function profile() {
 
   return (
     <>
-      <StatusBar style="light" />
+       
       <View style={tw`flex justify-center flex-row flex-1 items-center`}>
         <RenderPricingCard />
-        <StatusBar style="light" />
+         
       </View>
     </>
   );

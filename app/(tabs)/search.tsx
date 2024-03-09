@@ -8,7 +8,6 @@ import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
-import { StatusBar } from "expo-status-bar";
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
@@ -22,7 +21,6 @@ export default function Search() {
     `${BASE_URL}/v2/search?page=1&limit=25&q=`
   );
 
-  console.log(data.length);
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
@@ -85,7 +83,7 @@ export default function Search() {
 
   return (
     <>
-      <StatusBar style="light" />
+       
       <View style={{ height: "100%" }}>
         <View>
           <SearchBar

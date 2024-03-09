@@ -1,31 +1,47 @@
-import { View, Text } from "react-native";
+import { Linking, View } from "react-native";
 import React from "react";
-import { ListItem, Icon } from "@rneui/base";
-import { StatusBar } from "expo-status-bar";
+import SettingsItem from "../src/components/settings/SettingsItem";
+import { router } from "expo-router";
 
 export default function Settings() {
+  function openURL(url: string) {
+    // Linking.openURL(
+    //   "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
+    // );
+    Linking.openURL(url);
+  }
+
+  function changeScreen(name: string) {
+    router.navigate(name);
+  }
+
   return (
     <>
-      <StatusBar style="light" />
-      <View>
-        <ListItem>
-          <Icon name="forum" color="grey" />
-          <ListItem.Content>
-            <ListItem.Title>Feedback</ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Chevron size={25} color={"black"} />
-        </ListItem>
-        <ListItem>
-          <Icon
-            name="trash-can-outline"
-            type="material-community"
-            color="grey"
-          />
-          <ListItem.Content>
-            <ListItem.Title>Trash</ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Chevron size={25} color={"black"} />
-        </ListItem>
+      <View style={{ backgroundColor: "white", height: "100%" }}>
+        <SettingsItem
+          onPress={() =>
+            openURL(
+              "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
+            )
+          }
+          title="Rate Us"
+          icon="star"
+        />
+        <SettingsItem
+          onPress={() => changeScreen("/feedback")}
+          title="Feedback"
+          icon="forum"
+        />
+        <SettingsItem
+          onPress={() => openURL("")}
+          title="Privacy Policy"
+          icon="shield"
+        />
+        <SettingsItem
+          onPress={() => openURL("")}
+          title="Contact Us"
+          icon="people"
+        />
       </View>
     </>
   );
