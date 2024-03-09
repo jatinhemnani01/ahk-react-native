@@ -6,6 +6,9 @@ import { Platform, StatusBar } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
 import { getAnalytics } from "@react-native-firebase/analytics";
+import { firebase } from "@react-native-firebase/remote-config";
+
+const remoteConfig = firebase.remoteConfig();
 
 export default function RootLayout() {
   useEffect(() => {
@@ -22,6 +25,16 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
+
+    remoteConfig.fetch(1).then(()=>{
+      remoteConfig.fetchAndActivate()
+    }).then(()=>{
+      const ok =remoteConfig.getValue("test")
+      console.log(ok);
+      
+    })
+
+
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
