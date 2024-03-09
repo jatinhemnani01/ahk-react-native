@@ -7,13 +7,19 @@ interface SettingsItemProps {
   title: string;
   icon: string;
   type?: string;
+  onPress?: () => void;
 }
 
-export default function SettingsItem({ title, icon, type }: SettingsItemProps) {
+export default function SettingsItem({
+  title,
+  icon,
+  type,
+  onPress,
+}: SettingsItemProps) {
   return (
     <View>
       <FadeAnimation animation="fadeInRight" duration={200} delay={100}>
-        <ListItem>
+        <ListItem onPress={onPress}>
           <Icon name={icon} color="grey" type={type || ""} />
           <ListItem.Content>
             <ListItem.Title>{title}</ListItem.Title>
