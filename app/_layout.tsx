@@ -22,16 +22,6 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
-
-    // remoteConfig
-    //   .fetch(60)
-    //   .then(() => {
-    //     remoteConfig.fetchAndActivate();
-    //   })
-    //   .then(() => {
-    //     const ok = remoteConfig.getValue("test");
-    //     console.log(ok);
-    //   });
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
