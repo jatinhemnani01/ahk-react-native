@@ -10,6 +10,7 @@ import tw from "twrnc";
 export default function KaraokeList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  
 
   const { data, error, setData } = useFetch(
     `${BASE_URL}/v2/all?page=1&limit=25`

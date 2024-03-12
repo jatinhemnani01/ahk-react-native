@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
 import { getAnalytics } from "@react-native-firebase/analytics";
+import { activateConfig, remoteConfig} from "../src/firebase/activateConfig";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
+    activateConfig();
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
