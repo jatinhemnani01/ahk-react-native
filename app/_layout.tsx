@@ -24,6 +24,7 @@ export default function RootLayout() {
     update();
   }, []);
 
+
   const isPro = isProStore((state) => state.isPro);
 
   return (
