@@ -6,9 +6,10 @@ import { Platform } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
 import { getAnalytics } from "@react-native-firebase/analytics";
-import { activateConfig, remoteConfig} from "../src/firebase/activateConfig";
+import { ForAll } from "../src/firebase/forAll";
 
 export default function RootLayout() {
+  const forAll = new ForAll();
   useEffect(() => {
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
@@ -23,7 +24,7 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
-    activateConfig();
+    forAll.getBaseURL().then((url) => console.log(url));
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
