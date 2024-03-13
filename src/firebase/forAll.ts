@@ -11,9 +11,9 @@ export class ForAll {
     await remoteConfig.fetchAndActivate();
   }
 
-  public async getBaseURL() {
+  public async getForAllConfig() {
     return remoteConfig.fetch(1).then(() => {
-      return remoteConfig.getValue("base_url").asString();
+      return remoteConfig.getValue("all").asBoolean();
     });
   }
 }
