@@ -8,6 +8,7 @@ import isProStore from "../src/state/isPro";
 import { getAnalytics } from "@react-native-firebase/analytics";
 import forAllState from "../src/state/forAllState";
 import { RemoteConfigService } from "../src/firebase/remoteConfig";
+import BASE_URL from "../src/constants/base_url";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -15,6 +16,11 @@ export default function RootLayout() {
   async function fetchForAll() {
     const forAllRes = await remoteConfigService.getForAllConfig();
     forAllState.setState({ forAll: forAllRes });
+  }
+
+  async function fetchBaseURL() {
+    const baseURLRes = await remoteConfigService.getBaseURL();
+    BASE_URL.setState({ baseURL: baseURLRes });
   }
 
   useEffect(() => {
@@ -31,6 +37,7 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
+    fetchBaseURL();
     fetchForAll();
   }, []);
 
