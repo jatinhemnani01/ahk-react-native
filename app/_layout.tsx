@@ -45,7 +45,7 @@ export default function RootLayout() {
     getAnalytics();
     update();
     fetchForAll();
-  }, [loaded]);
+  }, []);
 
   const isPro = isProStore((state) => state.isPro);
 
