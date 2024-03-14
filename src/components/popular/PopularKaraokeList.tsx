@@ -12,7 +12,7 @@ export default function PopularKaraokeList() {
   const [hasMore, setHasMore] = useState(true);
 
   const { data, error, setData, isLoading } = useFetch(
-    `${BASE_URL}/v2/popular?page=1&limit=25`
+    `${BASE_URL.getState().baseURL}/v2/popular?page=1&limit=25`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {

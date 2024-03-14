@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
@@ -11,6 +11,10 @@ import { RemoteConfigService } from "../src/firebase/remoteConfig";
 import BASE_URL from "../src/constants/base_url";
 
 export default function RootLayout() {
+
+  const [loaded,setLoaded] = useState(false)
+
+  const baseURL= BASE_URL((state) => state.baseURL);
   const remoteConfigService = new RemoteConfigService();
 
   async function fetchForAll() {
@@ -19,11 +23,14 @@ export default function RootLayout() {
   }
 
   async function fetchBaseURL() {
+    setLoaded(true)
     const baseURLRes = await remoteConfigService.getBaseURL();
     BASE_URL.setState({ baseURL: baseURLRes });
+    setLoaded(false)
   }
 
   useEffect(() => {
+    fetchBaseURL();
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
@@ -37,9 +44,8 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
-    fetchBaseURL();
     fetchForAll();
-  }, []);
+  }, [loaded]);
 
   const isPro = isProStore((state) => state.isPro);
 
