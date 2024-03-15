@@ -11,10 +11,6 @@ import { RemoteConfigService } from "../src/firebase/remoteConfig";
 import BASE_URL from "../src/constants/base_url";
 
 export default function RootLayout() {
-
-  const [loaded,setLoaded] = useState(false)
-
-  const baseURL= BASE_URL((state) => state.baseURL);
   const remoteConfigService = new RemoteConfigService();
 
   async function fetchForAll() {
@@ -23,10 +19,8 @@ export default function RootLayout() {
   }
 
   async function fetchBaseURL() {
-    setLoaded(true)
     const baseURLRes = await remoteConfigService.getBaseURL();
     BASE_URL.setState({ baseURL: baseURLRes });
-    setLoaded(false)
   }
 
   useEffect(() => {
