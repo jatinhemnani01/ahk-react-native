@@ -3,13 +3,14 @@ import tw from "twrnc";
 import { router } from "expo-router";
 import isProStore from "../../src/state/isPro";
 import KaraokeList from "../../src/components/home/KaraokeList";
+import BASE_URL from "../../src/constants/base_url";
 
 export default function Home() {
   const isPro = isProStore((state) => state.isPro);
+  const baseURL = BASE_URL((state) => state.baseURL);
 
   return (
     <>
-       
       <View style={{ height: "100%" }}>
         {!isPro && (
           <Pressable
@@ -22,7 +23,7 @@ export default function Home() {
           </Pressable>
         )}
 
-        <KaraokeList />
+        {baseURL === "" ? null : <KaraokeList />}
       </View>
     </>
   );

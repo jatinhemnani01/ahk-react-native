@@ -10,6 +10,8 @@ import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
 
 export default function Search() {
+
+
   const [searchValue, updateSearch] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ export default function Search() {
   const [page, setPage] = useState(1);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL}/v2/search?page=1&limit=25&q=`
+    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=`
   );
 
 
@@ -52,7 +54,7 @@ export default function Search() {
   async function fetchMore() {
     setPage((prev) => prev + 1);
     const response = await fetch(
-      `${BASE_URL}/v2/search?page=${page}&limit=25&q=${searchValue}`
+      `${BASE_URL.getState().baseURL}/v2/search?page=${page}&limit=25&q=${searchValue}`
     );
     const newDate = await response.json();
     if (newDate.length >= 25) {

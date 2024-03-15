@@ -1,13 +1,30 @@
 import { Stack } from "expo-router";
 import { colors } from "../src/constants/colors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
-import { Platform, StatusBar } from "react-native";
+import { Platform } from "react-native";
 import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
+import { getAnalytics } from "@react-native-firebase/analytics";
+import forAllState from "../src/state/forAllState";
+import { RemoteConfigService } from "../src/firebase/remoteConfig";
+import BASE_URL from "../src/constants/base_url";
 
 export default function RootLayout() {
+  const remoteConfigService = new RemoteConfigService();
+
+  async function fetchForAll() {
+    const forAllRes = await remoteConfigService.getForAllConfig();
+    forAllState.setState({ forAll: forAllRes });
+  }
+
+  async function fetchBaseURL() {
+    const baseURLRes = await remoteConfigService.getBaseURL();
+    BASE_URL.setState({ baseURL: baseURLRes });
+  }
+
   useEffect(() => {
+    fetchBaseURL();
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
@@ -19,15 +36,15 @@ export default function RootLayout() {
     async function update() {
       await updateSubscription();
     }
-
+    getAnalytics();
     update();
+    fetchForAll();
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
 
   return (
     <>
-      <StatusBar barStyle={"light-content"} animated />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
