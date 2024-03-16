@@ -1,10 +1,11 @@
 import { View, ActivityIndicator, TouchableOpacity } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
 import * as ScreenCapture from "expo-screen-capture";
+import { rewardedInterstitial } from "../src/ads/interAd";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
@@ -32,6 +33,18 @@ export default function VideoPlayer() {
 
   const toggleControls = useCallback(() => {
     setShowControls((showControls) => !showControls);
+  }, []);
+
+  useEffect(() => {
+    rewardedInterstitial.load();
+
+    return () => {
+      if (rewardedInterstitial.loaded) {
+        rewardedInterstitial.show();
+      } else {
+        console.log("Ad not loaded");
+      }
+    };
   }, []);
 
   return (
