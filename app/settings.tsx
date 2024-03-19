@@ -42,6 +42,12 @@ export default function Settings() {
           title="Contact Us"
           icon="people"
         />
+        <SettingsItem
+          onPress={() => changeScreen("/userId")}
+          title="User ID"
+          icon="hash"
+          type="feather"
+        />
       </View>
     </>
   );
