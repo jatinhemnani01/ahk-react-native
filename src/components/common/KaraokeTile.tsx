@@ -57,7 +57,9 @@ export default function KaraokeTile({ kid, title }: Props) {
             source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
           />
           <ListItem.Content>
-            <ListItem.Title>{title}</ListItem.Title>
+            <ListItem.Title style={{ textTransform: "capitalize" }}>
+              {title}
+            </ListItem.Title>
           </ListItem.Content>
           {/* <ListItem.Chevron size={25} color={"black"} /> */}
           <Icon
