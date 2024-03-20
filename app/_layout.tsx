@@ -78,6 +78,17 @@ export default function RootLayout() {
             headerTintColor: "white",
           }}
         />
+
+        <Stack.Screen
+          name="feedback"
+          options={{
+            animation: "ios",
+            title: "Feedback",
+            headerStyle: { backgroundColor: colors.primary },
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
+          }}
+        />
       </Stack>
     </>
   );
