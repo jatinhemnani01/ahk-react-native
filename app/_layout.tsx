@@ -89,6 +89,16 @@ export default function RootLayout() {
             headerTintColor: "white",
           }}
         />
+        <Stack.Screen
+          name="songRequest"
+          options={{
+            animation: "ios",
+            title: "Song Request",
+            headerStyle: { backgroundColor: colors.primary },
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
+          }}
+        />
       </Stack>
     </>
   );

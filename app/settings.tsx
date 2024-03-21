@@ -33,7 +33,7 @@ export default function Settings() {
           icon="forum"
         />
         <SettingsItem
-          onPress={() => changeScreen("/feedback")}
+          onPress={() => changeScreen("/songRequest")}
           title="Song Request"
           icon="plus"
           type="feather"
