@@ -28,6 +28,12 @@ export default function Settings() {
           icon="star"
         />
         <SettingsItem
+          onPress={() => openURL("https://wa.me/+918962210828")}
+          title="Contact Us"
+          icon="logo-whatsapp"
+          type="ionicon"
+        />
+        <SettingsItem
           onPress={() => changeScreen("/feedback")}
           title="Feedback"
           icon="forum"
@@ -42,11 +48,6 @@ export default function Settings() {
           onPress={() => openURL("")}
           title="Privacy Policy"
           icon="shield"
-        />
-        <SettingsItem
-          onPress={() => openURL("")}
-          title="Contact Us"
-          icon="people"
         />
         <SettingsItem
           onPress={() => changeScreen("/userID")}
