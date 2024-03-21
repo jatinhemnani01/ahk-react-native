@@ -49,7 +49,7 @@ export default function Settings() {
           icon="people"
         />
         <SettingsItem
-          onPress={() => changeScreen("/userId")}
+          onPress={() => changeScreen("/userID")}
           title="User ID"
           icon="hash"
           type="feather"

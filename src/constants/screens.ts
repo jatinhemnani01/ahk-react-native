@@ -20,7 +20,7 @@ export const screens = [
     title: "Song Request",
   },
   {
-    name: "id",
+    name: "userID",
     title: "User ID",
   },
 ];
