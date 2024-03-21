@@ -1,6 +1,6 @@
 import { Icon } from "@rneui/base";
 import { Tabs } from "expo-router/tabs";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { colors } from "../../src/constants/colors";
 import { router } from "expo-router";
 
@@ -130,6 +130,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+     
     </>
   );
 }

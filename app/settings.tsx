@@ -5,9 +5,6 @@ import { router } from "expo-router";
 
 export default function Settings() {
   function openURL(url: string) {
-    // Linking.openURL(
-    //   "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
-    // );
     Linking.openURL(url);
   }
 
