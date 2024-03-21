@@ -37,6 +37,7 @@ export default function Feedback() {
     }).finally(() => {
       setMobile("");
       setMessage("");
+      setMobileError(true);
       Alert.alert("Feedback Submitted Successfully");
     });
   }
