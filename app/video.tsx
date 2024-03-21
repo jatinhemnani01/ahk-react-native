@@ -6,9 +6,14 @@ import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
 import * as ScreenCapture from "expo-screen-capture";
 import { rewardedInterstitial } from "../src/ads/interAd";
+import forAllState from "../src/state/forAllState";
+import isProStore from "../src/state/isPro";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
+
+  const isPro = isProStore((state) => state.isPro);
+  const forAll = forAllState((state) => state.forAll);
 
   const params = useGlobalSearchParams();
   const [showControls, setShowControls] = React.useState(false);
@@ -36,9 +41,14 @@ export default function VideoPlayer() {
   }, []);
 
   useEffect(() => {
+    if (isPro) return;
+    if (!forAll) return;
     rewardedInterstitial.load();
 
     return () => {
+      if (isPro) return;
+      if (!forAll) return;
+
       if (rewardedInterstitial.loaded) {
         rewardedInterstitial.show();
       } else {
