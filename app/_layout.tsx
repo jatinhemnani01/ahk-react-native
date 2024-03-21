@@ -9,6 +9,7 @@ import { getAnalytics } from "@react-native-firebase/analytics";
 import forAllState from "../src/state/forAllState";
 import { RemoteConfigService } from "../src/firebase/remoteConfig";
 import BASE_URL from "../src/constants/base_url";
+import { screens } from "../src/constants/screens";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -47,58 +48,22 @@ export default function RootLayout() {
     <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="video"
-          options={{
-            animation: "ios",
-            title: "Video",
-            headerStyle: { backgroundColor: colors.primary },
-            headerTitleStyle: { color: "white" },
-            headerTintColor: "white",
-          }}
-        />
-        <Stack.Screen
-          name="free"
-          options={{
-            animation: "ios",
-            title: "Free Karaoke",
-            headerStyle: { backgroundColor: colors.primary },
-            headerTitleStyle: { color: "white" },
-            headerTintColor: "white",
-          }}
-        />
 
-        <Stack.Screen
-          name="settings"
-          options={{
-            animation: "ios",
-            title: "Settings",
-            headerStyle: { backgroundColor: colors.primary },
-            headerTitleStyle: { color: "white" },
-            headerTintColor: "white",
-          }}
-        />
-
-        <Stack.Screen
-          name="feedback"
-          options={{
-            animation: "ios",
-            title: "Feedback",
-            headerStyle: { backgroundColor: colors.primary },
-            headerTitleStyle: { color: "white" },
-            headerTintColor: "white",
-          }}
-        />
-        <Stack.Screen
-          name="songRequest"
-          options={{
-            animation: "ios",
-            title: "Song Request",
-            headerStyle: { backgroundColor: colors.primary },
-            headerTitleStyle: { color: "white" },
-            headerTintColor: "white",
-          }}
-        />
+        {screens.map((screen, i) => {
+          return (
+            <Stack.Screen
+              key={i}
+              name={screen.name}
+              options={{
+                animation: "ios",
+                title: screen.title,
+                headerStyle: { backgroundColor: colors.primary },
+                headerTitleStyle: { color: "white" },
+                headerTintColor: "white",
+              }}
+            />
+          );
+        })}
       </Stack>
     </>
   );
