@@ -33,6 +33,12 @@ export default function Settings() {
           icon="forum"
         />
         <SettingsItem
+          onPress={() => changeScreen("/feedback")}
+          title="Song Request"
+          icon="plus"
+          type="feather"
+        />
+        <SettingsItem
           onPress={() => openURL("")}
           title="Privacy Policy"
           icon="shield"
