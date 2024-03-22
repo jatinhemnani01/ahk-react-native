@@ -12,13 +12,13 @@ export class RemoteConfigService {
   }
 
   public async getForAllConfig() {
-    return remoteConfig.fetch(1).then(() => {
+    return remoteConfig.fetch(300).then(() => {
       return remoteConfig.getValue("all").asBoolean();
     });
   }
 
   public async getBaseURL() {
-    return remoteConfig.fetch(1).then(() => {
+    return remoteConfig.fetch(300).then(() => {
       return remoteConfig.getValue("base_url").asString();
     });
   }

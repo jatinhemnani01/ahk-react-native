@@ -5,9 +5,6 @@ import { router } from "expo-router";
 
 export default function Settings() {
   function openURL(url: string) {
-    // Linking.openURL(
-    //   "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
-    // );
     Linking.openURL(url);
   }
 
@@ -28,9 +25,21 @@ export default function Settings() {
           icon="star"
         />
         <SettingsItem
+          onPress={() => openURL("https://wa.me/+918962210828")}
+          title="Contact Us"
+          icon="logo-whatsapp"
+          type="ionicon"
+        />
+        <SettingsItem
           onPress={() => changeScreen("/feedback")}
           title="Feedback"
           icon="forum"
+        />
+        <SettingsItem
+          onPress={() => changeScreen("/songRequest")}
+          title="Song Request"
+          icon="plus"
+          type="feather"
         />
         <SettingsItem
           onPress={() => openURL("")}
@@ -38,9 +47,10 @@ export default function Settings() {
           icon="shield"
         />
         <SettingsItem
-          onPress={() => openURL("")}
-          title="Contact Us"
-          icon="people"
+          onPress={() => changeScreen("/userID")}
+          title="User ID"
+          icon="hash"
+          type="feather"
         />
       </View>
     </>

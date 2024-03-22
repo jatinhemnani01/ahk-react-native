@@ -1,8 +1,9 @@
 import { Icon } from "@rneui/base";
 import { Tabs } from "expo-router/tabs";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { colors } from "../../src/constants/colors";
 import { router } from "expo-router";
+import BannerAdComp from "../../src/ads/BannerAdComp";
 
 export default function TabLayout() {
   const MoreComp = () => {
@@ -130,6 +131,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+      <BannerAdComp />
     </>
   );
 }
