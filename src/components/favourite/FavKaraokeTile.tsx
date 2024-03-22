@@ -4,6 +4,8 @@ import { router } from "expo-router";
 import removeLiked from "../../storage/removeLiked";
 import { useLikedSongsList } from "../../state/likedSongsList";
 import FadeAnimation from "../common/FadeAnimation";
+import forAllState from "../../state/forAllState";
+import isProStore from "../../state/isPro";
 
 interface Props {
   kid: number;
@@ -11,6 +13,9 @@ interface Props {
 }
 
 export default function FavKaraokeTile({ kid, title }: Props) {
+  const isPro = isProStore((state) => state.isPro);
+  const forAll = forAllState((state) => state.forAll);
+
   const [liked, setLiked] = React.useState(false);
   const removeLikedSongs = useLikedSongsList((state) => state.removeLikedSong);
 
@@ -20,11 +25,21 @@ export default function FavKaraokeTile({ kid, title }: Props) {
     removeLikedSongs(kid);
   }
 
+  function changeScreen(name: string) {
+    if (isPro) {
+      router.navigate(name);
+    } else if (forAll) {
+      router.navigate(name);
+    } else {
+      router.navigate("/purchase");
+    }
+  }
+
   return (
     <>
       <FadeAnimation>
         <ListItem
-          onPress={() => router.navigate("/video")}
+          onPress={() => changeScreen("/videdo")}
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >

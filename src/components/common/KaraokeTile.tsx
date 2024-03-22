@@ -5,6 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
 import { useLikedSongsList } from "../../state/likedSongsList";
 import FadeAnimation from "./FadeAnimation";
+import forAllState from "../../state/forAllState";
+import isProStore from "../../state/isPro";
 
 interface Props {
   kid: number;
@@ -12,6 +14,9 @@ interface Props {
 }
 
 export default function KaraokeTile({ kid, title }: Props) {
+  const isPro = isProStore((state) => state.isPro);
+  const forAll = forAllState((state) => state.forAll);
+
   const [liked, setLiked] = React.useState(false);
   const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
 
@@ -44,11 +49,21 @@ export default function KaraokeTile({ kid, title }: Props) {
     } catch (error) {}
   }
 
+  function changeScreen(name: string) {
+    if (isPro) {
+      router.navigate(name);
+    } else if (forAll) {
+      router.navigate(name);
+    } else {
+      router.navigate("/purchase");
+    }
+  }
+
   return (
     <>
       <FadeAnimation>
         <ListItem
-          onPress={() => router.navigate("/video")}
+          onPress={() => changeScreen("/video")}
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >
