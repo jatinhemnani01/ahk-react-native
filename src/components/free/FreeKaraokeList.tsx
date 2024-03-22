@@ -16,7 +16,9 @@ export default function FreeKaraokeList() {
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
-    return <KaraokeTile title={item?.title} kid={item?.kid} />;
+    return (
+      <KaraokeTile freeScreen={true} title={item?.title} kid={item?.kid} />
+    );
   };
 
   async function fetchMore() {

@@ -11,9 +11,10 @@ import isProStore from "../../state/isPro";
 interface Props {
   kid: number;
   title: string;
+  freeScreen?: boolean;
 }
 
-export default function KaraokeTile({ kid, title }: Props) {
+export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
 
@@ -53,6 +54,8 @@ export default function KaraokeTile({ kid, title }: Props) {
     if (isPro) {
       router.navigate(name);
     } else if (forAll) {
+      router.navigate(name);
+    } else if (freeScreen) {
       router.navigate(name);
     } else {
       router.navigate("/purchase");
