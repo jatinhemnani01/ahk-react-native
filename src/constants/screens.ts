@@ -23,4 +23,8 @@ export const screens = [
     name: "userID",
     title: "User ID",
   },
+  {
+    name: "purchase",
+    title: "Purchase",
+  },
 ];
