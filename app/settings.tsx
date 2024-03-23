@@ -25,7 +25,7 @@ export default function Settings() {
           icon="star"
         />
         <SettingsItem
-          onPress={() => openURL("https://wa.me/+918962210828")}
+          onPress={() => openURL("whatsapp://send?phone=+918962210828")}
           title="Contact Us"
           icon="logo-whatsapp"
           type="ionicon"
@@ -42,15 +42,19 @@ export default function Settings() {
           type="feather"
         />
         <SettingsItem
-          onPress={() => openURL("")}
-          title="Privacy Policy"
-          icon="shield"
-        />
-        <SettingsItem
           onPress={() => changeScreen("/userID")}
           title="User ID"
           icon="hash"
           type="feather"
+        />
+        <SettingsItem
+          onPress={() =>
+            openURL(
+              "https://gist.github.com/jatinhemnani01/88a6c53fb57dbd499caa7d2ac6762036"
+            )
+          }
+          title="Privacy Policy"
+          icon="shield"
         />
       </View>
     </>
