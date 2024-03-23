@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, ActivityIndicator, TouchableOpacity, Alert } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
@@ -8,21 +8,23 @@ import * as ScreenCapture from "expo-screen-capture";
 import { rewardedInterstitial } from "../src/ads/interAd";
 import forAllState from "../src/state/forAllState";
 import isProStore from "../src/state/isPro";
+import BASE_URL from "../src/constants/base_url";
+import { Text } from "@rneui/base";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
+  const params = useGlobalSearchParams();
+  const { kid, title } = params;
 
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
 
-  const params = useGlobalSearchParams();
   const [showControls, setShowControls] = React.useState(false);
-
   const [loading, setLoading] = React.useState(false);
-  const { id } = params;
-  const ref = React.useRef(null);
-
   const [speed, setSpeed] = React.useState<number>(1);
+  const [url, setUrl] = React.useState("");
+
+  const ref = React.useRef(null);
 
   const handleIncrement = () => {
     setSpeed((prevSpeed: number) => prevSpeed + 0.01);
@@ -40,7 +42,37 @@ export default function VideoPlayer() {
     setShowControls((showControls) => !showControls);
   }, []);
 
+  function fetchSingleVideo() {
+    setLoading(true);
+    fetch(`${BASE_URL.getState().baseURL}/v2/single?id=${kid}`)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.url) {
+          setUrl(res.url);
+        }
+      })
+      .catch((err) => {
+        Alert.alert("Error", "An error occurred while fetching video");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  const Title = () => {
+    return (
+      <View style={tw`flex justify-center items-center m-3`}>
+        <Text style={tw`font-bold capitalize text-lg text-center`}>
+          {title}
+        </Text>
+      </View>
+    );
+  };
+
   useEffect(() => {
+    // FETCHING VIDEO URL
+    fetchSingleVideo();
+
     if (isPro) return;
     if (!forAll) return;
     rewardedInterstitial.load();
@@ -63,7 +95,7 @@ export default function VideoPlayer() {
         <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
           <Video
             source={{
-              uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+              uri: url,
             }}
             style={{ width: "100%", height: 300 }}
             useNativeControls={showControls}
@@ -81,6 +113,8 @@ export default function VideoPlayer() {
               <ActivityIndicator size="large" color="#0000ff" />
             </View>
           )}
+
+          {!loading && <Title />}
 
           {!loading && (
             <VideoSpeedControl
