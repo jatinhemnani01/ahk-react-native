@@ -33,7 +33,7 @@ export default function Search() {
     setLoading(true);
     setPage(1);
     const response = await fetch(
-      `${BASE_URL}/v2/search?page=1&limit=25&q=${searchValue}`
+      `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=${searchValue}`
     );
     const newData = await response.json();
 
