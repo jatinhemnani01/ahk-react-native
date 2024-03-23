@@ -10,6 +10,7 @@ import forAllState from "../src/state/forAllState";
 import { RemoteConfigService } from "../src/firebase/remoteConfig";
 import BASE_URL from "../src/constants/base_url";
 import { screens } from "../src/constants/screens";
+import { setStatusBarStyle } from "expo-status-bar";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -25,6 +26,10 @@ export default function RootLayout() {
   }
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setStatusBarStyle("light");
+    }, 3000);
+
     fetchBaseURL();
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
@@ -40,6 +45,10 @@ export default function RootLayout() {
     getAnalytics();
     update();
     fetchForAll();
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   const isPro = isProStore((state) => state.isPro);
