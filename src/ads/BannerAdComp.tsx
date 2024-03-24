@@ -1,9 +1,5 @@
 import { View, Text } from "react-native";
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-} from "react-native-google-mobile-ads";
+import { BannerAd, BannerAdSize } from "react-native-google-mobile-ads";
 import React from "react";
 import forAllState from "../state/forAllState";
 import isProStore from "../state/isPro";
@@ -19,7 +15,7 @@ export default function BannerAdComp() {
     return (
       <BannerAd
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        unitId={TestIds.BANNER}
+        unitId={"ca-app-pub-5153786927158690/1601135861"}
       />
     );
   };

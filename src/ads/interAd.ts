@@ -1,9 +1,6 @@
-import {
-  RewardedInterstitialAd,
-  TestIds,
-} from "react-native-google-mobile-ads";
+import { RewardedInterstitialAd } from "react-native-google-mobile-ads";
 
-const adUnitId = TestIds.REWARDED_INTERSTITIAL;
+const adUnitId = "ca-app-pub-5153786927158690/1118738379";
 
 export const rewardedInterstitial =
   RewardedInterstitialAd.createForAdRequest(adUnitId);
