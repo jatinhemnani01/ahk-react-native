@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ahk-react-native",
-    "slug": "ahk-react-native",
-    "scheme": "ahk-react-native",
+    "name": "AH Karaoke",
+    "slug": "ah-karaoke",
+    "scheme": "ah-karaoke",
     "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#2E3AE5"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ahkkaraoke.app"
@@ -27,9 +25,7 @@
       "versionCode": 3,
       "package": "com.ahkkaraoke.app",
       "googleServicesFile": "./google-services.json",
-      "permissions": [
-        "com.android.vending.BILLING"
-      ]
+      "permissions": ["com.android.vending.BILLING"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
