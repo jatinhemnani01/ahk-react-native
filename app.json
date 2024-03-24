@@ -3,7 +3,7 @@
     "name": "AH Karaoke",
     "slug": "ah-karaoke",
     "scheme": "ah-karaoke",
-    "version": "1.2.0",
+    "version": "1.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2E3AE5"
       },
-      "versionCode": 3,
+      "versionCode": 4,
       "package": "com.ahkkaraoke.app",
       "googleServicesFile": "./google-services.json",
       "permissions": ["com.android.vending.BILLING"]
