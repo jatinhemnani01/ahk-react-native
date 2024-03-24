@@ -8,10 +8,9 @@ import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
+import BannerAdComp from "../../src/ads/BannerAdComp";
 
 export default function Search() {
-
-
   const [searchValue, updateSearch] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -23,7 +22,6 @@ export default function Search() {
     `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=`
   );
 
-
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
   };
@@ -33,7 +31,9 @@ export default function Search() {
     setLoading(true);
     setPage(1);
     const response = await fetch(
-      `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=${searchValue}`
+      `${
+        BASE_URL.getState().baseURL
+      }/v2/search?page=1&limit=25&q=${searchValue}`
     );
     const newData = await response.json();
 
@@ -54,7 +54,9 @@ export default function Search() {
   async function fetchMore() {
     setPage((prev) => prev + 1);
     const response = await fetch(
-      `${BASE_URL.getState().baseURL}/v2/search?page=${page}&limit=25&q=${searchValue}`
+      `${
+        BASE_URL.getState().baseURL
+      }/v2/search?page=${page}&limit=25&q=${searchValue}`
     );
     const newDate = await response.json();
     if (newDate.length >= 25) {
@@ -85,7 +87,6 @@ export default function Search() {
 
   return (
     <>
-       
       <View style={{ height: "100%" }}>
         <View>
           <SearchBar
@@ -99,6 +100,8 @@ export default function Search() {
             value={searchValue}
           />
         </View>
+        
+        <BannerAdComp />
 
         {isEmpty && <ShowEmpty />}
 
