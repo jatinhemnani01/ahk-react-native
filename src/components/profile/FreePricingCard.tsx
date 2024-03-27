@@ -12,8 +12,8 @@ export default function FreePricingCard({ onPress }: { onPress: () => void }) {
           containerStyle={tw`rounded-xl`}
           color={colors.primary}
           title="Free"
-          price="Buy Now and get access to 10,000+ Karaoke"
-          info={["Free Karaoke", "Basic Support", "Change Speed/Scale"]}
+          price="Buy Now and get access to 8,000+ Karaoke"
+          info={["Free Karaoke", "Basic Support", "Change Pitch/Tempo/Key"]}
           button={{
             title: "Buy Now",
             onPress: onPress,
