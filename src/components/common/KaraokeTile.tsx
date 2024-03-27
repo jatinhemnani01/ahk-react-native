@@ -7,6 +7,7 @@ import { useLikedSongsList } from "../../state/likedSongsList";
 import FadeAnimation from "./FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
+import { ToastAndroid } from "react-native";
 
 interface Props {
   kid: number;
@@ -25,10 +26,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
     if ((await AsyncStorage.getItem("liked")) === null) {
       await AsyncStorage.setItem("liked", JSON.stringify([]));
     }
-    const kidExists = await kidExistsOnStorage(kid);
-    const likedSongs = await AsyncStorage.getItem("liked");
 
-    setLiked((prev) => !prev);
     try {
       const data = {
         kid: kid,
@@ -36,7 +34,6 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
       };
 
       if (await kidExistsOnStorage(kid)) {
-        setLiked(true);
       } else {
         const likedSongs = await AsyncStorage.getItem("liked");
         if (likedSongs) {
@@ -47,7 +44,10 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
           return;
         }
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      ToastAndroid.show("Added to liked songs", ToastAndroid.SHORT);
+    }
   }
 
   function changeScreen(name: string) {
@@ -83,8 +83,8 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
           <Icon
             name={"heart"}
             onPress={handleLike}
-            type={liked ? "font-awesome" : "feather"}
-            color={liked ? "red" : "black"}
+            type={"feather"}
+            color={"black"}
           />
         </ListItem>
       </FadeAnimation>
