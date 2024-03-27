@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { Linking, ScrollView } from "react-native";
 import React from "react";
 import { PricingCard } from "@rneui/base";
 import { colors } from "../../constants/colors";
@@ -14,14 +14,17 @@ export default function PremiumPricingCard() {
           title="Premium"
           price="All Features Unlocked"
           info={[
-            "10,000+ Karaoke",
-            "24x7 Support",
+            "8,000+ Karaoke",
+            "Premium Support",
             "Change Speed/Scale",
             "No Ads",
           ]}
           button={{
             title: "Contact Us",
             buttonStyle: tw`rounded-lg`,
+            onPress: () => {
+              Linking.openURL("whatsapp://send?phone=+918962210828");
+            },
           }}
           pricingStyle={tw`text-xl`}
         />

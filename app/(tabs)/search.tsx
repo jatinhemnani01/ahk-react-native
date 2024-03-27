@@ -94,7 +94,7 @@ export default function Search() {
             loadingProps={{ color: colors.primary, size: 25 }}
             onChangeText={(newVal) => updateSearch(newVal)}
             onSubmitEditing={fetchSearch}
-            placeholder="Search Song/Artist/Movie"
+            placeholder="Search Song/Singer/Movie"
             placeholderTextColor="#888"
             showLoading={loading}
             value={searchValue}
