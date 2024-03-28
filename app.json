@@ -25,7 +25,13 @@
       "versionCode": 4,
       "package": "com.ahkkaraoke.app",
       "googleServicesFile": "./google-services.json",
-      "permissions": ["com.android.vending.BILLING"]
+      "permissions": ["com.android.vending.BILLING"],
+      "blockedPermissions": [
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
