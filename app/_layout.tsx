@@ -9,6 +9,7 @@ import { getAnalytics } from "@react-native-firebase/analytics";
 import forAllState from "../src/state/forAllState";
 import { RemoteConfigService } from "../src/firebase/remoteConfig";
 import BASE_URL from "../src/constants/base_url";
+import imgUrlState from "../src/state/imgUrlState";
 import { screens } from "../src/constants/screens";
 import { setStatusBarStyle } from "expo-status-bar";
 
@@ -23,6 +24,11 @@ export default function RootLayout() {
   async function fetchBaseURL() {
     const baseURLRes = await remoteConfigService.getBaseURL();
     BASE_URL.setState({ baseURL: baseURLRes });
+  }
+
+  async function fetchImgURL() {
+    const imgUrl = await remoteConfigService.getImgURL();
+    imgUrlState.setState({ url: imgUrl });
   }
 
   useEffect(() => {
@@ -44,6 +50,7 @@ export default function RootLayout() {
     }
     getAnalytics();
     update();
+    fetchImgURL();
     fetchForAll();
 
     return () => {

@@ -6,6 +6,7 @@ import { useLikedSongsList } from "../../state/likedSongsList";
 import FadeAnimation from "../common/FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
+import imgUrlState from "../../state/imgUrlState";
 
 interface Props {
   kid: number;
@@ -15,6 +16,7 @@ interface Props {
 export default function FavKaraokeTile({ kid, title }: Props) {
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
+  const imgUrl = imgUrlState((state) => state.url);
 
   const [liked, setLiked] = React.useState(false);
   const removeLikedSongs = useLikedSongsList((state) => state.removeLikedSong);
@@ -43,10 +45,7 @@ export default function FavKaraokeTile({ kid, title }: Props) {
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >
-          <Avatar
-            rounded
-            source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-          />
+          <Avatar rounded source={{ uri: imgUrl }} />
           <ListItem.Content>
             <ListItem.Title>{title}</ListItem.Title>
           </ListItem.Content>

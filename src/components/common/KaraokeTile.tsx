@@ -8,6 +8,7 @@ import FadeAnimation from "./FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
 import { ToastAndroid } from "react-native";
+import imgUrlState from "../../state/imgUrlState";
 
 interface Props {
   kid: number;
@@ -18,6 +19,7 @@ interface Props {
 export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
+  const imgUrl = imgUrlState((state) => state.url);
 
   const [liked, setLiked] = React.useState(false);
   const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
@@ -72,7 +74,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
         >
           <Avatar
             rounded
-            source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
+            source={{ uri: imgUrl }}
           />
           <ListItem.Content>
             <ListItem.Title style={{ textTransform: "capitalize" }}>

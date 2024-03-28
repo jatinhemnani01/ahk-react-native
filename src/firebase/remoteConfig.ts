@@ -22,4 +22,10 @@ export class RemoteConfigService {
       return remoteConfig.getValue("base_url").asString();
     });
   }
+
+  public async getImgURL() {
+    return remoteConfig.fetch(300).then(() => {
+      return remoteConfig.getValue("img").asString();
+    });
+  }
 }
