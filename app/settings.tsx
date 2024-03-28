@@ -2,8 +2,11 @@ import { Linking, View } from "react-native";
 import React from "react";
 import SettingsItem from "../src/components/settings/SettingsItem";
 import { router } from "expo-router";
+import isProStore from "../src/state/isPro";
 
 export default function Settings() {
+  const isPro = isProStore((state) => state.isPro);
+
   function openURL(url: string) {
     Linking.openURL(url);
   }
@@ -35,12 +38,16 @@ export default function Settings() {
           title="Feedback"
           icon="forum"
         />
-        <SettingsItem
-          onPress={() => changeScreen("/songRequest")}
-          title="Song Request"
-          icon="plus"
-          type="feather"
-        />
+
+        {isPro && (
+          <SettingsItem
+            onPress={() => changeScreen("/songRequest")}
+            title="Song Request"
+            icon="plus"
+            type="feather"
+          />
+        )}
+
         <SettingsItem
           onPress={() => changeScreen("/userID")}
           title="User ID"

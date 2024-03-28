@@ -38,7 +38,9 @@ export default function SongRequest() {
       setMobile("");
       setMessage("");
       setMobileError(true);
-      Alert.alert("Song Request Submitted Successfully");
+      Alert.alert(
+        "Song Request Submitted, We'll add the song as per availability."
+      );
     });
   }
 
