@@ -19,7 +19,7 @@ export default function Search() {
   const [page, setPage] = useState(1);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=`
+    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=Kishore Kumar`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
@@ -100,10 +100,18 @@ export default function Search() {
             value={searchValue}
           />
         </View>
-        
+
         <BannerAdComp />
 
         {isEmpty && <ShowEmpty />}
+
+        {error && (
+          <View style={tw`flex justify-center flex-1 items-center`}>
+            <Text style={tw`text-lg text-gray-500 font-semibold`}>
+              Error fetching data
+            </Text>
+          </View>
+        )}
 
         <FlashList
           data={data}
