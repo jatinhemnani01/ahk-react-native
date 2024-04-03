@@ -41,6 +41,28 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="free"
+          options={{
+            title: "Free",
+            headerTitleAlign: "center",
+            tabBarLabelStyle: { fontSize: 15, color: "black" },
+            headerTitleStyle: { color: "white" },
+            headerRight: MoreComp,
+            headerStyle: { backgroundColor: colors.primary },
+            tabBarIcon: ({ focused }) => {
+              return (
+                <View>
+                  <Icon
+                    name="dollar-sign"
+                    type="feather"
+                    color={focused ? colors.primary : "grey"}
+                  />
+                </View>
+              );
+            },
+          }}
+        />
+        <Tabs.Screen
           name="search"
           options={{
             title: "Search",
@@ -54,28 +76,6 @@ export default function TabLayout() {
                 <View>
                   <Icon
                     name="search"
-                    color={focused ? colors.primary : "grey"}
-                  />
-                </View>
-              );
-            },
-          }}
-        />
-        <Tabs.Screen
-          name="popular"
-          options={{
-            title: "Popular",
-            headerTitleAlign: "center",
-            tabBarLabelStyle: { fontSize: 15, color: "black" },
-            headerTitleStyle: { color: "white" },
-            headerRight: MoreComp,
-            headerStyle: { backgroundColor: colors.primary },
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View>
-                  <Icon
-                    name="fire"
-                    type="font-awesome-5"
                     color={focused ? colors.primary : "grey"}
                   />
                 </View>

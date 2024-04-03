@@ -4,8 +4,8 @@ export const screens = [
     title: "Video",
   },
   {
-    name: "free",
-    title: "Free Karaoke",
+    name: "popular",
+    title: "Popular",
   },
   {
     name: "settings",
