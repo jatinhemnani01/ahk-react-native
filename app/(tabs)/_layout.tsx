@@ -53,7 +53,7 @@ export default function TabLayout() {
               return (
                 <View>
                   <Icon
-                    name="dollar-sign"
+                    name="headphones"
                     type="feather"
                     color={focused ? colors.primary : "grey"}
                   />
