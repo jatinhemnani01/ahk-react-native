@@ -36,7 +36,7 @@ export default function RootLayout() {
       setStatusBarStyle("light");
     }, 3000);
 
-    // fetchBaseURL();
+    fetchBaseURL();
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
