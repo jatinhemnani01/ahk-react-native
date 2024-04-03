@@ -12,19 +12,19 @@ export class RemoteConfigService {
   }
 
   public async getForAllConfig() {
-    return remoteConfig.fetch(300).then(() => {
+    return await remoteConfig.fetch(300).then(() => {
       return remoteConfig.getValue("all").asBoolean();
     });
   }
 
   public async getBaseURL() {
-    return remoteConfig.fetch(300).then(() => {
+    return await remoteConfig.fetch(300).then(() => {
       return remoteConfig.getValue("base_url").asString();
     });
   }
 
   public async getImgURL() {
-    return remoteConfig.fetch(300).then(() => {
+    return await remoteConfig.fetch(300).then(() => {
       return remoteConfig.getValue("img").asString();
     });
   }
