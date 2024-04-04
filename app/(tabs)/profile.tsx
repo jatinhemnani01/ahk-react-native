@@ -22,8 +22,8 @@ export default function profile() {
       );
     } else if (paywallResult === PAYWALL_RESULT.RESTORED) {
       // isProStore.setState({ isPro: true });
+
       toPro();
-      console.log("User restored");
       Alert.alert(
         "Success!",
         "Restore Successful! Thank you for your purchase!"
@@ -45,10 +45,8 @@ export default function profile() {
 
   return (
     <>
-       
       <View style={tw`flex justify-center flex-row flex-1 items-center`}>
         <RenderPricingCard />
-         
       </View>
     </>
   );
