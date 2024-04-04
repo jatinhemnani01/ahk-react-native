@@ -10,9 +10,11 @@ import forAllState from "../src/state/forAllState";
 import isProStore from "../src/state/isPro";
 import BASE_URL from "../src/constants/base_url";
 import { Text } from "@rneui/base";
+import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
+
   const params = useGlobalSearchParams();
   const { kid, title } = params;
 
@@ -70,6 +72,9 @@ export default function VideoPlayer() {
   };
 
   useEffect(() => {
+    // KEEP SCREEN AWAKE
+    activateKeepAwakeAsync("video");
+
     // FETCHING VIDEO URL
     fetchSingleVideo();
 
@@ -78,6 +83,7 @@ export default function VideoPlayer() {
     rewardedInterstitial.load();
 
     return () => {
+      deactivateKeepAwake("video");
       if (isPro) return;
       if (!forAll) return;
 

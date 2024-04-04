@@ -19,7 +19,7 @@ export default function Search() {
   const [page, setPage] = useState(1);
 
   const { data, error, setData } = useFetch(
-    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=Kishore Kumar`
+    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=kisore kumar`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
