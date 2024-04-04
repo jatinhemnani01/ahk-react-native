@@ -40,7 +40,7 @@ export default function RootLayout() {
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
-        Purchases.configure({ apiKey: "goog_gGxArHKrmaNHKqOSVLLiPWnlwYL" });
+        Purchases.configure({ apiKey: "goog_gGxArHKrmaNHKqOSVLLiPWnlwYL", });
       }
     }
     setupPurchases();
