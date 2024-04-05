@@ -34,6 +34,8 @@ export default function RootLayout() {
   }
 
   useEffect(() => {
+    // FETCHING BASE URL
+    fetchBaseURL();
     // firebaseInAppMessage();
     async function update() {
       await inAppMessaging().setMessagesDisplaySuppressed(false);
@@ -44,8 +46,6 @@ export default function RootLayout() {
       setStatusBarStyle("light");
     }, 3000);
 
-    // FETCHING BASE URL
-    // fetchBaseURL();
 
     // IN APP MESSAGING
 
