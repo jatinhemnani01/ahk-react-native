@@ -24,7 +24,6 @@ function NotificationController() {
     messaging()
       .getInitialNotification()
       .then((remoteMessage) => {
-        console.log("remoteMessage", remoteMessage);
       });
 
     messaging().onNotificationOpenedApp((remoteMessage) => {
