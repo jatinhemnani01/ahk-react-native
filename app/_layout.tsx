@@ -12,7 +12,6 @@ import BASE_URL from "../src/constants/base_url";
 import imgUrlState from "../src/state/imgUrlState";
 import { screens } from "../src/constants/screens";
 import { setStatusBarStyle } from "expo-status-bar";
-import inAppMessaging from "@react-native-firebase/in-app-messaging";
 import NotificationController from "../src/components/common/NotificationController";
 
 export default function RootLayout() {
@@ -32,13 +31,15 @@ export default function RootLayout() {
     const imgUrl = await remoteConfigService.getImgURL();
     imgUrlState.setState({ url: imgUrl });
   }
+  
 
   useEffect(() => {
     // FETCHING BASE URL
+    
     fetchBaseURL();
+    
     // firebaseInAppMessage();
     async function update() {
-      await inAppMessaging().setMessagesDisplaySuppressed(false);
       await updateSubscription();
     }
 
