@@ -18,8 +18,8 @@ export default function Search() {
 
   const [page, setPage] = useState(1);
 
-  const { data, error, setData } = useFetch(
-    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=kisore kumar`
+  const { data, error, setData, isLoading } = useFetch(
+    `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=Kishore Kumar`
   );
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
@@ -113,15 +113,21 @@ export default function Search() {
           </View>
         )}
 
-        <FlashList
-          data={data}
-          estimatedItemSize={170}
-          renderItem={RenderKaraokeList}
-          ListFooterComponent={() => <HasMore />}
-          onEndReached={() => {
-            fetchMore();
-          }}
-        />
+        {isLoading ? (
+          <View style={tw`flex justify-center flex-1 items-center`}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        ) : (
+          <FlashList
+            data={data}
+            estimatedItemSize={170}
+            renderItem={RenderKaraokeList}
+            ListFooterComponent={() => <HasMore />}
+            onEndReached={() => {
+              fetchMore();
+            }}
+          />
+        )}
       </View>
     </>
   );
