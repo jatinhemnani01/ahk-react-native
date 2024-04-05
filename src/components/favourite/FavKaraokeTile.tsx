@@ -29,9 +29,9 @@ export default function FavKaraokeTile({ kid, title }: Props) {
 
   function changeScreen(name: string) {
     if (isPro) {
-      router.navigate(name);
+      router.navigate({ pathname: name, params: { kid: kid, title: title } });
     } else if (forAll) {
-      router.navigate(name);
+      router.navigate({ pathname: name, params: { kid: kid, title: title } });
     } else {
       router.navigate("/purchase");
     }
