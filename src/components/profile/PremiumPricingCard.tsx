@@ -16,7 +16,7 @@ export default function PremiumPricingCard() {
           info={[
             "8,000+ Karaoke",
             "Premium Support",
-            "Change Speed/Scale",
+            "Change Pitch/Tempo/Key",
             "No Ads",
           ]}
           button={{
