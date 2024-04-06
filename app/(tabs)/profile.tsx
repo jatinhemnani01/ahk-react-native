@@ -44,11 +44,6 @@ export default function profile() {
     }
   };
 
-
-  useEffect(()=>{
-    updateSubscription();
-  },[isPro])
-
   return (
     <>
       <View style={tw`flex justify-center flex-row flex-1 items-center`}>

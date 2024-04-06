@@ -21,7 +21,14 @@ export default function TabLayout() {
   };
 
   useEffect(() => {
-    updateSubscription();
+    const timeout = setTimeout(() => {
+      updateSubscription();
+      
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
