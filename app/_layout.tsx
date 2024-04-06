@@ -3,7 +3,6 @@ import { colors } from "../src/constants/colors";
 import { useEffect } from "react";
 import Purchases, { LOG_LEVEL } from "react-native-purchases";
 import { Platform } from "react-native";
-import { updateSubscription } from "../src/subscription/getSubscription";
 import isProStore from "../src/state/isPro";
 import { getAnalytics } from "@react-native-firebase/analytics";
 import forAllState from "../src/state/forAllState";
@@ -17,39 +16,25 @@ import NotificationController from "../src/components/common/NotificationControl
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
 
-  async function fetchForAll() {
-    const forAllRes = await remoteConfigService.getForAllConfig();
-    forAllState.setState({ forAll: forAllRes });
+  async function fetchEverything() {
+    const everything = await remoteConfigService.getEverything();
+    BASE_URL.setState({ baseURL: everything.base_url });
+    imgUrlState.setState({ url: everything.img });
+    forAllState.setState({ forAll: everything.all });
   }
-
-  async function fetchBaseURL() {
-    const baseURLRes = await remoteConfigService.getBaseURL();
-    BASE_URL.setState({ baseURL: baseURLRes });
-  }
-
-  async function fetchImgURL() {
-    const imgUrl = await remoteConfigService.getImgURL();
-    imgUrlState.setState({ url: imgUrl });
-  }
-  
 
   useEffect(() => {
-    // FETCHING BASE URL
-    
-    fetchBaseURL();
-    
-    // firebaseInAppMessage();
-    async function update() {
-      await updateSubscription();
-    }
+    // Fetching remote config
+    fetchEverything();
 
+    // Function to update subscription
+
+    // Timeout to set status bar style
     const timeout = setTimeout(() => {
       setStatusBarStyle("light");
     }, 3000);
 
-
-    // IN APP MESSAGING
-
+    // Function to setup purchases
     async function setupPurchases() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
@@ -58,11 +43,10 @@ export default function RootLayout() {
     }
     setupPurchases();
 
+    // Function to get analytics
     getAnalytics();
-    update();
-    fetchImgURL();
-    fetchForAll();
 
+    // Cleanup function
     return () => {
       clearTimeout(timeout);
     };

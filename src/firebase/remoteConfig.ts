@@ -9,23 +9,58 @@ export class RemoteConfigService {
 
   public async init() {
     await remoteConfig.fetchAndActivate();
+    await remoteConfig.setConfigSettings({
+      minimumFetchIntervalMillis: 600000,
+    });
+  }
+
+  public async getEverything() {
+    try {
+      return await remoteConfig.fetchAndActivate().then(() => {
+        const all = remoteConfig.getAll();
+        return {
+          all: all?.["all"].asBoolean(),
+          base_url: all?.["base_url"].asString(),
+          img: all?.["img"].asString(),
+        };
+      });
+    } catch (error) {
+      return {
+        all: false,
+        base_url:
+          "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws",
+        img: "https://ahkaraoke-admin.vercel.app/image.jpg",
+      };
+    }
   }
 
   public async getForAllConfig() {
-    return await remoteConfig.fetch(300).then(() => {
-      return remoteConfig.getValue("all").asBoolean();
-    });
+    try {
+      return await remoteConfig.fetch(300).then(() => {
+        return remoteConfig.getValue("all").asBoolean();
+      });
+    } catch (error) {
+      return false;
+    }
   }
 
   public async getBaseURL() {
-    return await remoteConfig.fetch(300).then(() => {
-      return remoteConfig.getValue("base_url").asString();
-    });
+    try {
+      return await remoteConfig.fetch(300).then(() => {
+        return remoteConfig.getValue("base_url").asString();
+      });
+    } catch (error) {
+      return "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws";
+    }
   }
 
   public async getImgURL() {
-    return await remoteConfig.fetch(300).then(() => {
-      return remoteConfig.getValue("img").asString();
-    });
+    try {
+      return await remoteConfig.fetch(1).then(() => {
+        return remoteConfig.getValue("img").asString();
+      });
+    } catch (error) {
+      return "https://ahkaraoke-admin.vercel.app/image.jpg";
+    }
   }
 }
