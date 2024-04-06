@@ -5,6 +5,7 @@ import { updateSubscription } from "../../src/subscription/getSubscription";
 import isProStore from "../../src/state/isPro";
 import FreePricingCard from "../../src/components/profile/FreePricingCard";
 import PremiumPricingCard from "../../src/components/profile/PremiumPricingCard";
+import { useEffect } from "react";
 
 export default function profile() {
   const isPro = isProStore((state) => state.isPro);
@@ -42,6 +43,11 @@ export default function profile() {
       return <FreePricingCard onPress={displayPaywall} />;
     }
   };
+
+
+  useEffect(()=>{
+    updateSubscription();
+  },[isPro])
 
   return (
     <>
