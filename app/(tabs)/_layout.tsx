@@ -3,7 +3,8 @@ import { Tabs } from "expo-router/tabs";
 import { View, Text } from "react-native";
 import { colors } from "../../src/constants/colors";
 import { router } from "expo-router";
-import BannerAdComp from "../../src/ads/BannerAdComp";
+import { updateSubscription } from "../../src/subscription/getSubscription";
+import { useEffect } from "react";
 
 export default function TabLayout() {
   const MoreComp = () => {
@@ -18,6 +19,17 @@ export default function TabLayout() {
       />
     );
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      updateSubscription();
+      
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <>

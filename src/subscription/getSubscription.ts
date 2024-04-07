@@ -11,6 +11,7 @@ export async function updateSubscription() {
 
   if (!isEmpty(entitlements)) {
     isProStore.setState({ isPro: true });
+
     return true;
   } else {
     isProStore.setState({ isPro: false });
