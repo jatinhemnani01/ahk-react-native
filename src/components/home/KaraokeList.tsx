@@ -6,11 +6,11 @@ import { FlashList } from "@shopify/flash-list";
 import KaraokeTile from "../common/KaraokeTile";
 import { KaraokeListItem } from "../../types/KaraokeListItemType";
 import tw from "twrnc";
+import FloatingButton from "../common/FloatingButton";
 
 export default function KaraokeList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
 
   const { data, error, setData } = useFetch(
     `${BASE_URL.getState().baseURL}/v2/all?page=1&limit=25`
@@ -22,7 +22,9 @@ export default function KaraokeList() {
 
   async function fetchMore() {
     setPage((prev) => prev + 1);
-    const response = await fetch(`${BASE_URL.getState().baseURL}/v2/all?page=${page}&limit=25`);
+    const response = await fetch(
+      `${BASE_URL.getState().baseURL}/v2/all?page=${page}&limit=25`
+    );
     const newDate = await response.json();
 
     if (newDate.length >= 25) {
@@ -51,14 +53,17 @@ export default function KaraokeList() {
   }
 
   return (
-    <FlashList
-      data={data}
-      estimatedItemSize={170}
-      renderItem={RenderKaraokeList}
-      ListFooterComponent={() => <HasMore />}
-      onEndReached={() => {
-        fetchMore();
-      }}
-    />
+    <>
+      <FloatingButton />
+      <FlashList
+        data={data}
+        estimatedItemSize={170}
+        renderItem={RenderKaraokeList}
+        ListFooterComponent={() => <HasMore />}
+        onEndReached={() => {
+          fetchMore();
+        }}
+      />
+    </>
   );
 }
