@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import KaraokeTile from "../common/KaraokeTile";
 import { KaraokeListItem } from "../../types/KaraokeListItemType";
 import tw from "twrnc";
+import FloatingButton from "../common/FloatingButton";
 
 export default function FreeKaraokeList() {
   const [page, setPage] = useState(1);
@@ -61,14 +62,17 @@ export default function FreeKaraokeList() {
   }
 
   return (
-    <FlashList
-      data={data}
-      estimatedItemSize={170}
-      ListFooterComponent={() => <HasMore />}
-      onEndReached={() => {
-        fetchMore();
-      }}
-      renderItem={RenderKaraokeList}
-    />
+    <>
+      <FloatingButton />
+      <FlashList
+        data={data}
+        estimatedItemSize={170}
+        ListFooterComponent={() => <HasMore />}
+        onEndReached={() => {
+          fetchMore();
+        }}
+        renderItem={RenderKaraokeList}
+      />
+    </>
   );
 }
