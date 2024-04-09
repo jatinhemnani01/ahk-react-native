@@ -11,6 +11,7 @@ import isProStore from "../src/state/isPro";
 import BASE_URL from "../src/constants/base_url";
 import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
+import analytics from "@react-native-firebase/analytics";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
@@ -77,6 +78,11 @@ export default function VideoPlayer() {
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
+
+    analytics().logScreenView({
+      screen_name: "Video Player",
+      screen_class: "VideoPlayer",
+    })
 
     if (isPro) return;
     if (!forAll) return;

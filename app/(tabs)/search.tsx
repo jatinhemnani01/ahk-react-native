@@ -1,5 +1,5 @@
 import { View, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar, Text } from "@rneui/base";
 import { colors } from "../../src/constants/colors";
 import KaraokeTile from "../../src/components/common/KaraokeTile";
@@ -9,6 +9,7 @@ import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
 import BannerAdComp from "../../src/ads/BannerAdComp";
+import analytics from "@react-native-firebase/analytics";
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
@@ -84,6 +85,13 @@ export default function Search() {
       </View>
     );
   };
+
+  useEffect(() => {
+    analytics().logScreenView({
+      screen_name: "Search",
+      screen_class: "Search",
+    });
+  }, []);
 
   return (
     <>
