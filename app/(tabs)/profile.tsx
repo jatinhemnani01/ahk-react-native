@@ -6,6 +6,7 @@ import isProStore from "../../src/state/isPro";
 import FreePricingCard from "../../src/components/profile/FreePricingCard";
 import PremiumPricingCard from "../../src/components/profile/PremiumPricingCard";
 import { useEffect } from "react";
+import analytics from "@react-native-firebase/analytics";
 
 export default function profile() {
   const isPro = isProStore((state) => state.isPro);
@@ -21,6 +22,7 @@ export default function profile() {
         "Success!",
         "Purchase Successful! Thank you for your purchase!"
       );
+      analytics().logEvent("yes_purchase");
     } else if (paywallResult === PAYWALL_RESULT.RESTORED) {
       // isProStore.setState({ isPro: true });
 
@@ -32,6 +34,7 @@ export default function profile() {
     } else {
       toFree();
       console.log("User did not purchase");
+      analytics().logEvent("no_purchase");
     }
     await updateSubscription();
   }
@@ -43,6 +46,13 @@ export default function profile() {
       return <FreePricingCard onPress={displayPaywall} />;
     }
   };
+
+  useEffect(() => {
+    analytics().logScreenView({
+      screen_name: "Profile",
+      screen_class: "Profile",
+    });
+  }, []);
 
   return (
     <>

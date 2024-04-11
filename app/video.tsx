@@ -1,6 +1,17 @@
-import { View, ActivityIndicator, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from "react-native";
 import React, { useCallback, useEffect } from "react";
-import { ResizeMode, Video } from "expo-av";
+import {
+  ResizeMode,
+  Video,
+  VideoFullscreenUpdate,
+  VideoFullscreenUpdateEvent,
+} from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
@@ -11,6 +22,8 @@ import isProStore from "../src/state/isPro";
 import BASE_URL from "../src/constants/base_url";
 import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
+import analytics from "@react-native-firebase/analytics";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function VideoPlayer() {
   ScreenCapture.usePreventScreenCapture();
@@ -43,6 +56,24 @@ export default function VideoPlayer() {
   const toggleControls = useCallback(() => {
     setShowControls((showControls) => !showControls);
   }, []);
+
+  const onFullscreenUpdate = async ({
+    fullscreenUpdate,
+  }: VideoFullscreenUpdateEvent) => {
+    if (Platform.OS === "android") {
+      if (fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_PRESENT) {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE
+        );
+      } else if (
+        fullscreenUpdate === VideoFullscreenUpdate.PLAYER_WILL_DISMISS
+      ) {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.PORTRAIT
+        );
+      }
+    }
+  };
 
   function fetchSingleVideo() {
     setLoading(true);
@@ -78,6 +109,11 @@ export default function VideoPlayer() {
     // FETCHING VIDEO URL
     fetchSingleVideo();
 
+    analytics().logScreenView({
+      screen_name: "Video Player",
+      screen_class: "VideoPlayer",
+    });
+
     if (isPro) return;
     if (!forAll) return;
     rewardedInterstitial.load();
@@ -112,6 +148,7 @@ export default function VideoPlayer() {
             rate={speed}
             onLoadStart={() => setLoading(true)}
             onReadyForDisplay={() => setLoading(false)}
+            onFullscreenUpdate={onFullscreenUpdate}
           />
 
           {loading && (

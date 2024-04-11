@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import KaraokeTile from "../common/KaraokeTile";
 import { KaraokeListItem } from "../../types/KaraokeListItemType";
 import tw from "twrnc";
+import FloatingButton from "../common/FloatingButton";
 
 export default function PopularKaraokeList() {
   const [page, setPage] = useState(1);
@@ -58,10 +59,13 @@ export default function PopularKaraokeList() {
   }
 
   return (
-    <FlashList
-      data={data}
-      estimatedItemSize={170}
-      renderItem={RenderKaraokeList}
-    />
+    <>
+      <FloatingButton />
+      <FlashList
+        data={data}
+        estimatedItemSize={170}
+        renderItem={RenderKaraokeList}
+      />
+    </>
   );
 }
