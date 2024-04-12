@@ -143,7 +143,6 @@ export default function VideoPlayer() {
             useNativeControls={showControls}
             resizeMode={ResizeMode.CONTAIN}
             ref={ref}
-            isLooping
             shouldPlay
             rate={speed}
             onLoadStart={() => setLoading(true)}
