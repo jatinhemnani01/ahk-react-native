@@ -17,7 +17,7 @@ export default function FadeAnimation({
   return (
     <View
       easing={"ease-in"}
-      animation={animation || "fadeInLeft"}
+      animation={animation || "fadeInUp"}
       duration={duration || 500}
       delay={delay || 200}
     >
