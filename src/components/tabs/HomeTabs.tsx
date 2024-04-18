@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, useWindowDimensions } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import KaraokeList from "../home/KaraokeList";
+import AllKaraokeList from "../list/AllKaraokeList";
 
 const FirstRoute = () => (
   <View style={{ flex: 1 }} />
@@ -13,7 +14,7 @@ const SecondRoute = () => (
 
 const renderScene = SceneMap({
   first: FirstRoute,
-  second: SecondRoute,
+  second: AllKaraokeList,
 });
 
 export default function HomeTabs() {
