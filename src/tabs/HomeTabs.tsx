@@ -9,6 +9,7 @@ const FirstRoute = () => <View style={{ flex: 1 }} />;
 
 const renderScene = SceneMap({
   new: NewKaraoke,
+  all: KaraokeList,
   list: AllKaraokeList,
 });
 
@@ -18,6 +19,7 @@ export default function HomeTabs() {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "new", title: "New" },
+    { key: "all", title: "All" },
     { key: "list", title: "List" },
   ]);
 
