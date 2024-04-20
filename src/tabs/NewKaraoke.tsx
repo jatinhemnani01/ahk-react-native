@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import tw from "twrnc";
 import KaraokeTile from "../components/common/KaraokeTile";
@@ -8,6 +8,7 @@ import FloatingButton from "../components/common/FloatingButton";
 import useFetch from "../hooks/useFetch";
 import { KaraokeListItem } from "../types/KaraokeListItemType";
 import { colors } from "../constants/colors";
+import analytics from "@react-native-firebase/analytics";
 
 export default function NewKaraoke() {
   const { data, error, isLoading } = useFetch(
@@ -33,6 +34,13 @@ export default function NewKaraoke() {
       </View>
     );
   }
+
+  useEffect(() => {
+    analytics().logScreenView({
+      screen_class: "NewKaraoke",
+      screen_name: "NewKaraoke",
+    });
+  }, []);
 
   return (
     <>

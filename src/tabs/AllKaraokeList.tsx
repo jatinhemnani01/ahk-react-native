@@ -2,8 +2,14 @@ import { View, ActivityIndicator, Dimensions, Alert } from "react-native";
 import { Button, Text } from "@rneui/base";
 import { AlphabetList } from "react-native-section-alphabet-list";
 import React, { useEffect, useState } from "react";
-import { checkList, clearList, getListLocal, saveList } from "../storage/listStorage";
+import {
+  checkList,
+  clearList,
+  getListLocal,
+  saveList,
+} from "../storage/listStorage";
 import { colors } from "../constants/colors";
+import analytics from "@react-native-firebase/analytics";
 
 export default function AllKaraokeList() {
   const [list, setList] = useState([]);
@@ -13,15 +19,12 @@ export default function AllKaraokeList() {
     setLoading(true);
 
     if (await checkList()) {
-      console.log("loading from local storage");
       const data = await getListLocal();
       if (data) {
         setList(data);
         setLoading(false);
       }
     } else {
-      console.log("loading remote");
-
       try {
         const data = await fetch(
           "https://pub-c2824179ee6f40abab7b9d770b4a7354.r2.dev/karaoke.json"
@@ -50,13 +53,18 @@ export default function AllKaraokeList() {
     }
   }
 
-  function refreshList(){
-    clearList()
-    getList()
+  function refreshList() {
+    clearList();
+    getList();
   }
 
   useEffect(() => {
     getList();
+
+    analytics().logScreenView({
+      screen_class: "ListKaraoke",
+      screen_name: "ListKaraoke",
+    });
   }, []);
 
   if (loading) {
@@ -65,7 +73,9 @@ export default function AllKaraokeList() {
 
   return (
     <View>
-      <Button type="outline" onPress={refreshList}>Click Here To Refresh</Button>
+      <Button type="outline" onPress={refreshList}>
+        Click Here To Refresh
+      </Button>
       {list.length !== 0 && (
         <AlphabetList
           data={list}
