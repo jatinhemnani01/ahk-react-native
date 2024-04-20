@@ -1,8 +1,8 @@
 import { View, ActivityIndicator, Dimensions, Alert } from "react-native";
-import { Text } from "@rneui/base";
+import { Button, Text } from "@rneui/base";
 import { AlphabetList } from "react-native-section-alphabet-list";
 import React, { useEffect, useState } from "react";
-import { checkList, getListLocal, saveList } from "../storage/listStorage";
+import { checkList, clearList, getListLocal, saveList } from "../storage/listStorage";
 import { colors } from "../constants/colors";
 
 export default function AllKaraokeList() {
@@ -50,6 +50,11 @@ export default function AllKaraokeList() {
     }
   }
 
+  function refreshList(){
+    clearList()
+    getList()
+  }
+
   useEffect(() => {
     getList();
   }, []);
@@ -60,6 +65,7 @@ export default function AllKaraokeList() {
 
   return (
     <View>
+      <Button type="outline" onPress={refreshList}>Click Here To Refresh</Button>
       {list.length !== 0 && (
         <AlphabetList
           data={list}

@@ -26,3 +26,11 @@ export async function getListLocal(): Promise<any> {
     return null;
   }
 }
+
+export async function clearList() {
+  try {
+    await AsyncStorage.removeItem("list");
+  } catch (error) {
+    throw Error("Something went wrong");
+  }
+}

@@ -5,7 +5,6 @@ import KaraokeList from "../components/home/KaraokeList";
 import AllKaraokeList from "./AllKaraokeList";
 import NewKaraoke from "./NewKaraoke";
 
-const FirstRoute = () => <View style={{ flex: 1 }} />;
 
 const renderScene = SceneMap({
   new: NewKaraoke,
