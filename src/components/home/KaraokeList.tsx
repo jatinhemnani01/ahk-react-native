@@ -1,5 +1,5 @@
 import { View, Text, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BASE_URL from "../../constants/base_url";
 import useFetch from "../../hooks/useFetch";
 import { FlashList } from "@shopify/flash-list";
@@ -7,6 +7,7 @@ import KaraokeTile from "../common/KaraokeTile";
 import { KaraokeListItem } from "../../types/KaraokeListItemType";
 import tw from "twrnc";
 import FloatingButton from "../common/FloatingButton";
+import analytics from "@react-native-firebase/analytics";
 
 export default function KaraokeList() {
   const [page, setPage] = useState(1);
@@ -51,6 +52,13 @@ export default function KaraokeList() {
       </View>
     );
   }
+
+  useEffect(() => {
+    analytics().logScreenView({
+      screen_class: "AllKaraoke",
+      screen_name: "AllKaraoke",
+    });
+  }, []);
 
   return (
     <>

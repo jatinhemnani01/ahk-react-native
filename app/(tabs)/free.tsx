@@ -5,7 +5,7 @@ import tw from "twrnc";
 import FreeKaraokeList from "../../src/components/free/FreeKaraokeList";
 import analytics from "@react-native-firebase/analytics";
 
-export default function Popular() {
+export default function Free() {
   useEffect(() => {
     analytics().logScreenView({
       screen_name: "Free Karaoke",

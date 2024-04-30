@@ -36,6 +36,16 @@ export default () => {
         }
       />
       <SpeedDial.Action
+        icon={{ name: "logo-google-playstore", color: "#fff", type: "ionicon" }}
+        color={colors.primary}
+        title="Update"
+        onPress={() =>
+          openURL(
+            "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
+          )
+        }
+      />
+      <SpeedDial.Action
         icon={{ name: "bell", color: "#fff", type: "feather" }}
         color={colors.primary}
         title="Enable Notifications"
