@@ -15,7 +15,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ahkkaraoke.app"
+      "bundleIdentifier": "com.ahkkaraoke.app",
+      "googleServicesFile": "GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -53,12 +54,16 @@
           "android": {
             "minSdkVersion": 26,
             "enableProguardInReleaseBuilds": true
+          },
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ]
     ]
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-5153786927158690~8883121288"
+    "android_app_id": "ca-app-pub-5153786927158690~8883121288",
+    "ios_app_id": "ca-app-pub-5153786927158690~6618398488"
   }
 }

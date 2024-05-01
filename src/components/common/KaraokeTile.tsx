@@ -21,7 +21,6 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const forAll = forAllState((state) => state.forAll);
   const imgUrl = imgUrlState((state) => state.url);
 
-  const [liked, setLiked] = React.useState(false);
   const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
 
   async function handleLike() {
@@ -72,10 +71,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >
-          <Avatar
-            rounded
-            source={{ uri: imgUrl }}
-          />
+          <Avatar rounded source={{ uri: imgUrl }} />
           <ListItem.Content>
             <ListItem.Title style={{ textTransform: "capitalize" }}>
               {title}

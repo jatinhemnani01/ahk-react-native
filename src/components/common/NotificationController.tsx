@@ -4,9 +4,9 @@ import messaging from "@react-native-firebase/messaging";
 
 function NotificationController() {
   async function requestUserPermission() {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-    );
+    // PermissionsAndroid.request(
+    //   PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+    // );
 
     const authStatus = await messaging().requestPermission();
     const enabled =
@@ -28,7 +28,7 @@ function NotificationController() {
     messaging().onNotificationOpenedApp((remoteMessage) => {
       console.log(
         "Notification caused app to open from background state:",
-        remoteMessage
+        remoteMessage,
       );
     });
 
@@ -39,7 +39,7 @@ function NotificationController() {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       Alert.alert(
         remoteMessage?.notification?.title!,
-        remoteMessage?.notification?.body!
+        remoteMessage?.notification?.body!,
       );
     });
 
