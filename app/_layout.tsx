@@ -59,7 +59,10 @@ export default function RootLayout() {
     <>
       <NotificationController />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false, title: "Home" }}
+        />
 
         {screens.map((screen, i) => {
           return (
