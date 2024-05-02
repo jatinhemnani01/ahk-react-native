@@ -2,7 +2,8 @@ import React from "react";
 import { SpeedDial } from "@rneui/themed";
 import { colors } from "../../constants/colors";
 import { Linking } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
+import { isIOS } from "../../utils/isIOS";
 
 export default () => {
   const [open, setOpen] = React.useState(false);
@@ -36,14 +37,14 @@ export default () => {
         }
       />
       <SpeedDial.Action
-        icon={{ name: "logo-google-playstore", color: "#fff", type: "ionicon" }}
+        icon={{
+          name: isIOS() ? "logo-apple-appstore" : "logo-google-playstore",
+          color: "#fff",
+          type: "ionicon",
+        }}
         color={colors.primary}
         title="Update"
-        onPress={() =>
-          openURL(
-            "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
-          )
-        }
+        onPress={() => openURL("market://details?id=com.ahkkaraoke.app")}
       />
       <SpeedDial.Action
         icon={{ name: "bell", color: "#fff", type: "feather" }}
