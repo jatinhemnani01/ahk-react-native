@@ -58,15 +58,16 @@ export default function PopularKaraokeList() {
     );
   }
 
-
   return (
     <>
       <FloatingButton />
-      <FlashList
-        data={data}
-        estimatedItemSize={170}
-        renderItem={RenderKaraokeList}
-      />
+      {data && (
+        <FlashList
+          data={data}
+          estimatedItemSize={170}
+          renderItem={RenderKaraokeList}
+        />
+      )}
     </>
   );
 }

@@ -63,15 +63,17 @@ export default function KaraokeList() {
   return (
     <>
       <FloatingButton />
-      <FlashList
-        data={data}
-        estimatedItemSize={170}
-        renderItem={RenderKaraokeList}
-        ListFooterComponent={() => <HasMore />}
-        onEndReached={() => {
-          fetchMore();
-        }}
-      />
+      {data && (
+        <FlashList
+          data={data}
+          estimatedItemSize={170}
+          renderItem={RenderKaraokeList}
+          ListFooterComponent={() => <HasMore />}
+          onEndReached={() => {
+            fetchMore();
+          }}
+        />
+      )}
     </>
   );
 }
