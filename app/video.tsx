@@ -39,7 +39,7 @@ export default function VideoPlayer() {
   const [speed, setSpeed] = React.useState<number>(1);
   const [url, setUrl] = React.useState("");
 
-  const ref = React.useRef(null);
+  const ref = React.useRef<Video>(null);
 
   const handleIncrement = () => {
     setSpeed((prevSpeed: number) => prevSpeed + 0.01);
@@ -105,6 +105,11 @@ export default function VideoPlayer() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
+    const timeOut = setTimeout(() => {
+      if (!loading) {
+        ref?.current?.playAsync();
+      }
+    }, 1000);
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
@@ -120,6 +125,7 @@ export default function VideoPlayer() {
 
     return () => {
       deactivateKeepAwake("video");
+      clearTimeout(timeOut);
       if (isPro) return;
       if (!forAll) return;
 
@@ -145,6 +151,7 @@ export default function VideoPlayer() {
             ref={ref}
             shouldPlay
             rate={speed}
+            isMuted={false}
             onLoadStart={() => setLoading(true)}
             onReadyForDisplay={() => setLoading(false)}
             onFullscreenUpdate={onFullscreenUpdate}
