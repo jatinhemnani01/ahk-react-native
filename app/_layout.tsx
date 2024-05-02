@@ -12,6 +12,7 @@ import imgUrlState from "../src/state/imgUrlState";
 import { screens } from "../src/constants/screens";
 import { setStatusBarStyle } from "expo-status-bar";
 import NotificationController from "../src/components/common/NotificationController";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -25,7 +26,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     // Fetching remote config
-    fetchEverything();
+    // fetchEverything();
 
     // Function to update subscription
 
@@ -76,6 +77,7 @@ export default function RootLayout() {
           );
         })}
       </Stack>
+      <Toast />
     </>
   );
 }

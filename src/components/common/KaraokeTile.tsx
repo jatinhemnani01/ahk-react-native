@@ -7,8 +7,8 @@ import { useLikedSongsList } from "../../state/likedSongsList";
 import FadeAnimation from "./FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
-import { ToastAndroid } from "react-native";
 import imgUrlState from "../../state/imgUrlState";
+import Toast from "react-native-toast-message";
 
 interface Props {
   kid: number;
@@ -47,7 +47,12 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
       }
     } catch (error) {
     } finally {
-      ToastAndroid.show("Added to liked songs", ToastAndroid.SHORT);
+      Toast.show({
+        type: "success",
+        text1: "Added To Liked Songs",
+        position: "bottom",
+        visibilityTime: 1500,
+      });
     }
   }
 

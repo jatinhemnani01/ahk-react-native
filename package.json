@@ -41,6 +41,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-section-alphabet-list": "^3.0.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-toast-message": "^2.2.0",
     "twrnc": "^3.6.8",
     "zustand": "^4.5.1"
   },

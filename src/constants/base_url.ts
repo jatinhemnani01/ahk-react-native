@@ -6,8 +6,9 @@ interface baseUrlInt {
 
 const BASE_URL = create<baseUrlInt>((set) => ({
   // baseURL: "http://192.168.29.87:5000",
-  baseURL:
-    "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws",
+  baseURL: "http://192.168.29.235:5000",
+  // baseURL:
+  //   "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws",
 }));
 
 // const BASE_URL = "http://192.168.29.87:5000";
