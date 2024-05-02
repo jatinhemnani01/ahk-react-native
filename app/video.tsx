@@ -66,7 +66,7 @@ export default function VideoPlayer() {
           ScreenOrientation.OrientationLock.LANDSCAPE
         );
       } else if (
-        fullscreenUpdate === VideoFullscreenUpdate.PLAYER_WILL_DISMISS
+        fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS
       ) {
         await ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.PORTRAIT
@@ -140,7 +140,7 @@ export default function VideoPlayer() {
               uri: url,
             }}
             style={{ width: "100%", height: 300 }}
-            useNativeControls={showControls}
+            useNativeControls={true}
             resizeMode={ResizeMode.CONTAIN}
             ref={ref}
             shouldPlay
