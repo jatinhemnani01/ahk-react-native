@@ -9,6 +9,7 @@ import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
 import imgUrlState from "../../state/imgUrlState";
 import Toast from "react-native-toast-message";
+import { Linking } from "react-native";
 
 interface Props {
   kid: number;
@@ -68,6 +69,11 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
     }
   }
 
+  function handleDownload() {
+    console.log(kid);
+    Linking.openURL("https://google.com");
+  }
+
   return (
     <>
       <FadeAnimation>
@@ -83,6 +89,12 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
             </ListItem.Title>
           </ListItem.Content>
           {/* <ListItem.Chevron size={25} color={"black"} /> */}
+          <Icon
+            onPress={handleDownload}
+            name="download"
+            color={"black"}
+            type="ionicons"
+          />
           <Icon
             name={"heart"}
             onPress={handleLike}
