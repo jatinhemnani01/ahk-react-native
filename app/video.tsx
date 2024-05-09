@@ -100,14 +100,14 @@ export default function VideoPlayers() {
   // ENTER FULLSCREEN
   function enterFullscreen() {
     setIsFullScreen(true);
-    ref?.current?.pauseAsync();
-    setVideoHeight(800);
+    ref?.current?.playAsync();
+    setVideoHeight(screenHeight - 200);
   }
 
   // EXIT FULLSCREEN
   function exitFullscreen() {
     setIsFullScreen(false);
-    ref?.current?.pauseAsync();
+    ref?.current?.playAsync();
     setVideoHeight(300);
   }
 
