@@ -4,8 +4,9 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  Dimensions,
 } from "react-native";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ResizeMode,
   Video,
@@ -24,8 +25,9 @@ import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import analytics from "@react-native-firebase/analytics";
 import * as ScreenOrientation from "expo-screen-orientation";
+import VideoPlayer from "expo-video-player";
 
-export default function VideoPlayer() {
+export default function VideoPlayers() {
   ScreenCapture.usePreventScreenCapture();
 
   const params = useGlobalSearchParams();
@@ -38,8 +40,11 @@ export default function VideoPlayer() {
   const [loading, setLoading] = React.useState(false);
   const [speed, setSpeed] = React.useState<number>(1);
   const [url, setUrl] = React.useState("");
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [videoHeigh, setVideoHeight] = useState(300);
+  const screenHeight = Dimensions.get("window").height;
 
-  const ref = React.useRef<Video>(null);
+  const ref = React.useRef<Video>(null) as React.MutableRefObject<Video>;
 
   const handleIncrement = () => {
     setSpeed((prevSpeed: number) => prevSpeed + 0.01);
@@ -92,6 +97,20 @@ export default function VideoPlayer() {
       });
   }
 
+  // ENTER FULLSCREEN
+  function enterFullscreen() {
+    setIsFullScreen(true);
+    ref?.current?.pauseAsync();
+    setVideoHeight(800);
+  }
+
+  // EXIT FULLSCREEN
+  function exitFullscreen() {
+    setIsFullScreen(false);
+    ref?.current?.pauseAsync();
+    setVideoHeight(300);
+  }
+
   const Title = () => {
     return (
       <View style={tw`flex justify-center items-center m-3`}>
@@ -105,6 +124,7 @@ export default function VideoPlayer() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
+    console.log(videoHeigh);
     const timeOut = setTimeout(() => {
       if (!loading) {
         ref?.current?.playAsync();
@@ -140,7 +160,7 @@ export default function VideoPlayer() {
   return (
     <>
       <View>
-        <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
+        {/* <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
           <Video
             source={{
               uri: url,
@@ -173,7 +193,42 @@ export default function VideoPlayer() {
               speed={speed}
             />
           )}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <VideoPlayer
+          videoProps={{
+            style: {
+              width: "100%",
+              height: 300,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+            },
+            ref: ref,
+            shouldPlay: true,
+            resizeMode: ResizeMode.CONTAIN,
+            source: { uri: url },
+            rate: speed,
+            onLoadStart: () => setLoading(true),
+            onReadyForDisplay: () => setLoading(false),
+          }}
+          style={{ height: videoHeigh }}
+          fullscreen={{
+            visible: true,
+            enterFullscreen: () => enterFullscreen(),
+            exitFullscreen: () => exitFullscreen(),
+            inFullscreen: isFullScreen,
+          }}
+        />
+
+        {!loading && (
+          <VideoSpeedControl
+            handleReset={handleReset}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+            speed={speed}
+          />
+        )}
       </View>
     </>
   );
