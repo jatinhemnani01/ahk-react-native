@@ -1,19 +1,12 @@
 import {
   View,
   ActivityIndicator,
-  TouchableOpacity,
   Alert,
-  Platform,
   Dimensions,
   SafeAreaView,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  ResizeMode,
-  Video,
-  VideoFullscreenUpdate,
-  VideoFullscreenUpdateEvent,
-} from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
@@ -27,6 +20,11 @@ import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import analytics from "@react-native-firebase/analytics";
 import * as ScreenOrientation from "expo-screen-orientation";
 import VideoPlayer from "expo-video-player";
+import {
+  AdEventType,
+  RewardedAdEventType,
+} from "react-native-google-mobile-ads";
+import { setStatusBarHidden } from "expo-status-bar";
 
 export default function VideoPlayers() {
   ScreenCapture.usePreventScreenCapture();
@@ -57,28 +55,6 @@ export default function VideoPlayers() {
 
   const handleReset = () => {
     setSpeed(1);
-  };
-
-  const toggleControls = useCallback(() => {
-    setShowControls((showControls) => !showControls);
-  }, []);
-
-  const onFullscreenUpdate = async ({
-    fullscreenUpdate,
-  }: VideoFullscreenUpdateEvent) => {
-    if (Platform.OS === "android") {
-      if (fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_PRESENT) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.LANDSCAPE
-        );
-      } else if (
-        fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_DISMISS
-      ) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.PORTRAIT
-        );
-      }
-    }
   };
 
   function fetchSingleVideo() {
@@ -114,10 +90,8 @@ export default function VideoPlayers() {
 
   const Title = () => {
     return (
-      <View style={tw`flex justify-center items-center m-3`}>
-        <Text style={tw`font-bold capitalize text-lg text-center`}>
-          {title}
-        </Text>
+      <View style={tw`flex justify-center flex-1`}>
+        <Text style={tw`font-bold text-white text-lg`} />
       </View>
     );
   };
@@ -126,11 +100,6 @@ export default function VideoPlayers() {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
     console.log(videoHeigh);
-    const timeOut = setTimeout(() => {
-      if (!loading) {
-        ref?.current?.playAsync();
-      }
-    }, 1000);
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
@@ -142,19 +111,63 @@ export default function VideoPlayers() {
 
     if (isPro) return;
     if (!forAll) return;
-    rewardedInterstitial.load();
 
     return () => {
       deactivateKeepAwake("video");
-      clearTimeout(timeOut);
+
       if (isPro) return;
       if (!forAll) return;
 
-      if (rewardedInterstitial.loaded) {
+      // if (rewardedInterstitial.loaded) {
+      //   rewardedInterstitial.show();
+      // } else {
+      //   console.log("Ad not loaded");
+      // }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isPro) return;
+    if (!forAll) return;
+    rewardedInterstitial.load();
+    const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
+      RewardedAdEventType.LOADED,
+      () => {
+        //code
+        setStatusBarHidden(true)
         rewardedInterstitial.show();
-      } else {
-        console.log("Ad not loaded");
+        ref?.current?.pauseAsync();
+        console.log(("Showing ad"));
       }
+    );
+    const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
+      AdEventType.CLOSED,
+      () => {
+        console.log("User earned reward of ");
+        setStatusBarHidden(false)
+        ref?.current?.playAsync();
+      }
+    );
+
+    const unsubscribeError = rewardedInterstitial.addAdEventListener(
+      AdEventType.ERROR,
+      () => {
+        ref?.current?.playAsync();
+        console.log(("Error ad"));
+        
+      }
+    );
+
+    // Start loading the rewarded interstitial ad straight away
+    rewardedInterstitial.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      if (isPro) return;
+      if (!forAll) return;
+      unsubscribeLoaded();
+      unsubscribeEarned();
+      unsubscribeError();
     };
   }, []);
 
@@ -214,6 +227,7 @@ export default function VideoPlayers() {
             onReadyForDisplay: () => setLoading(false),
           }}
           style={{ height: videoHeigh }}
+          header={<Title />}
           fullscreen={{
             visible: true,
             enterFullscreen: () => enterFullscreen(),
@@ -221,6 +235,12 @@ export default function VideoPlayers() {
             inFullscreen: isFullScreen,
           }}
         />
+
+        {loading && (
+          <View style={tw`flex justify-center items-center m-5`}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
 
         {!loading && (
           <VideoSpeedControl
