@@ -8,7 +8,6 @@ import useFetch from "../../src/hooks/useFetch";
 import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
-import BannerAdComp from "../../src/ads/BannerAdComp";
 import analytics from "@react-native-firebase/analytics";
 
 export default function Search() {
@@ -108,8 +107,6 @@ export default function Search() {
             value={searchValue}
           />
         </View>
-
-        <BannerAdComp />
 
         {isEmpty && <ShowEmpty />}
 
