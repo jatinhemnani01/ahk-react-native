@@ -5,7 +5,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
@@ -18,7 +18,6 @@ import BASE_URL from "../src/constants/base_url";
 import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import analytics from "@react-native-firebase/analytics";
-import * as ScreenOrientation from "expo-screen-orientation";
 import VideoPlayer from "expo-video-player";
 import {
   AdEventType,

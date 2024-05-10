@@ -29,7 +29,6 @@
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.10",
     "expo-screen-capture": "~5.8.1",
-    "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "expo-video-player": "^2.2.0",
     "react": "18.2.0",

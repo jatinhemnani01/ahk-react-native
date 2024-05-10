@@ -26,7 +26,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     // Fetching remote config
-    // fetchEverything();
+    fetchEverything();
 
     // Function to update subscription
 
