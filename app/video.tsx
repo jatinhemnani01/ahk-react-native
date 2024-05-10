@@ -5,6 +5,7 @@ import {
   Alert,
   Platform,
   Dimensions,
+  SafeAreaView,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -159,7 +160,7 @@ export default function VideoPlayers() {
 
   return (
     <>
-      <View>
+      <SafeAreaView>
         {/* <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
           <Video
             source={{
@@ -229,7 +230,7 @@ export default function VideoPlayers() {
             speed={speed}
           />
         )}
-      </View>
+      </SafeAreaView>
     </>
   );
 }
