@@ -5,7 +5,7 @@ interface forAllInt {
 }
 
 const forAllState = create<forAllInt>((set) => ({
-  forAll: true,
+  forAll: false,
 }));
 
 export default forAllState;
