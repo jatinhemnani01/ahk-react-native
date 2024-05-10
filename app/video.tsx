@@ -99,7 +99,6 @@ export default function VideoPlayers() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
-    console.log(videoHeigh);
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
@@ -134,17 +133,15 @@ export default function VideoPlayers() {
       RewardedAdEventType.LOADED,
       () => {
         //code
-        setStatusBarHidden(true)
+        setStatusBarHidden(true);
         rewardedInterstitial.show();
         ref?.current?.pauseAsync();
-        console.log(("Showing ad"));
       }
     );
     const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
       AdEventType.CLOSED,
       () => {
-        console.log("User earned reward of ");
-        setStatusBarHidden(false)
+        setStatusBarHidden(false);
         ref?.current?.playAsync();
       }
     );
@@ -153,8 +150,6 @@ export default function VideoPlayers() {
       AdEventType.ERROR,
       () => {
         ref?.current?.playAsync();
-        console.log(("Error ad"));
-        
       }
     );
 

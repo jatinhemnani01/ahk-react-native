@@ -69,10 +69,10 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
     }
   }
 
-  function handleDownload() {
-    console.log(kid);
-    Linking.openURL("https://google.com");
-  }
+  // function handleDownload() {
+  //   console.log(kid);
+  //   Linking.openURL("https://google.com");
+  // }
 
   return (
     <>
@@ -89,12 +89,12 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
             </ListItem.Title>
           </ListItem.Content>
           {/* <ListItem.Chevron size={25} color={"black"} /> */}
-          <Icon
+          {/* <Icon
             onPress={handleDownload}
             name="download"
             color={"black"}
             type="ionicons"
-          />
+          /> */}
           <Icon
             name={"heart"}
             onPress={handleLike}
