@@ -76,16 +76,16 @@ export default function VideoPlayers() {
 
   // ENTER FULLSCREEN
   function enterFullscreen() {
+    setVideoHeight(screenHeight - 200);
     setIsFullScreen(true);
     ref?.current?.playAsync();
-    setVideoHeight(screenHeight - 200);
   }
 
   // EXIT FULLSCREEN
   function exitFullscreen() {
+    setVideoHeight(300);
     setIsFullScreen(false);
     ref?.current?.playAsync();
-    setVideoHeight(300);
   }
 
   const Title = () => {
@@ -128,7 +128,7 @@ export default function VideoPlayers() {
   useEffect(() => {
     if (isPro) return;
     if (!forAll) return;
-    rewardedInterstitial.load();
+    // rewardedInterstitial.load();
     const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
       RewardedAdEventType.LOADED,
       () => {
