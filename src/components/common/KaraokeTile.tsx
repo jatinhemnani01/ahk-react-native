@@ -8,6 +8,7 @@ import FadeAnimation from "./FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
 import imgUrlState from "../../state/imgUrlState";
+import downloadState from "../../state/downloadState";
 import Toast from "react-native-toast-message";
 import { Linking } from "react-native";
 
@@ -21,6 +22,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
   const imgUrl = imgUrlState((state) => state.url);
+  const download = downloadState((state) => state.download);
 
   const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
 
@@ -69,10 +71,9 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
     }
   }
 
-  // function handleDownload() {
-  //   console.log(kid);
-  //   Linking.openURL("https://google.com");
-  // }
+  function handleDownload() {
+    Linking.openURL(`${download}/karaoke/${kid}`);
+  }
 
   return (
     <>
@@ -88,13 +89,12 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
               {title}
             </ListItem.Title>
           </ListItem.Content>
-          {/* <ListItem.Chevron size={25} color={"black"} /> */}
-          {/* <Icon
+          <Icon
             onPress={handleDownload}
             name="download"
             color={"black"}
             type="ionicons"
-          /> */}
+          />
           <Icon
             name={"heart"}
             onPress={handleLike}
