@@ -23,7 +23,7 @@ export default function RootLayout() {
     BASE_URL.setState({ baseURL: everything.base_url });
     imgUrlState.setState({ url: everything.img });
     forAllState.setState({ forAll: everything.all });
-    // downloadState.setState({ download: everything.download });
+    downloadState.setState({ download: everything.download });
   }
 
   useEffect(() => {

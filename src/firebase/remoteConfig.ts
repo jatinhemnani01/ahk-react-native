@@ -22,6 +22,7 @@ export class RemoteConfigService {
           all: all?.["all"].asBoolean(),
           base_url: all?.["base_url"].asString(),
           img: all?.["img"].asString(),
+          download: all?.["download"].asString(),
         };
       });
     } catch (error) {
@@ -30,6 +31,7 @@ export class RemoteConfigService {
         base_url:
           "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws",
         img: "https://ahkaraoke-admin.vercel.app/image.jpg",
+        download: "https://ahkaraoke.vercel.app/#",
       };
     }
   }
