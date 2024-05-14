@@ -98,6 +98,7 @@ export default function VideoPlayers() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
+
     // const playTimeout = setTimeout(() => {
     //   if (!loading) {
     //     ref?.current?.playAsync();
@@ -131,9 +132,9 @@ export default function VideoPlayers() {
       RewardedAdEventType.LOADED,
       () => {
         //code
+        ref?.current?.pauseAsync();
         setStatusBarHidden(true);
         rewardedInterstitial.show();
-        ref?.current?.pauseAsync();
       }
     );
     const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
@@ -167,40 +168,6 @@ export default function VideoPlayers() {
   return (
     <>
       <SafeAreaView>
-        {/* <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
-          <Video
-            source={{
-              uri: url,
-            }}
-            style={{ width: "100%", height: 300 }}
-            useNativeControls={true}
-            resizeMode={ResizeMode.CONTAIN}
-            ref={ref}
-            shouldPlay
-            rate={speed}
-            isMuted={false}
-            onLoadStart={() => setLoading(true)}
-            onReadyForDisplay={() => setLoading(false)}
-            onFullscreenUpdate={onFullscreenUpdate}
-          />
-
-          {loading && (
-            <View style={tw`flex justify-center items-center`}>
-              <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-          )}
-
-          {!loading && <Title />}
-
-          {!loading && (
-            <VideoSpeedControl
-              handleReset={handleReset}
-              handleDecrement={handleDecrement}
-              handleIncrement={handleIncrement}
-              speed={speed}
-            />
-          )}
-        </TouchableOpacity> */}
         <VideoPlayer
           videoProps={{
             style: {
