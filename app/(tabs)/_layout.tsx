@@ -25,7 +25,7 @@ export default function TabLayout() {
     MobileAds().initialize()
     const timeout = setTimeout(() => {
       updateSubscription();
-    }, 3000);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
