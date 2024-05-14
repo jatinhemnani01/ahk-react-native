@@ -13,6 +13,7 @@ import { screens } from "../src/constants/screens";
 import { setStatusBarStyle } from "expo-status-bar";
 import NotificationController from "../src/components/common/NotificationController";
 import Toast from "react-native-toast-message";
+import downloadState from "../src/state/downloadState";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -22,6 +23,7 @@ export default function RootLayout() {
     BASE_URL.setState({ baseURL: everything.base_url });
     imgUrlState.setState({ url: everything.img });
     forAllState.setState({ forAll: everything.all });
+    // downloadState.setState({ download: everything.download });
   }
 
   useEffect(() => {
@@ -40,6 +42,8 @@ export default function RootLayout() {
       Purchases.setLogLevel(LOG_LEVEL.DEBUG);
       if (Platform.OS === "android") {
         Purchases.configure({ apiKey: "goog_gGxArHKrmaNHKqOSVLLiPWnlwYL" });
+      } else if (Platform.OS === "ios") {
+        Purchases.configure({ apiKey: "appl_LANOZzqgWzjTgPaWbEueJiEofgr" });
       }
     }
     setupPurchases();
