@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { Alert, PermissionsAndroid } from "react-native";
+import { Alert, PermissionsAndroid, Platform } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 
 function NotificationController() {
   async function requestUserPermission() {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-    );
+    if (Platform.OS === "android") {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+    }
 
     const authStatus = await messaging().requestPermission();
     const enabled =
