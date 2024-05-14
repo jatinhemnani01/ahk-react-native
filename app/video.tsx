@@ -5,7 +5,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
@@ -98,6 +98,11 @@ export default function VideoPlayers() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
+    // const playTimeout = setTimeout(() => {
+    //   if (!loading) {
+    //     ref?.current?.playAsync();
+    //   }
+    // }, 1000);
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
@@ -115,12 +120,6 @@ export default function VideoPlayers() {
 
       if (isPro) return;
       if (!forAll) return;
-
-      // if (rewardedInterstitial.loaded) {
-      //   rewardedInterstitial.show();
-      // } else {
-      //   console.log("Ad not loaded");
-      // }
     };
   }, []);
 
@@ -218,7 +217,10 @@ export default function VideoPlayers() {
             source: { uri: url },
             rate: speed,
             onLoadStart: () => setLoading(true),
-            onReadyForDisplay: () => setLoading(false),
+            onReadyForDisplay: () => {
+              setLoading(false);
+              ref?.current?.playAsync();
+            },
           }}
           style={{ height: videoHeigh }}
           header={<Title />}
