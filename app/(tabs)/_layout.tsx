@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { updateSubscription } from "../../src/subscription/getSubscription";
 import { useEffect } from "react";
 import { MobileAds } from "react-native-google-mobile-ads";
+import BannerAdComp from "../../src/ads/BannerAdComp";
 
 export default function TabLayout() {
   const MoreComp = () => {
@@ -22,7 +23,7 @@ export default function TabLayout() {
   };
 
   useEffect(() => {
-    MobileAds().initialize()
+    MobileAds().initialize();
     const timeout = setTimeout(() => {
       updateSubscription();
     }, 2000);
@@ -144,6 +145,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+      <BannerAdComp />
     </>
   );
 }

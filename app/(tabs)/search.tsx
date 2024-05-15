@@ -9,6 +9,7 @@ import { KaraokeListItem } from "../../src/types/KaraokeListItemType";
 import { FlashList } from "@shopify/flash-list";
 import tw from "twrnc";
 import analytics from "@react-native-firebase/analytics";
+import BannerAdComp from "../../src/ads/BannerAdComp";
 
 export default function Search() {
   const [searchValue, updateSearch] = useState("");
@@ -107,6 +108,7 @@ export default function Search() {
             value={searchValue}
           />
         </View>
+        <BannerAdComp />
 
         {isEmpty && <ShowEmpty />}
 
