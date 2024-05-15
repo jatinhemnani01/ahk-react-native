@@ -32,7 +32,7 @@ export default () => {
         title="Rate Us"
         onPress={() =>
           openURL(
-            "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
+            "https://onelink.to/te5v7d"
           )
         }
       />
@@ -44,7 +44,7 @@ export default () => {
         }}
         color={colors.primary}
         title="Update"
-        onPress={() => openURL("market://details?id=com.ahkkaraoke.app")}
+        onPress={() => openURL("https://onelink.to/te5v7d")}
       />
       <SpeedDial.Action
         icon={{ name: "bell", color: "#fff", type: "feather" }}

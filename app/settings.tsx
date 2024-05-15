@@ -1,4 +1,4 @@
-import { Linking, View } from "react-native";
+import { Linking, Platform, View } from "react-native";
 import React from "react";
 import SettingsItem from "../src/components/settings/SettingsItem";
 import { router } from "expo-router";
@@ -6,6 +6,7 @@ import isProStore from "../src/state/isPro";
 
 export default function Settings() {
   const isPro = isProStore((state) => state.isPro);
+  const isIos = Platform.OS === "ios" ? true : false;
 
   function openURL(url: string) {
     Linking.openURL(url);
@@ -18,15 +19,13 @@ export default function Settings() {
   return (
     <>
       <View style={{ backgroundColor: "white", height: "100%" }}>
-        <SettingsItem
-          onPress={() =>
-            openURL(
-              "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
-            )
-          }
-          title="Rate Us"
-          icon="star"
-        />
+        {!isIos && (
+          <SettingsItem
+            onPress={() => openURL("https://onelink.to/te5v7d")}
+            title="Rate Us"
+            icon="star"
+          />
+        )}
         <SettingsItem
           onPress={() => openURL("whatsapp://send?phone=+918962210828")}
           title="Contact Us"
