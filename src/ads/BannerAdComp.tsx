@@ -4,7 +4,7 @@ import React from "react";
 import forAllState from "../state/forAllState";
 import isProStore from "../state/isPro";
 
-export default function BannerAdComp() {
+function BannerAdComp() {
   const isPro = isProStore((state) => state.isPro);
   const forAll = forAllState((state) => state.forAll);
   const android = "ca-app-pub-5153786927158690/1601135861";
@@ -26,3 +26,5 @@ export default function BannerAdComp() {
     </View>
   );
 }
+
+export default React.memo(BannerAdComp);
