@@ -1,13 +1,14 @@
 {
   "cli": {
-    "version": ">= 7.1.2"
+    "version": ">= 7.1.2",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "ios":{
-        "simulator":true
+      "ios": {
+        "simulator": true
       }
     },
     "preview": {
