@@ -6,7 +6,6 @@ import isProStore from "../src/state/isPro";
 
 export default function Settings() {
   const isPro = isProStore((state) => state.isPro);
-  const isIos = Platform.OS === "ios" ? true : false;
 
   function openURL(url: string) {
     Linking.openURL(url);
@@ -19,13 +18,11 @@ export default function Settings() {
   return (
     <>
       <View style={{ backgroundColor: "white", height: "100%" }}>
-        {!isIos && (
-          <SettingsItem
-            onPress={() => openURL("https://onelink.to/te5v7d")}
-            title="Rate Us"
-            icon="star"
-          />
-        )}
+        <SettingsItem
+          onPress={() => openURL("https://onelink.to/te5v7d")}
+          title="Rate Us"
+          icon="star"
+        />
         <SettingsItem
           onPress={() => openURL("whatsapp://send?phone=+918962210828")}
           title="Contact Us"
@@ -60,6 +57,15 @@ export default function Settings() {
             )
           }
           title="Privacy Policy"
+          icon="shield"
+        />
+        <SettingsItem
+          onPress={() =>
+            openURL(
+              "https://gist.github.com/jatinhemnani01/47c46acd79e034421def5a92acfd703b"
+            )
+          }
+          title="Terms Of Use (EULA)"
           icon="shield"
         />
       </View>
