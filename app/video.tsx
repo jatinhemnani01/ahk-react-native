@@ -90,7 +90,7 @@ export default function VideoPlayers() {
   const Title = () => {
     return (
       <View style={tw`flex justify-center flex-1`}>
-        <Text style={tw`font-bold text-white text-lg`} />
+        <Text style={tw`font-bold text-white text-lg text-center`}>{title}</Text>
       </View>
     );
   };
