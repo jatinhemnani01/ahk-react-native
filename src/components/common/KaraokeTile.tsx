@@ -10,7 +10,7 @@ import isProStore from "../../state/isPro";
 import imgUrlState from "../../state/imgUrlState";
 import downloadState from "../../state/downloadState";
 import Toast from "react-native-toast-message";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 
 interface Props {
   kid: number;
@@ -23,6 +23,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const forAll = forAllState((state) => state.forAll);
   const imgUrl = imgUrlState((state) => state.url);
   const download = downloadState((state) => state.download);
+  const isIos = Platform.OS === "ios";
 
   const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
 
@@ -89,12 +90,14 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
               {title}
             </ListItem.Title>
           </ListItem.Content>
-          <Icon
-            onPress={handleDownload}
-            name="download"
-            color={"black"}
-            type="ionicons"
-          />
+          {!isIos && (
+            <Icon
+              onPress={handleDownload}
+              name="download"
+              color={"black"}
+              type="ionicons"
+            />
+          )}
           <Icon
             name={"heart"}
             onPress={handleLike}
