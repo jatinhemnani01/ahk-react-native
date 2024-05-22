@@ -14,9 +14,13 @@ import { setStatusBarStyle } from "expo-status-bar";
 import NotificationController from "../src/components/common/NotificationController";
 import Toast from "react-native-toast-message";
 import downloadState from "../src/state/downloadState";
+import { initialize } from "react-native-clarity";
+import { isIOS } from "../src/utils/isIOS";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
+
+  // CLARITY INSTALLATION
 
   async function fetchEverything() {
     const everything = await remoteConfigService.getEverything();
@@ -28,7 +32,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     // Fetching remote config
-    fetchEverything();
+    // fetchEverything();
 
     // Function to update subscription
 
@@ -50,6 +54,12 @@ export default function RootLayout() {
 
     // Function to get analytics
     getAnalytics();
+
+    if (!isIOS()) {
+      initialize("mfmfyodmu0");
+      console.log("kk");
+      
+    }
 
     // Cleanup function
     return () => {
