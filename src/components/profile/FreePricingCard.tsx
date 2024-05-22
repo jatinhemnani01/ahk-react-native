@@ -13,7 +13,7 @@ export default function FreePricingCard({ onPress }: { onPress: () => void }) {
           color={colors.primary}
           title="Get Premium Now"
           price="Buy Now and get access to 8,000+ Karaoke"
-          info={["Free Karaoke", "Basic Support", "Change Pitch/Tempo/Key"]}
+          info={["8,000+ Karaoke", "Premium Support", "Change Tempo/Key"]}
           button={{
             title: "Buy Now",
             onPress: onPress,

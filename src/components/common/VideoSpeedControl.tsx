@@ -19,9 +19,7 @@ export default function VideoSpeedControl({
 }: VideoSpeedControlProps) {
   return (
     <View style={tw`flex justify-center items-center mt-10`}>
-      <Text style={tw`font-semibold mb-5 text-xl`}>
-        Change Pitch/Tempo/Key
-      </Text>
+      <Text style={tw`font-semibold mb-5 text-xl`}>Change Tempo/Key</Text>
       <View style={tw`flex flex-row gap-2 justify-center items-center`}>
         <Button onPress={handleIncrement} radius={"xl"} color={"#cbd5e1"}>
           <Icon name="plus" color={"black"} size={20} type="font-awesome" />
