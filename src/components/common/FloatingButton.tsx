@@ -70,6 +70,12 @@ export default () => {
         title="User ID"
         onPress={() => changeScreen("/userID")}
       />
+      <SpeedDial.Action
+        icon={{ name: "dollar-sign", color: "#fff", type: "feather" }}
+        color={colors.primary}
+        title="Subscription"
+        onPress={() => changeScreen("/profile")}
+      />
     </SpeedDial>
   );
 };
