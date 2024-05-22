@@ -1,5 +1,4 @@
 import {
-  Alert,
   NativeSyntheticEvent,
   TextInputChangeEventData,
   View,
@@ -8,6 +7,7 @@ import React, { useState } from "react";
 import { Button, Input, Text } from "@rneui/base";
 import tw from "twrnc";
 import BASE_URL from "../src/constants/base_url";
+import Toast from "react-native-toast-message";
 
 export default function Feedback() {
   const [mobile, setMobile] = useState("");
@@ -38,27 +38,40 @@ export default function Feedback() {
       setMobile("");
       setMessage("");
       setMobileError(true);
-      Alert.alert("Feedback Submitted Successfully");
+    });
+
+    Toast.show({
+      text1: "Feedback Submitted!",
+      autoHide: true,
+      swipeable: true,
+      type: "success",
+      position: "bottom",
     });
   }
 
   return (
-    <View style={tw`p-5`}>
-      <Input
-        keyboardType="phone-pad"
-        label="Mobile No."
-        onChange={changeMobile}
-        value={mobile}
-        errorMessage={mobileError ? "Invalid Mobile No." : ""}
-      />
-      <Input
-        keyboardType="name-phone-pad"
-        value={message}
-        label="Feedback Message"
-        onChange={changeMessage}
-      />
+    <>
+      <View style={tw`p-5`}>
+        <Input
+          keyboardType="phone-pad"
+          label="Mobile No."
+          onChange={changeMobile}
+          value={mobile}
+          errorMessage={mobileError ? "Invalid Mobile No." : ""}
+        />
+        <Input
+          keyboardType="name-phone-pad"
+          value={message}
+          label="Feedback Message"
+          onChange={changeMessage}
+        />
 
-      <Button onPress={handleSubmit} title={"Submit"} disabled={mobileError} />
-    </View>
+        <Button
+          onPress={handleSubmit}
+          title={"Submit"}
+          disabled={mobileError}
+        />
+      </View>
+    </>
   );
 }

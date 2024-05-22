@@ -5,6 +5,8 @@ import { colors } from "../../src/constants/colors";
 import { router } from "expo-router";
 import { updateSubscription } from "../../src/subscription/getSubscription";
 import { useEffect } from "react";
+import { MobileAds } from "react-native-google-mobile-ads";
+import BannerAdComp from "../../src/ads/BannerAdComp";
 
 export default function TabLayout() {
   const MoreComp = () => {
@@ -21,10 +23,10 @@ export default function TabLayout() {
   };
 
   useEffect(() => {
+    MobileAds().initialize();
     const timeout = setTimeout(() => {
       updateSubscription();
-      
-    }, 3000);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
@@ -143,6 +145,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+      <BannerAdComp />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Linking, View } from "react-native";
+import { Linking, Platform, View } from "react-native";
 import React from "react";
 import SettingsItem from "../src/components/settings/SettingsItem";
 import { router } from "expo-router";
@@ -19,11 +19,7 @@ export default function Settings() {
     <>
       <View style={{ backgroundColor: "white", height: "100%" }}>
         <SettingsItem
-          onPress={() =>
-            openURL(
-              "https://play.google.com/store/apps/details?id=com.ahkkaraoke.app"
-            )
-          }
+          onPress={() => openURL("https://onelink.to/te5v7d")}
           title="Rate Us"
           icon="star"
         />
@@ -61,6 +57,15 @@ export default function Settings() {
             )
           }
           title="Privacy Policy"
+          icon="shield"
+        />
+        <SettingsItem
+          onPress={() =>
+            openURL(
+              "https://gist.github.com/jatinhemnani01/47c46acd79e034421def5a92acfd703b"
+            )
+          }
+          title="Terms Of Use (EULA)"
           icon="shield"
         />
       </View>

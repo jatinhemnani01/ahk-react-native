@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { Button, Input, Text } from "@rneui/base";
 import tw from "twrnc";
 import BASE_URL from "../src/constants/base_url";
+import Toast from "react-native-toast-message";
 
 export default function SongRequest() {
   const [mobile, setMobile] = useState("");
@@ -38,9 +39,14 @@ export default function SongRequest() {
       setMobile("");
       setMessage("");
       setMobileError(true);
-      Alert.alert(
-        "Song Request Submitted, We'll add the song as per availability."
-      );
+    });
+
+    Toast.show({
+      text1: "Song Request Submitted!",
+      autoHide: true,
+      swipeable: true,
+      type: "success",
+      position: "bottom",
     });
   }
 

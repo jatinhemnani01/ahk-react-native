@@ -1,17 +1,12 @@
 import {
   View,
   ActivityIndicator,
-  TouchableOpacity,
   Alert,
-  Platform,
+  Dimensions,
+  SafeAreaView,
 } from "react-native";
-import React, { useCallback, useEffect } from "react";
-import {
-  ResizeMode,
-  Video,
-  VideoFullscreenUpdate,
-  VideoFullscreenUpdateEvent,
-} from "expo-av";
+import React, { useEffect, useState } from "react";
+import { ResizeMode, Video } from "expo-av";
 import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
@@ -23,9 +18,14 @@ import BASE_URL from "../src/constants/base_url";
 import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import analytics from "@react-native-firebase/analytics";
-import * as ScreenOrientation from "expo-screen-orientation";
+import VideoPlayer from "expo-video-player";
+import {
+  AdEventType,
+  RewardedAdEventType,
+} from "react-native-google-mobile-ads";
+import { setStatusBarHidden } from "expo-status-bar";
 
-export default function VideoPlayer() {
+export default function VideoPlayers() {
   ScreenCapture.usePreventScreenCapture();
 
   const params = useGlobalSearchParams();
@@ -38,8 +38,11 @@ export default function VideoPlayer() {
   const [loading, setLoading] = React.useState(false);
   const [speed, setSpeed] = React.useState<number>(1);
   const [url, setUrl] = React.useState("");
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [videoHeigh, setVideoHeight] = useState(300);
+  const screenHeight = Dimensions.get("window").height;
 
-  const ref = React.useRef(null);
+  const ref = React.useRef<Video>(null) as React.MutableRefObject<Video>;
 
   const handleIncrement = () => {
     setSpeed((prevSpeed: number) => prevSpeed + 0.01);
@@ -51,28 +54,6 @@ export default function VideoPlayer() {
 
   const handleReset = () => {
     setSpeed(1);
-  };
-
-  const toggleControls = useCallback(() => {
-    setShowControls((showControls) => !showControls);
-  }, []);
-
-  const onFullscreenUpdate = async ({
-    fullscreenUpdate,
-  }: VideoFullscreenUpdateEvent) => {
-    if (Platform.OS === "android") {
-      if (fullscreenUpdate === VideoFullscreenUpdate.PLAYER_DID_PRESENT) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.LANDSCAPE
-        );
-      } else if (
-        fullscreenUpdate === VideoFullscreenUpdate.PLAYER_WILL_DISMISS
-      ) {
-        await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.PORTRAIT
-        );
-      }
-    }
   };
 
   function fetchSingleVideo() {
@@ -92,12 +73,24 @@ export default function VideoPlayer() {
       });
   }
 
+  // ENTER FULLSCREEN
+  function enterFullscreen() {
+    setVideoHeight(screenHeight - 200);
+    setIsFullScreen(true);
+    ref?.current?.playAsync();
+  }
+
+  // EXIT FULLSCREEN
+  function exitFullscreen() {
+    setVideoHeight(300);
+    setIsFullScreen(false);
+    ref?.current?.playAsync();
+  }
+
   const Title = () => {
     return (
-      <View style={tw`flex justify-center items-center m-3`}>
-        <Text style={tw`font-bold capitalize text-lg text-center`}>
-          {title}
-        </Text>
+      <View style={tw`flex justify-center flex-1`}>
+        <Text style={tw`font-bold text-white text-lg text-center`}>{title}</Text>
       </View>
     );
   };
@@ -105,6 +98,12 @@ export default function VideoPlayer() {
   useEffect(() => {
     // KEEP SCREEN AWAKE
     activateKeepAwakeAsync("video");
+
+    // const playTimeout = setTimeout(() => {
+    //   if (!loading) {
+    //     ref?.current?.playAsync();
+    //   }
+    // }, 1000);
 
     // FETCHING VIDEO URL
     fetchSingleVideo();
@@ -116,58 +115,105 @@ export default function VideoPlayer() {
 
     if (isPro) return;
     if (!forAll) return;
-    rewardedInterstitial.load();
 
     return () => {
       deactivateKeepAwake("video");
+
       if (isPro) return;
       if (!forAll) return;
+    };
+  }, []);
 
-      if (rewardedInterstitial.loaded) {
+  useEffect(() => {
+    if (isPro) return;
+    if (!forAll) return;
+    // rewardedInterstitial.load();
+    const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
+      RewardedAdEventType.LOADED,
+      () => {
+        //code
+        ref?.current?.pauseAsync();
+        setStatusBarHidden(true);
         rewardedInterstitial.show();
-      } else {
-        console.log("Ad not loaded");
       }
+    );
+    const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
+      AdEventType.CLOSED,
+      () => {
+        setStatusBarHidden(false);
+        ref?.current?.playAsync();
+      }
+    );
+
+    const unsubscribeError = rewardedInterstitial.addAdEventListener(
+      AdEventType.ERROR,
+      () => {
+        ref?.current?.playAsync();
+      }
+    );
+
+    // Start loading the rewarded interstitial ad straight away
+    rewardedInterstitial.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      if (isPro) return;
+      if (!forAll) return;
+      unsubscribeLoaded();
+      unsubscribeEarned();
+      unsubscribeError();
     };
   }, []);
 
   return (
     <>
-      <View>
-        <TouchableOpacity onPress={toggleControls} activeOpacity={1}>
-          <Video
-            source={{
-              uri: url,
-            }}
-            style={{ width: "100%", height: 300 }}
-            useNativeControls={showControls}
-            resizeMode={ResizeMode.CONTAIN}
-            ref={ref}
-            shouldPlay
-            rate={speed}
-            onLoadStart={() => setLoading(true)}
-            onReadyForDisplay={() => setLoading(false)}
-            onFullscreenUpdate={onFullscreenUpdate}
+      <SafeAreaView>
+        <VideoPlayer
+          videoProps={{
+            style: {
+              width: "100%",
+              height: 300,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+            },
+            ref: ref,
+            shouldPlay: true,
+            resizeMode: ResizeMode.CONTAIN,
+            source: { uri: url },
+            rate: speed,
+            onLoadStart: () => setLoading(true),
+            onReadyForDisplay: () => {
+              setLoading(false);
+              ref?.current?.playAsync();
+            },
+          }}
+          style={{ height: videoHeigh }}
+          header={<Title />}
+          fullscreen={{
+            visible: true,
+            enterFullscreen: () => enterFullscreen(),
+            exitFullscreen: () => exitFullscreen(),
+            inFullscreen: isFullScreen,
+          }}
+        />
+
+        {loading && (
+          <View style={tw`flex justify-center items-center m-5`}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+
+        {!loading && (
+          <VideoSpeedControl
+            handleReset={handleReset}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+            speed={speed}
           />
-
-          {loading && (
-            <View style={tw`flex justify-center items-center`}>
-              <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-          )}
-
-          {!loading && <Title />}
-
-          {!loading && (
-            <VideoSpeedControl
-              handleReset={handleReset}
-              handleDecrement={handleDecrement}
-              handleIncrement={handleIncrement}
-              speed={speed}
-            />
-          )}
-        </TouchableOpacity>
-      </View>
+        )}
+      </SafeAreaView>
     </>
   );
 }
