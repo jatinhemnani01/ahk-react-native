@@ -57,8 +57,6 @@ export default function RootLayout() {
 
     if (!isIOS()) {
       initialize("mfmfyodmu0");
-      console.log("kk");
-      
     }
 
     // Cleanup function
