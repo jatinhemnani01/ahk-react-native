@@ -96,7 +96,7 @@ export default function Search() {
     };
   };
 
-  const debouncedFetchSearch = useCallback(debounce(fetchSearch, 500), []);
+  const debouncedFetchSearch = useCallback(debounce(fetchSearch, 700), []);
 
   return (
     <>
