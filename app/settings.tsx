@@ -19,6 +19,12 @@ export default function Settings() {
     <>
       <View style={{ backgroundColor: "white", height: "100%" }}>
         <SettingsItem
+          onPress={() => changeScreen("/profile")}
+          title="Subscription"
+          icon="dollar-sign"
+          type="feather"
+        />
+        <SettingsItem
           onPress={() => openURL("https://onelink.to/te5v7d")}
           title="Rate Us"
           icon="star"
