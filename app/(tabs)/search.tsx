@@ -1,5 +1,5 @@
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { View, ActivityIndicator } from "react-native";
-import React, { useEffect, useState } from "react";
 import { SearchBar, Text } from "@rneui/base";
 import { colors } from "../../src/constants/colors";
 import KaraokeTile from "../../src/components/common/KaraokeTile";
@@ -16,7 +16,6 @@ export default function Search() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
-
   const [page, setPage] = useState(1);
 
   const { data, error, setData, isLoading } = useFetch(
@@ -27,14 +26,12 @@ export default function Search() {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
   };
 
-  async function fetchSearch() {
+  async function fetchSearch(query: string) {
     setIsEmpty(false);
     setLoading(true);
     setPage(1);
     const response = await fetch(
-      `${
-        BASE_URL.getState().baseURL
-      }/v2/search?page=1&limit=25&q=${searchValue}`
+      `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=${query}`
     );
     const newData = await response.json();
 
@@ -55,17 +52,15 @@ export default function Search() {
   async function fetchMore() {
     setPage((prev) => prev + 1);
     const response = await fetch(
-      `${
-        BASE_URL.getState().baseURL
-      }/v2/search?page=${page}&limit=25&q=${searchValue}`
+      `${BASE_URL.getState().baseURL}/v2/search?page=${page}&limit=25&q=${searchValue}`
     );
-    const newDate = await response.json();
-    if (newDate.length >= 25) {
+    const newData = await response.json();
+    if (newData.length >= 25) {
       setHasMore(true);
     } else {
       setHasMore(false);
     }
-    setData([...data, ...newDate]);
+    setData([...data, ...newData]);
   }
 
   const HasMore = () => {
@@ -93,6 +88,16 @@ export default function Search() {
     });
   }, []);
 
+  const debounce = (func: (...args: any[]) => void, wait: number) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  };
+
+  const debouncedFetchSearch = useCallback(debounce(fetchSearch, 500), []);
+
   return (
     <>
       <View style={{ height: "100%" }}>
@@ -100,8 +105,10 @@ export default function Search() {
           <SearchBar
             platform="android"
             loadingProps={{ color: colors.primary, size: 25 }}
-            onChangeText={(newVal) => updateSearch(newVal)}
-            onSubmitEditing={fetchSearch}
+            onChangeText={(newVal) => {
+              updateSearch(newVal);
+              debouncedFetchSearch(newVal);
+            }}
             placeholder="Search Song/Singer/Movie"
             placeholderTextColor="#888"
             showLoading={loading}
