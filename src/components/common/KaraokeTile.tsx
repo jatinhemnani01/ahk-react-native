@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, Icon, ListItem } from "@rneui/base";
+import { View, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
@@ -11,6 +12,7 @@ import imgUrlState from "../../state/imgUrlState";
 import downloadState from "../../state/downloadState";
 import Toast from "react-native-toast-message";
 import { Linking, Platform } from "react-native";
+import tw from 'twrnc'; // Make sure this import is correct for your project
 
 interface Props {
   kid: number;
@@ -19,13 +21,13 @@ interface Props {
 }
 
 export default function KaraokeTile({ kid, title, freeScreen }: Props) {
-  const isPro = isProStore((state) => state.isPro);
-  const forAll = forAllState((state) => state.forAll);
-  const imgUrl = imgUrlState((state) => state.url);
-  const download = downloadState((state) => state.download);
+  const isPro = isProStore((state: any) => state.isPro);
+  const forAll = forAllState((state: any) => state.forAll);
+  const imgUrl = imgUrlState((state: any) => state.url);
+  const download = downloadState((state: any) => state.download);
   const isIos = Platform.OS === "ios";
 
-  const addLikedSong = useLikedSongsList((state) => state.addLikedSong);
+  const addLikedSong = useLikedSongsList((state: any) => state.addLikedSong);
 
   async function handleLike() {
     if ((await AsyncStorage.getItem("liked")) === null) {
@@ -77,35 +79,42 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   }
 
   return (
-    <>
-      <FadeAnimation>
-        <ListItem
-          onPress={() => changeScreen("/video")}
-          bottomDivider
-          containerStyle={{ backgroundColor: "#ecf0f1" }}
-        >
-          <Avatar rounded source={{ uri: imgUrl }} />
+    <FadeAnimation>
+      <TouchableOpacity onPress={() => changeScreen("/video")}>
+        <ListItem containerStyle={tw`bg-white rounded-xl my-2 mx-4 py-3 px-4 shadow-md`}>
+          <Avatar 
+            rounded 
+            source={{ uri: imgUrl }} 
+            size="medium" 
+            containerStyle={tw`border-2 border-blue-400`}
+          />
           <ListItem.Content>
-            <ListItem.Title style={{ textTransform: "capitalize" }}>
+            <ListItem.Title style={tw`text-base font-bold text-gray-800 capitalize`}>
               {title}
             </ListItem.Title>
           </ListItem.Content>
-          {!isIos && (
-            <Icon
-              onPress={handleDownload}
-              name="download"
-              color={"black"}
-              type="ionicons"
-            />
-          )}
-          <Icon
-            name={"heart"}
-            onPress={handleLike}
-            type={"feather"}
-            color={"black"}
-          />
+          <View style={tw`flex-row items-center`}>
+            {!isIos && (
+              <TouchableOpacity onPress={handleDownload} style={tw`mr-4`}>
+                <Icon
+                  name="download"
+                  type="feather"
+                  color="#3498db"
+                  size={22}
+                />
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity onPress={handleLike}>
+              <Icon
+                name="heart"
+                type="feather"
+                color="#e74c3c"
+                size={22}
+              />
+            </TouchableOpacity>
+          </View>
         </ListItem>
-      </FadeAnimation>
-    </>
+      </TouchableOpacity>
+    </FadeAnimation>
   );
 }
