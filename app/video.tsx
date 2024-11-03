@@ -37,6 +37,7 @@ export default function VideoPlayers() {
   const [showControls, setShowControls] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [speed, setSpeed] = React.useState<number>(1);
+  const [pitchSpeed, setPitchSpeed] = useState(1);
   const [url, setUrl] = React.useState("");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoHeigh, setVideoHeight] = useState(300);
@@ -90,7 +91,37 @@ export default function VideoPlayers() {
   const Title = () => {
     return (
       <View style={tw`flex justify-center flex-1`}>
-        <Text style={tw`font-bold text-white text-lg text-center`}>{title}</Text>
+        <Text style={tw`font-bold text-white text-lg text-center`}>
+          {title}
+        </Text>
+      </View>
+    );
+  };
+
+  const ShowControls = () => {
+    return (
+      <View>
+        <VideoSpeedControl
+          handleReset={handleReset}
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+          speed={speed}
+        />
+        <VideoSpeedControl
+          handleReset={() => {
+            ref?.current?.setRateAsync(1, true);
+            setPitchSpeed(1);
+          }}
+          handleDecrement={() => {
+            ref?.current?.setRateAsync(pitchSpeed - 0.01, true);
+            setPitchSpeed((prev) => prev - 0.01);
+          }}
+          handleIncrement={() => {
+            ref?.current?.setRateAsync(pitchSpeed - 0.01, true);
+            setPitchSpeed((prev) => prev + 0.01);
+          }}
+          speed={pitchSpeed}
+        />
       </View>
     );
   };
@@ -183,6 +214,7 @@ export default function VideoPlayers() {
             resizeMode: ResizeMode.CONTAIN,
             source: { uri: url },
             rate: speed,
+            shouldCorrectPitch: true,
             onLoadStart: () => setLoading(true),
             onReadyForDisplay: () => {
               setLoading(false);
@@ -205,14 +237,7 @@ export default function VideoPlayers() {
           </View>
         )}
 
-        {!loading && (
-          <VideoSpeedControl
-            handleReset={handleReset}
-            handleDecrement={handleDecrement}
-            handleIncrement={handleIncrement}
-            speed={speed}
-          />
-        )}
+        {!loading && <ShowControls />}
       </SafeAreaView>
     </>
   );

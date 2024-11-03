@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { Icon, Button, color } from "@rneui/base";
+import { Icon, Button } from "@rneui/base";
 import React from "react";
 import tw from "twrnc";
 import { colors } from "../../constants/colors";
@@ -18,18 +18,33 @@ export default function VideoSpeedControl({
   speed,
 }: VideoSpeedControlProps) {
   return (
-    <View style={tw`flex justify-center items-center mt-10`}>
-      <Text style={tw`font-semibold mb-5 text-xl`}>Change Tempo/Key</Text>
-      <View style={tw`flex flex-row gap-2 justify-center items-center`}>
-        <Button onPress={handleIncrement} radius={"xl"} color={"#cbd5e1"}>
-          <Icon name="plus" color={"black"} size={20} type="font-awesome" />
+    <View style={tw`flex justify-center items-center mt-10 p-5 bg-white rounded-lg shadow-lg m-5 rounded-xl`}>
+      <Text style={tw`font-semibold mb-4 text-2xl text-gray-800`}>Change Tempo/Key</Text>
+      <View style={tw`flex flex-row items-center justify-center gap-5`}>
+        <Button 
+          onPress={handleIncrement} 
+          radius={"xl"} 
+          buttonStyle={tw`bg-blue-500`} 
+          titleStyle={tw`text-white`}
+        >
+          <Icon name="plus" color={"white"} size={20} type="font-awesome" />
         </Button>
-        <Text style={tw`font-bold text-xl`}>{speed.toFixed(2).toString()}</Text>
-        <Button onPress={handleDecrement} radius={"xl"} color={"#cbd5e1"}>
-          <Icon name="minus" color={"black"} size={20} type="font-awesome" />
+        <Text style={tw`font-bold text-2xl text-gray-800`}>{speed.toFixed(2).toString()}</Text>
+        <Button 
+          onPress={handleDecrement} 
+          radius={"xl"} 
+          buttonStyle={tw`bg-red-500`} 
+          titleStyle={tw`text-white`}
+        >
+          <Icon name="minus" color={"white"} size={20} type="font-awesome" />
         </Button>
       </View>
-      <Button onPress={handleReset} radius={"xl"} color={"#cbd5e1"}>
+      <Button 
+        onPress={handleReset} 
+        radius={"xl"} 
+        buttonStyle={tw`bg-gray-300 mt-4`} 
+        titleStyle={tw`text-black`}
+      >
         <Icon color={"black"} name="rotate-right" />
       </Button>
     </View>
