@@ -106,6 +106,7 @@ export default function VideoPlayers() {
           handleDecrement={handleDecrement}
           handleIncrement={handleIncrement}
           speed={speed}
+          title="Change Tempo/Key"
         />
         <VideoSpeedControl
           handleReset={() => {
@@ -121,6 +122,7 @@ export default function VideoPlayers() {
             setPitchSpeed((prev) => prev + 0.01);
           }}
           speed={pitchSpeed}
+          title="Change Pitch"
         />
       </View>
     );

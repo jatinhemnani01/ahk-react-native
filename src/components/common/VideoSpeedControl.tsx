@@ -9,17 +9,19 @@ interface VideoSpeedControlProps {
   handleIncrement: () => void;
   handleDecrement: () => void;
   handleReset: () => void;
+  title:string;
 }
 
 export default function VideoSpeedControl({
   handleDecrement,
   handleIncrement,
   handleReset,
+  title,
   speed,
 }: VideoSpeedControlProps) {
   return (
     <View style={tw`flex justify-center items-center mt-10 p-5 bg-white rounded-lg shadow-lg m-5 rounded-xl`}>
-      <Text style={tw`font-semibold mb-4 text-2xl text-gray-800`}>Change Tempo/Key</Text>
+      <Text style={tw`font-semibold mb-4 text-2xl text-gray-800`}>{title}</Text>
       <View style={tw`flex flex-row items-center justify-center gap-5`}>
         <Button 
           onPress={handleIncrement} 
