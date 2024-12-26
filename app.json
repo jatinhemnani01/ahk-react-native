@@ -3,7 +3,7 @@
     "name": "AH Karaoke",
     "slug": "ahk-react-native",
     "scheme": "ahk-react-native",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2E3AE5"
       },
-      "versionCode": 24,
+      "versionCode": 25,
       "package": "com.ahkkaraoke.app",
       "googleServicesFile": "./google-services.json",
       "permissions": [
