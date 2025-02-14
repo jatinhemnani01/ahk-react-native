@@ -6,11 +6,6 @@ import FreeKaraokeList from "../../src/components/free/FreeKaraokeList";
 import analytics from "@react-native-firebase/analytics";
 import isProStore from "../../src/state/isPro";
 import forAllState from "../../src/state/forAllState";
-import { rewardedInterstitial } from "../../src/ads/interAd";
-import {
-  AdEventType,
-  RewardedAdEventType,
-} from "react-native-google-mobile-ads";
 import { setStatusBarHidden } from "expo-status-bar";
 
 export default function Free() {
@@ -28,30 +23,10 @@ export default function Free() {
     if (isPro) return;
     if (!forAll) return;
     // rewardedInterstitial.load();
-    const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
-      RewardedAdEventType.LOADED,
-      () => {
-        //code
-        setStatusBarHidden(true);
-        rewardedInterstitial.show();
-      }
-    );
-    const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
-      AdEventType.CLOSED,
-      () => {
-        setStatusBarHidden(false);
-      }
-    );
-
-    // Start loading the rewarded interstitial ad straight away
-    rewardedInterstitial.load();
-
     // Unsubscribe from events on unmount
     return () => {
       if (isPro) return;
       if (!forAll) return;
-      unsubscribeLoaded();
-      unsubscribeEarned();
     };
   }, []);
 

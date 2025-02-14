@@ -82,7 +82,7 @@ export default function RootLayout() {
               key={i}
               name={screen.name}
               options={{
-                animation: "ios",
+                animation:"ios_from_right",
                 title: screen.title,
                 headerStyle: { backgroundColor: colors.primary },
                 headerTitleStyle: { color: "white" },

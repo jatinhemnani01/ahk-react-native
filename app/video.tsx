@@ -11,7 +11,6 @@ import { useGlobalSearchParams } from "expo-router";
 import tw from "twrnc";
 import VideoSpeedControl from "../src/components/common/VideoSpeedControl";
 import * as ScreenCapture from "expo-screen-capture";
-import { rewardedInterstitial } from "../src/ads/interAd";
 import forAllState from "../src/state/forAllState";
 import isProStore from "../src/state/isPro";
 import BASE_URL from "../src/constants/base_url";
@@ -19,10 +18,6 @@ import { Text } from "@rneui/base";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import analytics from "@react-native-firebase/analytics";
 import VideoPlayer from "expo-video-player";
-import {
-  AdEventType,
-  RewardedAdEventType,
-} from "react-native-google-mobile-ads";
 import { setStatusBarHidden } from "expo-status-bar";
 
 export default function VideoPlayers() {
@@ -161,40 +156,14 @@ export default function VideoPlayers() {
     if (isPro) return;
     if (!forAll) return;
     // rewardedInterstitial.load();
-    const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
-      RewardedAdEventType.LOADED,
-      () => {
-        //code
-        ref?.current?.pauseAsync();
-        setStatusBarHidden(true);
-        rewardedInterstitial.show();
-      }
-    );
-    const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
-      AdEventType.CLOSED,
-      () => {
-        setStatusBarHidden(false);
-        ref?.current?.playAsync();
-      }
-    );
 
-    const unsubscribeError = rewardedInterstitial.addAdEventListener(
-      AdEventType.ERROR,
-      () => {
-        ref?.current?.playAsync();
-      }
-    );
 
     // Start loading the rewarded interstitial ad straight away
-    rewardedInterstitial.load();
 
     // Unsubscribe from events on unmount
     return () => {
       if (isPro) return;
       if (!forAll) return;
-      unsubscribeLoaded();
-      unsubscribeEarned();
-      unsubscribeError();
     };
   }, []);
 
