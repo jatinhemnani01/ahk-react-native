@@ -11,14 +11,17 @@ import isProStore from "../../state/isPro";
 import imgUrlState from "../../state/imgUrlState";
 import downloadState from "../../state/downloadState";
 import Toast from "react-native-toast-message";
+import { Image } from "expo-image";
 import { Linking, Platform } from "react-native";
-import tw from 'twrnc'; // Make sure this import is correct for your project
+import tw from "twrnc"; // Make sure this import is correct for your project
 
 interface Props {
   kid: number;
   title: string;
   freeScreen?: boolean;
 }
+
+const blurHash = "eSE^8V0_EdWU$l0_-DxHj[S11E-Dspj[R*}cEdNZays:NZoLoMj[ay";
 
 export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const isPro = isProStore((state: any) => state.isPro);
@@ -80,16 +83,27 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
 
   return (
     <FadeAnimation>
-      <TouchableOpacity onPress={() => changeScreen("/video")}>
-        <ListItem containerStyle={tw`bg-white rounded-xl my-2 mx-4 py-3 px-4 shadow-md`}>
-          <Avatar 
-            rounded 
-            source={{ uri: imgUrl }} 
-            size="medium" 
-            containerStyle={tw`border-2 border-blue-400`}
-          />
+      <TouchableOpacity onPress={() => changeScreen("/video-pip")}>
+        <ListItem
+          containerStyle={tw`bg-white rounded-xl my-2 mx-4 py-3 px-4 shadow-md`}
+        >
+          <View
+            style={[
+              tw`border-2 border-blue-400 rounded-full`,
+              { width: 48, height: 48 },
+            ]}
+          >
+            <Image
+              source={{ uri: imgUrl }}
+              style={{ width: 48, height: 48, borderRadius: 48 / 2 }}
+              transition={1000}
+              placeholder={{ blurHash }}
+            />
+          </View>
           <ListItem.Content>
-            <ListItem.Title style={tw`text-base font-bold text-gray-800 capitalize`}>
+            <ListItem.Title
+              style={tw`text-base font-bold text-gray-800 capitalize`}
+            >
               {title}
             </ListItem.Title>
           </ListItem.Content>
@@ -105,12 +119,7 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
               </TouchableOpacity>
             )}
             <TouchableOpacity onPress={handleLike}>
-              <Icon
-                name="heart"
-                type="feather"
-                color="#e74c3c"
-                size={22}
-              />
+              <Icon name="heart" type="feather" color="#e74c3c" size={22} />
             </TouchableOpacity>
           </View>
         </ListItem>

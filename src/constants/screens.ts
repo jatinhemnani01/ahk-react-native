@@ -1,9 +1,5 @@
 export const screens = [
   {
-    name: "video",
-    title: "Video",
-  },
-  {
     name: "popular",
     title: "Popular",
   },
@@ -26,5 +22,9 @@ export const screens = [
   {
     name: "purchase",
     title: "Purchase",
+  },
+  {
+    name: "video-pip",
+    title: "Video PIP",
   },
 ];

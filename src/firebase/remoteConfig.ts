@@ -30,7 +30,7 @@ export class RemoteConfigService {
         all: false,
         base_url:
           "https://thf4yzhfcjpde5ausggkraw26e0pnnzd.lambda-url.ap-south-1.on.aws",
-        img: "https://ahkaraoke-admin.vercel.app/image.jpg",
+        img: "https://pub-c2824179ee6f40abab7b9d770b4a7354.r2.dev/AHK.png",
         download: "https://ahkaraoke.vercel.app/#",
       };
     }

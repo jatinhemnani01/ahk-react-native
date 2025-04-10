@@ -41,7 +41,7 @@ export default function FavKaraokeTile({ kid, title }: Props) {
     <>
       <FadeAnimation>
         <ListItem
-          onPress={() => changeScreen("/video")}
+          onPress={() => changeScreen("/video-pip")}
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >
