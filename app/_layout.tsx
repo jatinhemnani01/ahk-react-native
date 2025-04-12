@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 import downloadState from "../src/state/downloadState";
 import { initialize } from "react-native-clarity";
 import { isIOS } from "../src/utils/isIOS";
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -30,11 +31,28 @@ export default function RootLayout() {
     downloadState.setState({ download: everything.download });
   }
 
+  async function requestTracking() {
+    if (isIOS()) {
+      (async () => {
+        const { status } = await requestTrackingPermissionsAsync();
+        if (status === "granted") {
+          console.log("Yay! I have user permission to track data");
+          getAnalytics();
+        } else {
+          console.log("No permission to track data");
+        }
+      })();
+    } else {
+      getAnalytics();
+    }
+  }
+
   useEffect(() => {
     // Fetching remote config
     fetchEverything();
 
-    // Function to update subscription
+    // Requesting tracking permissions
+    requestTracking();
 
     // Timeout to set status bar style
     const timeout = setTimeout(() => {
@@ -82,7 +100,7 @@ export default function RootLayout() {
               key={i}
               name={screen.name}
               options={{
-                animation:"ios_from_right",
+                animation: "ios_from_right",
                 title: screen.title,
                 headerStyle: { backgroundColor: colors.primary },
                 headerTitleStyle: { color: "white" },
