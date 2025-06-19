@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Alert, Platform, View, ScrollView, SafeAreaView, TouchableOpacity, Linking } from "react-native";
+import {
+  Alert,
+  Platform,
+  View,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { router } from "expo-router";
 import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
 import tw from "twrnc";
@@ -16,14 +24,7 @@ export default function Profile() {
   const toFree = isProStore((state: any) => state.toFree);
   const isIos = Platform.OS === "ios";
 
-  async function displayPaywall() {
-    if (isIos) {
-      Alert.alert(
-        "Subscription",
-        "• Payment will be charged to iTunes Account at confirmation of purchase \n • Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \n Cancel anytime Settings > Apple ID one day before renewal date"
-      );
-    }
-
+  async function paywall() {
     const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall();
     if (paywallResult === PAYWALL_RESULT.PURCHASED) {
       toPro();
@@ -46,6 +47,24 @@ export default function Profile() {
       console.log("User did not purchase");
       analytics().logEvent("no_purchase");
     }
+  }
+
+  async function displayPaywall() {
+    if (isIos) {
+      Alert.alert(
+        "Subscription",
+        "• Payment will be charged to iTunes Account at confirmation of purchase \n • Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \n Cancel anytime Settings > Apple ID one day before renewal date",
+        [
+          {
+            text: "OK",
+            onPress: () => paywall(),
+          },
+        ]
+      );
+    } else {
+      paywall();
+    }
+
     await updateSubscription();
   }
 
@@ -121,21 +140,36 @@ export default function Profile() {
               style={tw`flex-row items-center justify-between py-3 border-b border-gray-200`}
             >
               <Text style={tw`text-gray-700`}>User ID</Text>
-              <Icon name="chevron-right" type="feather" color="#4A5568" size={20} />
+              <Icon
+                name="chevron-right"
+                type="feather"
+                color="#4A5568"
+                size={20}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleAccountSettingsPress}
               style={tw`flex-row items-center justify-between py-3 border-b border-gray-200`}
             >
               <Text style={tw`text-gray-700`}>Account Settings</Text>
-              <Icon name="chevron-right" type="feather" color="#4A5568" size={20} />
+              <Icon
+                name="chevron-right"
+                type="feather"
+                color="#4A5568"
+                size={20}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleHelpSupportPress}
               style={tw`flex-row items-center justify-between py-3`}
             >
               <Text style={tw`text-gray-700`}>Help & Support</Text>
-              <Icon name="chevron-right" type="feather" color="#4A5568" size={20} />
+              <Icon
+                name="chevron-right"
+                type="feather"
+                color="#4A5568"
+                size={20}
+              />
             </TouchableOpacity>
           </View>
         </View>
