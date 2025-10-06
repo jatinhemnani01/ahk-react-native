@@ -1,5 +1,5 @@
 import { View, Text, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import BASE_URL from "../../constants/base_url";
 import useFetch from "../../hooks/useFetch";
 import { FlashList } from "@shopify/flash-list";
@@ -11,6 +11,7 @@ import FloatingButton from "../common/FloatingButton";
 export default function FreeKaraokeList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { data, error, setData, isLoading } = useFetch(
     `${BASE_URL.getState().baseURL}/v2/free?page=1&limit=25`
@@ -22,28 +23,42 @@ export default function FreeKaraokeList() {
     );
   };
 
+  // 🚀 Load more when scrolling to the bottom
   async function fetchMore() {
-    setPage((prev) => prev + 1);
-    const response = await fetch(`${BASE_URL}/v2/free?page=${page}&limit=25`);
-    const newDate = await response.json();
-    console.log(newDate);
+    if (!hasMore) return;
 
-    if (newDate.length >= 25) {
-      setHasMore(true);
-    } else {
-      setHasMore(false);
-    }
+    const nextPage = page + 1;
+    setPage(nextPage);
 
-    setData([...data, ...newDate]);
+    const response = await fetch(
+      `${BASE_URL.getState().baseURL}/v2/free?page=${nextPage}&limit=25`
+    );
+    const newData = await response.json();
+
+    setHasMore(newData.length >= 25);
+    setData([...data, ...newData]);
   }
 
-  const HasMore = () => {
-    if (hasMore) {
-      return <ActivityIndicator size="large" color="#0000ff" />;
-    } else {
-      return null;
+  // 🌀 Pull-to-refresh handler
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    setPage(1);
+    try {
+      const response = await fetch(
+        `${BASE_URL.getState().baseURL}/v2/free?page=1&limit=25`
+      );
+      const freshData = await response.json();
+      setData(freshData);
+      setHasMore(true);
+    } catch (err) {
+      console.error("Refresh error:", err);
+    } finally {
+      setRefreshing(false);
     }
-  };
+  }, [setData]);
+
+  const HasMore = () =>
+    hasMore ? <ActivityIndicator size="large" color="#0000ff" /> : null;
 
   if (error) {
     return (
@@ -68,11 +83,11 @@ export default function FreeKaraokeList() {
         <FlashList
           data={data}
           estimatedItemSize={170}
-          ListFooterComponent={() => <HasMore />}
-          onEndReached={() => {
-            fetchMore();
-          }}
           renderItem={RenderKaraokeList}
+          ListFooterComponent={HasMore}
+          onEndReached={fetchMore}
+          refreshing={refreshing} 
+          onRefresh={onRefresh}   
         />
       )}
     </>

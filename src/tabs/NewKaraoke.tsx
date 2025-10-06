@@ -23,7 +23,6 @@ export default function NewKaraoke() {
   // 🌀 Pull-to-refresh handler
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    console.log("Refreshing...");
     
     try {
       const response = await fetch(
@@ -31,8 +30,6 @@ export default function NewKaraoke() {
       );
       const freshData = await response.json();
       setData(freshData);
-      console.log(freshData);
-      
     } catch (err) {
       console.error("Refresh error:", err);
     } finally {
