@@ -20,7 +20,7 @@
       "bundleIdentifier": "com.ahkkaraoke.app",
       "googleServicesFile": "./GoogleService-Info.plist",
       "entitlements": {
-        "aps-environment": true
+        "aps-environment": "development"
       },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
