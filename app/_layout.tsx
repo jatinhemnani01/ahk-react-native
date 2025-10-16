@@ -17,6 +17,7 @@ import downloadState from "../src/state/downloadState";
 import { initialize } from "react-native-clarity";
 import { isIOS } from "../src/utils/isIOS";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import UpdateOverlay from "../src/components/common/UpdateOverlay";
 
 export default function RootLayout() {
   const remoteConfigService = new RemoteConfigService();
@@ -88,6 +89,7 @@ export default function RootLayout() {
   return (
     <>
       <NotificationController />
+      <UpdateOverlay />
       <Stack>
         <Stack.Screen
           name="(tabs)"
