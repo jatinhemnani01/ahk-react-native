@@ -1,6 +1,6 @@
 import React from "react";
-import { Avatar, Icon, ListItem } from "@rneui/base";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Linking, Platform } from "react-native";
+import { ListItem, Icon } from "@rneui/base";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import kidExistsOnStorage from "../../storage/kidExistsOnStorage";
@@ -12,8 +12,7 @@ import imgUrlState from "../../state/imgUrlState";
 import downloadState from "../../state/downloadState";
 import Toast from "react-native-toast-message";
 import { Image } from "expo-image";
-import { Linking, Platform } from "react-native";
-import tw from "twrnc"; // Make sure this import is correct for your project
+import tw from "twrnc";
 
 interface Props {
   kid: number;
@@ -28,9 +27,8 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
   const forAll = forAllState((state: any) => state.forAll);
   const imgUrl = imgUrlState((state: any) => state.url);
   const download = downloadState((state: any) => state.download);
-  const isIos = Platform.OS === "ios";
-
   const addLikedSong = useLikedSongsList((state: any) => state.addLikedSong);
+  const isIos = Platform.OS === "ios";
 
   async function handleLike() {
     if ((await AsyncStorage.getItem("liked")) === null) {
@@ -38,40 +36,31 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
     }
 
     try {
-      const data = {
-        kid: kid,
-        title: title,
-      };
-
-      if (await kidExistsOnStorage(kid)) {
-      } else {
+      const data = { kid, title };
+      if (!(await kidExistsOnStorage(kid))) {
         const likedSongs = await AsyncStorage.getItem("liked");
         if (likedSongs) {
-          const parsedData = JSON.parse(likedSongs);
-          parsedData.unshift(data);
-          await AsyncStorage.setItem("liked", JSON.stringify(parsedData));
+          const parsed = JSON.parse(likedSongs);
+          parsed.unshift(data);
+          await AsyncStorage.setItem("liked", JSON.stringify(parsed));
           addLikedSong(title, kid);
-          return;
         }
       }
-    } catch (error) {
-    } finally {
+
       Toast.show({
         type: "success",
-        text1: "Added To Liked Songs",
+        text1: "Added to Liked Songs 💖",
         position: "bottom",
         visibilityTime: 1500,
       });
+    } catch (err) {
+      console.log("Error liking song:", err);
     }
   }
 
   function changeScreen(name: string) {
-    if (isPro) {
-      router.navigate({ pathname: name, params: { kid: kid, title: title } });
-    } else if (forAll) {
-      router.navigate({ pathname: name, params: { kid: kid, title: title } });
-    } else if (freeScreen) {
-      router.navigate({ pathname: name, params: { kid: kid, title: title } });
+    if (isPro || forAll || freeScreen) {
+      router.navigate({ pathname: name, params: { kid, title } });
     } else {
       router.navigate("/purchase");
     }
@@ -83,43 +72,68 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
 
   return (
     <FadeAnimation>
-      <TouchableOpacity onPress={() => changeScreen("/video-pip")}>
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() => changeScreen("/video-pip")}
+        style={tw`mx-4 my-2`}
+      >
         <ListItem
-          containerStyle={tw`bg-white rounded-xl my-2 mx-4 py-3 px-4 shadow-md`}
+          containerStyle={[
+            tw`bg-white rounded-2xl py-3 px-4`,
+            {
+              shadowColor: "#000",
+              shadowOpacity: 0.12,
+              shadowRadius: 8,
+              shadowOffset: { width: 0, height: 3 },
+              elevation: 4,
+            },
+          ]}
         >
+          {/* Left: Image */}
           <View
             style={[
-              tw`border-2 border-blue-400 rounded-full`,
-              { width: 48, height: 48 },
+              tw`border-2 border-blue-500 rounded-full mr-3`,
+              { width: 54, height: 54 },
             ]}
           >
             <Image
               source={{ uri: imgUrl }}
-              style={{ width: 48, height: 48, borderRadius: 48 / 2 }}
-              transition={1000}
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+              transition={500}
               placeholder={{ blurHash }}
             />
           </View>
+
+          {/* Middle: Full title */}
           <ListItem.Content>
             <ListItem.Title
-              style={tw`text-base font-bold text-gray-800 capitalize`}
+              style={tw`text-lg font-semibold text-gray-900 flex-wrap`}
             >
               {title}
             </ListItem.Title>
           </ListItem.Content>
+
+          {/* Right: Icons */}
           <View style={tw`flex-row items-center`}>
             {!isIos && (
-              <TouchableOpacity onPress={handleDownload} style={tw`mr-4`}>
+              <TouchableOpacity
+                onPress={handleDownload}
+                style={tw`mr-4 p-1.5 rounded-full bg-blue-50`}
+              >
                 <Icon
                   name="download"
                   type="feather"
-                  color="#3498db"
-                  size={22}
+                  color="#007AFF"
+                  size={20}
                 />
               </TouchableOpacity>
             )}
-            <TouchableOpacity onPress={handleLike}>
-              <Icon name="heart" type="feather" color="#e74c3c" size={22} />
+
+            <TouchableOpacity
+              onPress={handleLike}
+              style={tw`p-1.5 rounded-full bg-pink-50`}
+            >
+              <Icon name="heart" type="feather" color="#E63946" size={20} />
             </TouchableOpacity>
           </View>
         </ListItem>

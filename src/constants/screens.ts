@@ -25,6 +25,10 @@ export const screens = [
   },
   {
     name: "video-pip",
-    title: "Video PIP",
+    title: "Video Player",
+  },
+  {
+    name: "artist",
+    title: "Artist",
   },
 ];
