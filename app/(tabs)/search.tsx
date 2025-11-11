@@ -134,6 +134,7 @@ export default function Search() {
             data={data}
             estimatedItemSize={170}
             renderItem={RenderKaraokeList}
+            keyboardDismissMode="on-drag"
             ListFooterComponent={() => <HasMore />}
             onEndReached={() => {
               fetchMore();
