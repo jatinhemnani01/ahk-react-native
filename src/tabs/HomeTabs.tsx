@@ -6,10 +6,11 @@ import AllKaraokeList from "./AllKaraokeList";
 import NewKaraoke from "./NewKaraoke";
 import PopularKaraokeList from "../components/popular/PopularKaraokeList";
 import { colors } from "../constants/colors";
+import ArtistsList from "./ArtistsList";
 
 const renderScene = SceneMap({
   new: NewKaraoke,
-  all: KaraokeList,
+  all: ArtistsList,
   popular: PopularKaraokeList,
   list: AllKaraokeList,
 });
@@ -30,7 +31,7 @@ export default function HomeTabs() {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "new", title: "New" },
-    { key: "all", title: "All" },
+    { key: "all", title: "Artists" },
     { key: "popular", title: "Popular" },
     { key: "list", title: "List" },
   ]);
