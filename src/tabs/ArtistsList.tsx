@@ -15,6 +15,7 @@ import useFetch from "../hooks/useFetch";
 import BASE_URL from "../constants/base_url";
 import * as Animatable from "react-native-animatable";
 import { Skeleton } from "@rneui/base";
+import { router } from "expo-router";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const HORIZONTAL_PADDING = 16 * 2; // tw`p-4` left+right
@@ -25,19 +26,19 @@ export default function ArtistsList(): JSX.Element {
   const [refreshing, setRefreshing] = useState(false);
   const [animateKey, setAnimateKey] = useState(0); // bump to retrigger keyed animations
 
-  // include refreshKey in the URL so useFetch re-runs when it changes
-  const requestUrl = `${BASE_URL.getState().baseURL}/artists/all?_=${refreshKey}`;
+  const requestUrl = useMemo(
+    () => `${BASE_URL.getState().baseURL}/artists/all?_=${refreshKey}`,
+    [refreshKey]
+  );
 
   const { data, isLoading, error } = useFetch(requestUrl);
 
-  // stop spinner when loading finishes
   useEffect(() => {
     if (!isLoading && refreshing) {
       setRefreshing(false);
     }
   }, [isLoading, refreshing]);
 
-  // when refreshKey changes (we just refreshed), bump animateKey to re-run animations
   useEffect(() => {
     setAnimateKey((k) => k + 1);
   }, [refreshKey]);
@@ -50,20 +51,27 @@ export default function ArtistsList(): JSX.Element {
   }, [data]);
 
   const categorized = useMemo(() => {
-    const map = new Map<number, { category_type: number; category_name: string; artists: any[] }>();
+    const map = new Map<
+      number,
+      { category_type: number; category_name: string; artists: any[] }
+    >();
     for (const artist of artistsArray as any[]) {
       const ct = artist.category_type;
       const name = artist.category ?? artist.category_name ?? `Category ${ct}`;
-      if (!map.has(ct)) map.set(ct, { category_type: ct, category_name: name, artists: [] });
+      if (!map.has(ct))
+        map.set(ct, { category_type: ct, category_name: name, artists: [] });
       map.get(ct)!.artists.push(artist);
     }
-    return Array.from(map.values()).sort((a, b) => Number(a.category_type) - Number(b.category_type));
+    return Array.from(map.values()).sort(
+      (a, b) => Number(a.category_type) - Number(b.category_type)
+    );
   }, [artistsArray]);
 
   // Decide best-fit columns by a target min size (you can tweak TARGET_MIN)
   const TARGET_MIN = 72; // minimum avatar size you'd like
   const availableWidth = SCREEN_WIDTH - HORIZONTAL_PADDING;
-  const maxColumns = Math.floor(availableWidth / (TARGET_MIN + ITEM_HORIZONTAL_MARGIN * 2)) || 1;
+  const maxColumns =
+    Math.floor(availableWidth / (TARGET_MIN + ITEM_HORIZONTAL_MARGIN * 2)) || 1;
   const columns = Math.min(Math.max(maxColumns, 1), 6); // clamp between 1 and 6
   // now compute exact item size so columns fill the row exactly
   const totalMargins = columns * ITEM_HORIZONTAL_MARGIN * 2; // left+right margin per item
@@ -73,7 +81,6 @@ export default function ArtistsList(): JSX.Element {
   const onRefresh = () => {
     setRefreshing(true);
     setRefreshKey((k) => k + 1);
-    // animateKey will update in the effect tied to refreshKey
   };
 
   // ---------- Loading skeleton components ----------
@@ -95,7 +102,6 @@ export default function ArtistsList(): JSX.Element {
               alignItems: "center",
             }}
           >
-            {/* use style prop to set borderRadius (TS-friendly) */}
             <Skeleton
               animation="wave"
               width={exactItemSize}
@@ -112,7 +118,10 @@ export default function ArtistsList(): JSX.Element {
         );
       }
       rows.push(
-        <View key={`row-${r}`} style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+        <View
+          key={`row-${r}`}
+          style={{ flexDirection: "row", justifyContent: "flex-start" }}
+        >
           {rowItems}
         </View>
       );
@@ -123,34 +132,99 @@ export default function ArtistsList(): JSX.Element {
   const LoadingSkeleton: React.FC = () => {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 88 }}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            paddingTop: 12,
+            paddingBottom: 88,
+          }}
+        >
           {/* Header */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <Skeleton width={140} height={32} style={{ borderRadius: 8 }} animation="wave" />
-            <Skeleton width={40} height={32} style={{ borderRadius: 8 }} animation="wave" />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 12,
+            }}
+          >
+            <Skeleton
+              width={140}
+              height={32}
+              style={{ borderRadius: 8 }}
+              animation="wave"
+            />
+            <Skeleton
+              width={40}
+              height={32}
+              style={{ borderRadius: 8 }}
+              animation="wave"
+            />
           </View>
 
           {/* Tabs */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 18, paddingHorizontal: 4 }}>
-            <Skeleton width={70} height={28} style={{ borderRadius: 20 }} animation="wave" />
-            <Skeleton width={90} height={28} style={{ borderRadius: 20 }} animation="wave" />
-            <Skeleton width={80} height={28} style={{ borderRadius: 20 }} animation="wave" />
-            <Skeleton width={50} height={28} style={{ borderRadius: 20 }} animation="wave" />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 18,
+              paddingHorizontal: 4,
+            }}
+          >
+            <Skeleton
+              width={70}
+              height={28}
+              style={{ borderRadius: 20 }}
+              animation="wave"
+            />
+            <Skeleton
+              width={90}
+              height={28}
+              style={{ borderRadius: 20 }}
+              animation="wave"
+            />
+            <Skeleton
+              width={80}
+              height={28}
+              style={{ borderRadius: 20 }}
+              animation="wave"
+            />
+            <Skeleton
+              width={50}
+              height={28}
+              style={{ borderRadius: 20 }}
+              animation="wave"
+            />
           </View>
 
           {/* Multiple sections */}
           <View style={{ marginBottom: 22 }}>
-            <Skeleton width={220} height={22} style={{ borderRadius: 6 }} animation="wave" />
+            <Skeleton
+              width={220}
+              height={22}
+              style={{ borderRadius: 6 }}
+              animation="wave"
+            />
             <AvatarGridSkeleton count={12} />
           </View>
 
           <View style={{ marginBottom: 22 }}>
-            <Skeleton width={200} height={22} style={{ borderRadius: 6 }} animation="wave" />
+            <Skeleton
+              width={200}
+              height={22}
+              style={{ borderRadius: 6 }}
+              animation="wave"
+            />
             <AvatarGridSkeleton count={9} />
           </View>
 
           <View style={{ marginBottom: 22 }}>
-            <Skeleton width={180} height={22} style={{ borderRadius: 6 }} animation="wave" />
+            <Skeleton
+              width={180}
+              height={22}
+              style={{ borderRadius: 6 }}
+              animation="wave"
+            />
             <AvatarGridSkeleton count={6} />
           </View>
         </ScrollView>
@@ -160,8 +234,18 @@ export default function ArtistsList(): JSX.Element {
           <View style={styles.bottomIcons}>
             {[...Array(5)].map((_, i) => (
               <View key={`bt-${i}`} style={styles.bottomItem}>
-                <Skeleton width={28} height={28} style={{ borderRadius: 28 / 2 }} animation="wave" />
-                <Skeleton width={36} height={8} style={{ marginTop: 6, borderRadius: 4 }} animation="wave" />
+                <Skeleton
+                  width={28}
+                  height={28}
+                  style={{ borderRadius: 28 / 2 }}
+                  animation="wave"
+                />
+                <Skeleton
+                  width={36}
+                  height={8}
+                  style={{ marginTop: 6, borderRadius: 4 }}
+                  animation="wave"
+                />
               </View>
             ))}
           </View>
@@ -188,13 +272,16 @@ export default function ArtistsList(): JSX.Element {
     <ScrollView
       style={tw`flex-1 p-4`}
       contentContainerStyle={tw`pb-6`}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
       {categorized.length === 0 ? (
-        <Text style={tw`text-center text-gray-500 mt-4`}>No artists found.</Text>
+        <Text style={tw`text-center text-gray-500 mt-4`}>
+          No artists found.
+        </Text>
       ) : (
         categorized.map((group, groupIndex) => {
-          // groupKey includes animateKey so the Animatable.View re-mounts and re-animates when animateKey changes
           const groupKey = `${group.category_type}-${animateKey}`;
 
           return (
@@ -211,13 +298,20 @@ export default function ArtistsList(): JSX.Element {
               </Text>
 
               {/* Avatar Grid - items sized to fill full width */}
-              <View style={tw`flex-row flex-wrap`}>
+              <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                 {group.artists.map((artist: any, idx: number) => {
-                  const key = String(artist.id ?? `${group.category_type}-${artist.name}-${animateKey}-${idx}`);
-                  const imgUri = artist.image_url || artist.image || "https://via.placeholder.com/150";
+                  const key = String(
+                    artist.id ??
+                      `${group.category_type}-${artist.name}-${animateKey}-${idx}`
+                  );
+                  const imgUri =
+                    artist.image_url ||
+                    artist.image ||
+                    "https://via.placeholder.com/150";
 
                   // stagger delay per item (small)
-                  const itemDelay = (idx % columns) * 60 + Math.floor(idx / columns) * 40;
+                  const itemDelay =
+                    (idx % columns) * 60 + Math.floor(idx / columns) * 40;
 
                   return (
                     <Animatable.View
@@ -234,9 +328,14 @@ export default function ArtistsList(): JSX.Element {
                       }}
                     >
                       <TouchableOpacity
-                        onPress={() => console.log("Tapped artist:", artist.name)}
+                        onPress={() =>
+                          router.push(
+                            `/artist?name=${encodeURIComponent(artist.name)}`
+                          )
+                        }
                         activeOpacity={0.8}
-                        style={{ alignItems: "center" }}
+                        // constrain touchable to avoid children overflow
+                        style={{ width: exactItemSize, alignItems: "center" }}
                       >
                         <Image
                           source={{ uri: imgUri }}
@@ -248,7 +347,21 @@ export default function ArtistsList(): JSX.Element {
                           }}
                           contentFit="cover"
                         />
-                        <Text numberOfLines={2} style={tw`mt-1 text-xs text-center text-gray-700 w-full`}>
+
+                        {/* Constrain label width and truncate if too long */}
+                        <Text
+                          numberOfLines={2}
+                          ellipsizeMode="tail"
+                          style={{
+                            marginTop: 6,
+                            fontSize: 12,
+                            lineHeight: 16,
+                            textAlign: "center",
+                            width: exactItemSize,
+                            paddingHorizontal: 4,
+                            color: "#374151",
+                          }}
+                        >
                           {artist.name}
                         </Text>
                       </TouchableOpacity>
