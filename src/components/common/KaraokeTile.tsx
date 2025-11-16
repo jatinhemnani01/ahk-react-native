@@ -92,16 +92,11 @@ export default function KaraokeTile({ kid, title, freeScreen }: Props) {
           {/* Left: Image */}
           <View
             style={[
-              tw`border-2 border-blue-500 rounded-full mr-3`,
+              tw`items-center justify-center`,
               { width: 54, height: 54 },
             ]}
           >
-            <Image
-              source={{ uri: imgUrl }}
-              style={{ width: 50, height: 50, borderRadius: 25 }}
-              transition={500}
-              placeholder={{ blurHash }}
-            />
+            <Icon name="play" type="feather" size={28} color="blue" />
           </View>
 
           {/* Middle: Full title */}
