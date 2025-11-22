@@ -7,6 +7,8 @@ import FadeAnimation from "../common/FadeAnimation";
 import forAllState from "../../state/forAllState";
 import isProStore from "../../state/isPro";
 import imgUrlState from "../../state/imgUrlState";
+import { View } from "react-native";
+import tw from "twrnc";
 
 interface Props {
   kid: number;
@@ -45,7 +47,14 @@ export default function FavKaraokeTile({ kid, title }: Props) {
           bottomDivider
           containerStyle={{ backgroundColor: "#ecf0f1" }}
         >
-          <Avatar rounded source={{ uri: imgUrl }} />
+          <View
+            style={[
+              tw` items-center justify-center`,
+              { width: 54, height: 54 },
+            ]}
+          >
+            <Icon name="play" type="feather" size={28} color="blue" />
+          </View>
           <ListItem.Content>
             <ListItem.Title>{title}</ListItem.Title>
           </ListItem.Content>

@@ -1,5 +1,5 @@
-import { View, Text, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import { View, Text, ActivityIndicator, RefreshControl } from "react-native";
+import React, { useState, useCallback } from "react";
 import BASE_URL from "../../constants/base_url";
 import useFetch from "../../hooks/useFetch";
 import { FlashList } from "@shopify/flash-list";
@@ -9,8 +9,7 @@ import tw from "twrnc";
 import FloatingButton from "../common/FloatingButton";
 
 export default function PopularKaraokeList() {
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { data, error, setData, isLoading } = useFetch(
     `${BASE_URL.getState().baseURL}/v2/popular?page=1&limit=25`
@@ -20,27 +19,20 @@ export default function PopularKaraokeList() {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
   };
 
-  //   async function fetchMore() {
-  //     setPage((prev) => prev + 1);
-  //     const response = await fetch(`${BASE_URL}/v2/popular?page=${page}&limit=25`);
-  //     const newDate = await response.json();
-
-  //     if (newDate.length >= 25) {
-  //       setHasMore(true);
-  //     } else {
-  //       setHasMore(false);
-  //     }
-
-  //     setData([...data, ...newDate]);
-  //   }
-
-  //   const HasMore = () => {
-  //     if (hasMore) {
-  //       return <ActivityIndicator size="large" color="#0000ff" />;
-  //     } else {
-  //       return null;
-  //     }
-  //   };
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      const response = await fetch(
+        `${BASE_URL.getState().baseURL}/v2/popular?page=1&limit=25`
+      );
+      const refreshedData = await response.json();
+      setData(refreshedData);
+    } catch (err) {
+      console.error("Error refreshing:", err);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [setData]);
 
   if (error) {
     return (
@@ -66,6 +58,14 @@ export default function PopularKaraokeList() {
           data={data}
           estimatedItemSize={170}
           renderItem={RenderKaraokeList}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListEmptyComponent={() => (
+            <View style={tw`flex justify-center items-center py-10`}>
+              <Text style={tw`text-gray-600`}>No popular karaoke found</Text>
+            </View>
+          )}
         />
       )}
     </>

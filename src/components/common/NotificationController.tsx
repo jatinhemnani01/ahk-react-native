@@ -17,6 +17,9 @@ function NotificationController() {
 
     if (enabled) {
       console.log("Authorization status:", authStatus);
+      messaging().getToken().then((token) => {
+        console.log("FCM Token:", token);
+      });
     }
   }
 
