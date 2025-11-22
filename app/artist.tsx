@@ -21,33 +21,13 @@ export default function Artist() {
   const { data, error, setData, isLoading } = useFetch(
     `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=${params?.name}`
   );
+  
 
   const RenderKaraokeList = ({ item }: { item: KaraokeListItem }) => {
     return <KaraokeTile title={item?.title} kid={item?.kid} />;
   };
 
-  async function fetchSearch(query: string) {
-    setIsEmpty(false);
-    setLoading(true);
-    setPage(1);
-    const response = await fetch(
-      `${BASE_URL.getState().baseURL}/v2/search?page=1&limit=25&q=${query}`
-    );
-    const newData = await response.json();
 
-    if (newData.length >= 25) {
-      setHasMore(true);
-    } else {
-      setHasMore(false);
-    }
-
-    if (newData.length === 0) {
-      setIsEmpty(true);
-    }
-
-    setData(newData);
-    setLoading(false);
-  }
 
   async function fetchMore() {
     setPage((prev) => prev + 1);
@@ -90,15 +70,7 @@ export default function Artist() {
     });
   }, []);
 
-  const debounce = (func: (...args: any[]) => void, wait: number) => {
-    let timeout: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  };
 
-  const debouncedFetchSearch = useCallback(debounce(fetchSearch, 700), []);
 
   return (
     <>
